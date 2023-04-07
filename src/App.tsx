@@ -43,19 +43,14 @@ const App = () => {
         setFilter(filter)
     }
 
-    const getFilteredTasks = () => {
-        let filteredTasks = tasks
-        if (filter === 'active') {
-            filteredTasks = tasks.filter(el => !el.isDone)
-        }
-        if (filter === 'completed') {
-            filteredTasks = tasks.filter(el => el.isDone)
-        }
-
-        return filteredTasks
+    let filteredTasks = tasks
+    if (filter === 'active') {
+        filteredTasks = tasks.filter(el => !el.isDone)
+    }
+    if (filter === 'completed') {
+        filteredTasks = tasks.filter(el => el.isDone)
     }
 
-    const filteredTasks = getFilteredTasks()
 
     return (
         <div className="App">

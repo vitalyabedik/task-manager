@@ -16,14 +16,6 @@ type PropsType = {
 
 export const Todolist = (props: PropsType) => {
 
-    const buttonCloseHandler = (id: number) => {
-        props.removeTask(id)
-    }
-
-    const changeFilterHandler = (value: FilterType) => {
-        props.changeFilter(value)
-    }
-
     return (
         <div>
             <h3>{props.title}</h3>
@@ -39,16 +31,16 @@ export const Todolist = (props: PropsType) => {
                             <li key={task.id}>
                                 <input type="checkbox" checked={task.isDone}/>
                                 <span>{task.title}</span>
-                                <button onClick={() => buttonCloseHandler(task.id)}>x</button>
+                                <button onClick={() => props.removeTask(task.id)}>x</button>
                             </li>
                         )
                     })
                 }
             </ul>
             <div>
-                <button onClick={() => changeFilterHandler('all')}>All</button>
-                <button onClick={() => changeFilterHandler('active')}>Active</button>
-                <button onClick={() => changeFilterHandler('completed')}>Completed</button>
+                <button onClick={() => props.changeFilter('all')}>All</button>
+                <button onClick={() => props.changeFilter('active')}>Active</button>
+                <button onClick={() => props.changeFilter('completed')}>Completed</button>
             </div>
         </div>
     )
