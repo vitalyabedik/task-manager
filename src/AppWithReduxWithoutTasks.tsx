@@ -38,7 +38,6 @@ export type FilterType = 'all' | 'active' | 'completed'
 
 export const AppWithReduxWithoutTasks = () => {
     const todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
-    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
 
     const dispatch = useDispatch()
 
@@ -56,22 +55,6 @@ export const AppWithReduxWithoutTasks = () => {
 
     const changeFilter = (todolistId: string, filter: FilterType) => {
         dispatch(changeTodolistFilterAC(todolistId, filter))
-    }
-
-    const removeTask = (todolistId: string, id: string) => {
-        dispatch(removeTaskAC(todolistId, id))
-    }
-
-    const addTask = (todolistId: string, title: string) => {
-        dispatch(addTaskAC(todolistId, title))
-    }
-
-    const changeTaskStatus = (todolistId: string, taskId: string, taskStatus: boolean) => {
-        dispatch(changeTaskStatusAC(todolistId, taskId, taskStatus))
-    }
-
-    const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
-        dispatch(changeTaskTitleAC(todolistId, taskId, title))
     }
 
     return (
@@ -101,31 +84,17 @@ export const AppWithReduxWithoutTasks = () => {
                 <Grid container spacing={3}>
                     {
                         todolists.map(todolist => {
-
-                            let filteredTasks = tasks[todolist.id]
-
-                            if (todolist.filter === 'active') {
-                                filteredTasks = filteredTasks.filter(el => !el.isDone)
-                            }
-                            if (todolist.filter === 'completed') {
-                                filteredTasks = filteredTasks.filter(el => el.isDone)
-                            }
-
                             return (
                                 <Grid item>
                                     <Paper style={{padding: '10px'}}>
-                                        <TodolistWithTasks key={todolist.id}
-                                                  id={todolist.id}
-                                                  title={todolist.title}
-                                                  tasks={filteredTasks}
-                                                  removeTodolist={removeTodolist}
-                                                  changeTodolistTitle={changeTodolistTitle}
-                                                  removeTask={removeTask}
-                                                  changeFilter={changeFilter}
-                                                  addTask={addTask}
-                                                  changeTaskStatus={changeTaskStatus}
-                                                  changeTaskTitle={changeTaskTitle}
-                                                  filter={todolist.filter}
+                                        <TodolistWithTasks
+                                            key={todolist.id}
+                                            id={todolist.id}
+                                            title={todolist.title}
+                                            filter={todolist.filter}
+                                            removeTodolist={removeTodolist}
+                                            changeTodolistTitle={changeTodolistTitle}
+                                            changeFilter={changeFilter}
                                         />
                                     </Paper>
                                 </Grid>

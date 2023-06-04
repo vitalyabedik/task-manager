@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <Provider store={store}>
-        <AppWithReduxWithoutTasks/>
+        <AppWithRedux/>
     </Provider>
 );
 
