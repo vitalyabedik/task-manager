@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 
 import styles from './Todolist.module.css'
 
@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Delete from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import {Task} from './Task';
 
 export type TaskType = {
     id: string
@@ -30,44 +31,43 @@ type PropsType = {
     filter: FilterType
 }
 
-export const Todolist = (props: PropsType) => {
-    const removeTodolistHandler = () => {
+export const Todolist = React.memo((props: PropsType) => {
+    console.log('Todolist is called')
+
+    const removeTodolistHandler = useCallback(() => {
         props.removeTodolist(props.id)
-    }
-    const changeTodolistTitleHandler = (newTitle: string) => {
+    }, [props.removeTodolist, props.id])
+    const changeTodolistTitleHandler = useCallback((newTitle: string) => {
         props.changeTodolistTitle(props.id, newTitle)
-    }
+    }, [props.changeTodolistTitle, props.id])
 
-
-    // удаление вне map
-    // const removeTaskHandler = (tID: string) => {
-    //     props.removeTask(tID)
-    // }
-
-    // смена статуса checkbox вне map
-    // const onChangeCheckboxHandler = (id: string, e: ChangeEvent<HTMLInputElement>) => {
-    //     props.changeTaskStatus(id, e.currentTarget.checked)
-    // }
-
-    const onClickAllHandler = () => {
+    const onClickAllHandler = useCallback(() => {
         props.changeFilter(props.id, 'all')
-    }
+    }, [props.changeFilter, props.id])
 
-    const onClickActiveHandler = () => {
+    const onClickActiveHandler = useCallback(() => {
         props.changeFilter(props.id,'active')
-    }
+    }, [props.changeFilter, props.id])
 
-    const onClickCompletedHandler = () => {
+    const onClickCompletedHandler = useCallback(() => {
         props.changeFilter(props.id,'completed')
-    }
+    }, [props.changeFilter, props.id])
 
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         props.addTask(props.id, title)
-    }
+    }, [props.addTask, props.id])
 
     const onAllFilterBtnClasses = props.filter === 'all' ? styles.activeFilter : ''
     const onActiveFilterBtnClasses = props.filter === 'active' ? styles.activeFilter : ''
     const onCompletedFilterBtnClasses = props.filter === 'completed' ? styles.activeFilter : ''
+
+    let filteredTasks = props.tasks
+    if (props.filter === 'active') {
+        filteredTasks = filteredTasks.filter(el => !el.isDone)
+    }
+    if (props.filter === 'completed') {
+        filteredTasks = filteredTasks.filter(el => el.isDone)
+    }
 
     return (
         <div>
@@ -81,33 +81,17 @@ export const Todolist = (props: PropsType) => {
            <AddItemForm addTask={addTask}/>
             <div>
                 {
-                    props.tasks.map(task => {
-                        // удаление внутри map
-                        const removeTaskHandler = () => {
-                            props.removeTask(props.id, task.id)
-                        }
-
-                        // смена статуса checkbox внутри map
-                        const onChangeCheckboxHandler = ( e: ChangeEvent<HTMLInputElement>) => {
-                            props.changeTaskStatus(props.id, task.id, e.currentTarget.checked)
-                        }
-
-                        const onChangeTitleHandler = (newTitle: string) => {
-                            props.changeTaskTitle(props.id, task.id, newTitle)
-                        }
-
-                        const taskStatusClasses = task.isDone ? styles.isDone : ''
+                    filteredTasks.map(task => {
 
                         return (
-                            <div key={task.id} className={taskStatusClasses}>
-                                <Checkbox onChange={onChangeCheckboxHandler}
-                                       checked={task.isDone}
-                                />
-                                <EditableSpan onChange={onChangeTitleHandler} title={task.title}/>
-                                <IconButton onClick={removeTaskHandler}>
-                                    <Delete />
-                                </IconButton>
-                            </div>
+                            <Task
+                                key={task.id}
+                                todolistId={props.id}
+                                task={task}
+                                removeTask={props.removeTask}
+                                changeTaskStatus={props.changeTaskStatus}
+                                changeTaskTitle={props.changeTaskTitle}
+                            />
                         )
                     })
                 }
@@ -119,5 +103,5 @@ export const Todolist = (props: PropsType) => {
             </div>
         </div>
     )
-}
+})
 

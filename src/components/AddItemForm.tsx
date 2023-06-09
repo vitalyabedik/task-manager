@@ -7,7 +7,8 @@ import ControlPoint from '@mui/icons-material/ControlPoint';
 type AddItemFormPropsType = {
     addTask: (title: string) => void
 }
-export const AddItemForm = (props: AddItemFormPropsType) => {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+    console.log('AddItemForm called')
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
     const addTaskHandler = () => {
@@ -19,10 +20,12 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         }
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
         setTitle(e.currentTarget.value)
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (error !== null) {
+            setError(null)
+        }
         if (e.key === 'Enter') {
             addTaskHandler()
         }
@@ -45,4 +48,4 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
             {/*<Button onClick={addTaskHandler} variant={'contained'}>+</Button>*/}
         </div>
     )
-}
+})
