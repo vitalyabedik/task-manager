@@ -78,7 +78,7 @@ export const Todolist = React.memo((props: PropsType) => {
                     <Delete />
                 </IconButton>
             </h3>
-           <AddItemForm addTask={addTask}/>
+           <AddItemForm addItem={addTask}/>
             <div>
                 {
                     filteredTasks.map(task => {

@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import ControlPoint from '@mui/icons-material/ControlPoint';
 
 type AddItemFormPropsType = {
-    addTask: (title: string) => void
+    addItem: (title: string) => void
 }
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     console.log('AddItemForm called')
@@ -13,7 +13,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     const [error, setError] = useState<string | null>(null)
     const addTaskHandler = () => {
         if (title.trim() !== '') {
-            props.addTask(title.trim())
+            props.addItem(title.trim())
             setTitle('')
         } else {
             setError('Title is required!')
@@ -43,7 +43,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                        helperText={error}
             />
             <IconButton onClick={addTaskHandler} color={'primary'} >
-                <ControlPoint/>
+                <ControlPoint/>!
             </IconButton>
             {/*<Button onClick={addTaskHandler} variant={'contained'}>+</Button>*/}
         </div>
