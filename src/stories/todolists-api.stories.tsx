@@ -9,8 +9,6 @@ export default {
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        // здесь мы будем делать запрос и ответ закидывать в стейт.
-        // который в виде строки будем отображать в div-ке
         todolistAPI.getTodolist()
             .then(res => {
                 setState(res.data)
@@ -32,14 +30,6 @@ export const CreateTodolist = () => {
                 setState(res.data)
             })
     }
-
-    // useEffect(() => {
-    //     const title = 'Graph QL'
-    //     todolistAPI.createTodolist(title)
-    //         .then(res => {
-    //             setState(res.data)
-    //         })
-    // }, [])
 
     return <div>{JSON.stringify(state)}
         <div>
@@ -66,15 +56,6 @@ export const DeleteTodolist = () => {
                 setState(res.data)
             })
     }
-
-    // useEffect(() => {
-    //     const todolistId = 'a29c8b16-25c4-46a9-950d-6b611cf055d6'
-    //
-    //     todolistAPI.deleteTodolist(todolistId)
-    //         .then(res => {
-    //             setState(res.data)
-    //         })
-    // }, [])
 
     return <div>{JSON.stringify(state)}
         <div>
@@ -109,16 +90,6 @@ export const UpdateTodolistTitle = () => {
             })
     }
 
-    // useEffect(() => {
-    //     const todolistId = '461d0482-c906-4804-a69e-a91020637cae'
-    //     const title = 'TS'
-    //
-    //     todolistAPI.deleteTodolist(todolistId)
-    //         .then(res => {
-    //             setState(res.data)
-    //         })
-    // }, [])
-
     return <div>{JSON.stringify(state)}
         <div>
             <input onChange={onChangeTodolistIdHandler}
@@ -152,19 +123,6 @@ export const GetTodolistTasks = () => {
             })
     }
 
-
-    // useEffect(() => {
-    //     const todolistId = 'c6b052ba-a79f-4832-9461-b38ace162c97'
-    //     // const todolistId = '6d482de6-cb88-405a-b708-268780b6d422'
-    //     // const todolistId = 'b7c22e38-7f42-4093-835a-0d0c7cdf5d04'
-    //
-    //     todolistAPI.getTodolistTasks(todolistId)
-    //         .then(res => {
-    //             console.log(res.data)
-    //             setState(res.data)
-    //         })
-    // }, [])
-
     return <div>{JSON.stringify(state)}
         <div>
             <input onChange={onChangeTodolistIdHandler}
@@ -197,16 +155,6 @@ export const CreateTodolistTasks = () => {
             })
     }
 
-    // useEffect(() => {
-    //     const todolistId = '461d0482-c906-4804-a69e-a91020637cae'
-    //     const title = 'NEW-TASK'
-    //
-    //     todolistAPI.createTodolistTask(todolistId, title)
-    //         .then(res => {
-    //             setState(res.data)
-    //         })
-    // }, [])
-
     return <div>{JSON.stringify(state)}
         <div>
             <input onChange={onChangeTodolistIdHandler}
@@ -229,17 +177,6 @@ export const DeleteTodolistTask = () => {
     const [todolistId, setTodolistId] = useState<any>(null)
     const [taskId, setTaskId] = useState<any>(null)
 
-
-    // useEffect(() => {
-    //     const todolistId = '461d0482-c906-4804-a69e-a91020637cae'
-    //     const taskId = '04d8cb75-4eb3-4f9c-bd5d-8135ca41ff7e'
-    //
-    //     todolistAPI.deleteTodolistTask(todolistId, taskId)
-    //         .then(res => {
-    //             setState(res.data)
-    //         })
-    // }, [])
-
     const onChangeTodolistIdHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTodolistId(e.currentTarget.value)
     }
@@ -249,9 +186,6 @@ export const DeleteTodolistTask = () => {
     }
 
     const deleteTaskHandler = () => {
-        // const todolistId = '461d0482-c906-4804-a69e-a91020637cae'
-        // const taskId = '04d8cb75-4eb3-4f9c-bd5d-8135ca41ff7e'
-
         todolistAPI.deleteTodolistTask(todolistId, taskId)
             .then(res => {
                 setState(res.data)
@@ -299,18 +233,6 @@ export const UpdateTodolistTask = () => {
                 setState(res.data)
             })
     }
-
-    // useEffect(() => {
-    //     const todolistId = '461d0482-c906-4804-a69e-a91020637cae'
-    //     const taskId = '82a74f7b-3e0d-473b-80c7-b665823f8a4c'
-    //     const title = 'FRONTEND'
-    //
-    //     todolistAPI.updateTodolistTask(todolistId, taskId, title)
-    //         .then(res => {
-    //             setState(res.data)
-    //         })
-    //
-    // }, [])
 
     return <div>{JSON.stringify(state)}
         <div>
