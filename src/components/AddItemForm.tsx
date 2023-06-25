@@ -43,7 +43,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                        helperText={error}
             />
             <IconButton onClick={addTaskHandler} color={'primary'} >
-                <ControlPoint/>!
+                <ControlPoint/>
             </IconButton>
             {/*<Button onClick={addTaskHandler} variant={'contained'}>+</Button>*/}
         </div>
