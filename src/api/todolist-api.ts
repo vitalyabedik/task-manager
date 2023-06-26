@@ -33,18 +33,17 @@ export const todolistAPI = {
     },
 }
 
-type TaskType = {
+export type TaskType = {
     description: string
     title: string
-    completed: boolean
-    status: number
-    priority: number
-    startDate: Date
-    deadline: Date
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
     id: string
     todoListId: string
     order: number
-    addedDate: Date
+    addedDate: string
 }
 
 type TaskResponseType<T = {}> = {
@@ -53,10 +52,10 @@ type TaskResponseType<T = {}> = {
     error: string
 }
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     'title': string
-    'addedDate': Date
+    'addedDate': string
     'order': number
 }
 
@@ -67,44 +66,20 @@ type TodolistResponseType<T = {}> = {
     data: T
 }
 
-// type CreateTodolistResponseType = {
-//     resultCode: number
-//     messages: string[]
-//     fieldsErrors: string[]
-//     data: {
-//         item: TodolistType
-//     }
-// }
-//
-// type DeleteTodolistResponseType = {
-//     resultCode: number
-//     messages: string[]
-//     fieldsErrors: string[]
-//     data: {}
-// }
-//
-// type UpdateTodolistResponseType = {
-//     resultCode: number
-//     messages: string[]
-//     fieldsErrors: string[]
-//     data: {}
-// }
-
-
 
 // ================ LATER ===========
 
-// export enum TaskStatuses {
-//     New = 0,
-//     InProgress = 1,
-//     Completed = 2,
-//     Draft = 3,
-// }
-//
-// export enum TaskPriorities {
-//     Low = 0,
-//     Middle = 1,
-//     Hi = 2,
-//     Urgently = 3,
-//     Later = 4,
-// }
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3,
+}
+
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4,
+}

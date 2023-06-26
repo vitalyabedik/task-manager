@@ -1,22 +1,21 @@
-import {FilterType, TasksStateType, TodolistType} from '../App';
+import {TasksStateType} from '../App';
 import {v1} from 'uuid';
+
 import {AddTodolistACType, RemoveTodolistACType, todolistId1, todolistId2} from './todolists-reducer';
+import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
 
 const initialState: TasksStateType = {
     [todolistId1]: [
-        {id: v1(), title: 'CSS&HTML', isDone: true},
-        {id: v1(), title: 'JS', isDone: true},
-        {id: v1(), title: 'React', isDone: false},
-        {id: v1(), title: 'Redux', isDone: false},
-        {id: v1(), title: 'GraphQL', isDone: false}
+        {
+            id: v1(), title: 'CSS&HTML', status: TaskStatuses.Completed, priority: TaskPriorities.Low,
+            startDate: '', deadline: '', todoListId: todolistId1, order: 0, addedDate: '', description: ''
+        }
     ],
     [todolistId2]: [
-        {id: v1(), title: 'Book', isDone: true},
-        {id: v1(), title: 'Milk', isDone: true},
-        {id: v1(), title: 'Bread', isDone: false},
-        {id: v1(), title: 'Mango', isDone: false},
-        {id: v1(), title: 'Bananas', isDone: false},
-        {id: v1(), title: 'Peaches', isDone: false},
+        {
+            id: v1(), title: 'CSS&HTML', status: TaskStatuses.Completed, priority: TaskPriorities.Low,
+            startDate: '', deadline: '', todoListId: todolistId2, order: 0, addedDate: '', description: ''
+        }
     ],
 }
 
@@ -33,7 +32,8 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
             const newTask = {
                 id: v1(),
                 title: action.payload.title,
-                isDone: false
+                status: TaskStatuses.Completed, priority: TaskPriorities.Low,
+                startDate: '', deadline: '', todoListId: todolistId2, order: 0, addedDate: '', description: ''
             }
             return {
                 ...state,
@@ -45,7 +45,7 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
                 ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId]
                     .map(t => t.id === action.payload.taskId
-                        ? {...t, isDone: action.payload.isDone}
+                        ? {...t, status: action.payload.status}
                         : t
                     )
             }
@@ -108,13 +108,13 @@ export const addTaskAC = (todolistId: string, title: string) => {
 }
 
 type ChangeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>
-export const changeTaskStatusAC = (todolistId: string, taskId: string, isDone: boolean) => {
+export const changeTaskStatusAC = (todolistId: string, taskId: string, status: TaskStatuses) => {
     return {
         type: 'CHANGE-TASK-STATUS',
         payload: {
             todolistId,
             taskId,
-            isDone
+            status
         }
     } as const
 }
