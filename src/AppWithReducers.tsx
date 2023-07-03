@@ -21,7 +21,7 @@ import {
     removeTodolistAC,
     todolistsReducer
 } from './state/todolists-reducer';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
+import {addTaskAC, updateTaskAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
 import {TaskPriorities, TaskStatuses, TaskType} from './api/todolist-api';
 
 export type TasksStateType = {
@@ -55,7 +55,7 @@ export const AppWithReducers = () => {
     })
 
     const addTodolist = (title: string) => {
-        const action = addTodolistAC(title)
+        const action = addTodolistAC({id: v1(), title, addedDate: '', order: 0})
         dispatchToTodolists(action)
         dispatchToTasks(action)
     }
@@ -77,15 +77,19 @@ export const AppWithReducers = () => {
     }
 
     const addTask = (todolistId: string, title: string) => {
-        dispatchToTasks(addTaskAC(todolistId, title))
+        dispatchToTasks(addTaskAC(
+            {
+                id: '1', title, status: TaskStatuses.New, priority: TaskPriorities.Low,
+                startDate: '', deadline: '', todoListId: todolistId, order: 0, addedDate: '', description: ''
+            }))
     }
 
     const changeTaskStatus = (todolistId: string, taskId: string, status: TaskStatuses) => {
-        dispatchToTasks(changeTaskStatusAC(todolistId, taskId, status))
+        dispatchToTasks(updateTaskAC(todolistId, taskId, {status}))
     }
 
     const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
-        dispatchToTasks(changeTaskTitleAC(todolistId, taskId, title))
+        dispatchToTasks(updateTaskAC(todolistId, taskId, {title}))
     }
 
     return (

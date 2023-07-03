@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 
 import styles from './Todolist.module.css'
 
@@ -10,6 +10,8 @@ import Button from '@mui/material/Button';
 import {Task} from './Task';
 import {TaskStatuses, TaskType} from '../api/todolist-api';
 import {FilterValuesType} from '../state/todolists-reducer';
+import {fetchTasksTC} from '../state/tasks-reducer';
+import {useAppDispatch} from '../state/store';
 
 type PropsType = {
     id: string
@@ -26,6 +28,12 @@ type PropsType = {
 }
 
 export const Todolist = React.memo((props: PropsType) => {
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(fetchTasksTC(props.id))
+    }, [])
+
     const removeTodolistHandler = useCallback(() => {
         props.removeTodolist(props.id)
     }, [props.removeTodolist, props.id])
@@ -38,11 +46,11 @@ export const Todolist = React.memo((props: PropsType) => {
     }, [props.changeFilter, props.id])
 
     const onClickActiveHandler = useCallback(() => {
-        props.changeFilter(props.id,'active')
+        props.changeFilter(props.id, 'active')
     }, [props.changeFilter, props.id])
 
     const onClickCompletedHandler = useCallback(() => {
-        props.changeFilter(props.id,'completed')
+        props.changeFilter(props.id, 'completed')
     }, [props.changeFilter, props.id])
 
     const addTask = useCallback((title: string) => {
@@ -67,10 +75,10 @@ export const Todolist = React.memo((props: PropsType) => {
             <h3>
                 <EditableSpan title={props.title} onChange={changeTodolistTitleHandler}/>
                 <IconButton onClick={removeTodolistHandler}>
-                    <Delete />
+                    <Delete/>
                 </IconButton>
             </h3>
-           <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask}/>
             <div>
                 {
                     filteredTasks.map(task => {
@@ -89,9 +97,12 @@ export const Todolist = React.memo((props: PropsType) => {
                 }
             </div>
             <div>
-                <Button variant={props.filter === 'all' ? 'contained' : 'text'} className={onAllFilterBtnClasses} onClick={onClickAllHandler}>All</Button>
-                <Button variant={props.filter === 'active' ? 'contained' : 'text'} color={'primary'} className={onActiveFilterBtnClasses} onClick={onClickActiveHandler}>Active</Button>
-                <Button variant={props.filter === 'completed' ? 'contained' : 'text'} color={'secondary'} className={onCompletedFilterBtnClasses} onClick={onClickCompletedHandler}>Completed</Button>
+                <Button variant={props.filter === 'all' ? 'contained' : 'text'} className={onAllFilterBtnClasses}
+                        onClick={onClickAllHandler}>All</Button>
+                <Button variant={props.filter === 'active' ? 'contained' : 'text'} color={'primary'}
+                        className={onActiveFilterBtnClasses} onClick={onClickActiveHandler}>Active</Button>
+                <Button variant={props.filter === 'completed' ? 'contained' : 'text'} color={'secondary'}
+                        className={onCompletedFilterBtnClasses} onClick={onClickCompletedHandler}>Completed</Button>
             </div>
         </div>
     )
