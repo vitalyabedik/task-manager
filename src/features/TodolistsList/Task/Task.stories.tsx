@@ -1,14 +1,14 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {action} from '@storybook/addon-actions'
 
-import {Task} from './Task';
-import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
-import {todolistId1} from '../state/todolists-reducer';
+import {Task} from './index';
+import {TaskPriorities, TaskStatuses} from '../../../api/todolist-api';
+
 
 // More on how to set up stories at:
 // https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof Task> = {
-    title: 'TODOLISTS/Task',
+    title: 'TODOLISTS/Index',
     component: Task,
     // This component will have an automatically generated Autodocs entry:
     // https://storybook.js.org/docs/react/writing-docs/autodocs
@@ -18,12 +18,12 @@ const meta: Meta<typeof Task> = {
     args: {
         task: {
             id: '12wsdewfijdei', title: 'JS', status: TaskStatuses.New, priority: TaskPriorities.Low,
-            startDate: '', deadline: '', todoListId: todolistId1, order: 0, addedDate: '', description: ''
+            startDate: '', deadline: '', todoListId: 'qweewtrrddfgdfg', order: 0, addedDate: '', description: ''
         },
         todolistId: 'fgdosrg8rgjuh',
-        changeTaskStatus: action('Status changed inside Task'),
-        changeTaskTitle: action('Title changed inside Task'),
-        removeTask: action('Remove Button clicked changed inside Task')
+        changeTaskStatus: action('Status changed inside Index'),
+        changeTaskTitle: action('Title changed inside Index'),
+        removeTask: action('Remove Button clicked changed inside Index')
     }
 };
 
@@ -37,7 +37,7 @@ export const TaskIsDoneStory: Story = {
     args: {
         task: {
             id: '12wsdewfijdei2343', title: 'CSS', status: TaskStatuses.Completed, priority: TaskPriorities.Low,
-            startDate: '', deadline: '', todoListId: todolistId1, order: 0, addedDate: '', description: ''
+            startDate: '', deadline: '', todoListId: 'qweewtrrddfgdfg', order: 0, addedDate: '', description: ''
         },
     },
 };

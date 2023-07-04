@@ -1,7 +1,7 @@
-import {addTodolistAC, removeTodolistAC, TodolistDomainType, todolistId1, todolistsReducer} from './todolists-reducer';
-import {TasksStateType} from '../App';
-import {tasksReducer} from './tasks-reducer';
-import {TaskPriorities, TaskStatuses, TodolistType} from '../api/todolist-api';
+import {addTodolistAC, removeTodolistAC, TodolistDomainType, todolistsReducer} from './todolists-reducer';
+import {TasksStateType} from '../../trash/App';
+import {tasksReducer} from './Task/tasks-reducer';
+import {TaskPriorities, TaskStatuses, TodolistType} from '../../api/todolist-api';
 
 test('ids should be equals', () => {
     const startTasksState: TasksStateType = {}
@@ -23,8 +23,8 @@ test('ids should be equals', () => {
     const idFromTasks = keys[0]
     const idFromTodolists = endTodolistsState[0].id
 
-    expect(idFromTasks).toBe(action.payload.todolist.id)
-    expect(idFromTodolists).toBe(action.payload.todolist.id)
+    expect(idFromTasks).toBe(action.todolist.id)
+    expect(idFromTodolists).toBe(action.todolist.id)
 })
 
 test('property with todolistId should be deleted', () => {
