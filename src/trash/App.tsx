@@ -15,11 +15,12 @@ import Paper from '@mui/material/Paper';
 
 import {Todolist} from '../features/TodolistsList/Todolist';
 import {AddItemForm} from '../components/AddItemForm/AddItemForm';
-import {TaskPriorities, TaskStatuses, TaskType} from '../api/todolist-api';
+import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
 import {FilterValuesType, TodolistDomainType} from '../features/TodolistsList/todolists-reducer';
+import {TaskDomainType} from '../features/TodolistsList/Task/tasks-reducer';
 
 export type TasksStateType = {
-    [key: string]: TaskType[]
+    [key: string]: TaskDomainType[]
 }
 
 const App = () => {
@@ -27,20 +28,20 @@ const App = () => {
     const todolistId2 = v1()
 
     const [todolists, setTodolists] = useState<TodolistDomainType[]>([
-        {id: todolistId1, title: 'What to learn', filter: 'active', addedDate: '', order: 0},
-        {id: todolistId2, title: 'What to buy', filter: 'completed', addedDate: '', order: 0},
+        {id: todolistId1, title: 'What to learn', filter: 'active', addedDate: '', order: 0, entityStatus: 'idle'},
+        {id: todolistId2, title: 'What to buy', filter: 'completed', addedDate: '', order: 0, entityStatus: 'idle'},
     ])
 
     const [tasks, setTasks] = useState<TasksStateType>({
         [todolistId1]: [
             {
-                id: v1(), title: 'CSS&HTML', status: TaskStatuses.Completed, priority: TaskPriorities.Low,
+                id: v1(), title: 'CSS&HTML', status: TaskStatuses.Completed, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: todolistId1, order: 0, addedDate: '', description: ''
             },
         ],
         [todolistId2]: [
             {
-                id: v1(), title: 'React', status: TaskStatuses.Completed, priority: TaskPriorities.Low,
+                id: v1(), title: 'React', status: TaskStatuses.Completed, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: todolistId2, order: 0, addedDate: '', description: ''
             },
         ],
@@ -52,7 +53,8 @@ const App = () => {
             filter: 'all',
             title: title,
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus: 'idle'
         }
 
         setTodolists([todolist, ...todolists])
@@ -81,7 +83,7 @@ const App = () => {
 
     }
     const addTask = (todolistId: string, title: string) => {
-        const newTask = {
+        const newTask: TaskDomainType = {
             id: v1(),
             title,
             status: TaskStatuses.Completed,
@@ -91,7 +93,8 @@ const App = () => {
             todoListId: todolistId,
             order: 0,
             addedDate: '',
-            description: ''
+            description: '',
+            entityStatus: 'idle'
         }
         setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
 
@@ -171,6 +174,8 @@ const App = () => {
                                                   id={todolist.id}
                                                   title={todolist.title}
                                                   tasks={filteredTasks}
+                                                  filter={todolist.filter}
+                                                  entityStatus={todolist.entityStatus}
                                                   removeTodolist={removeTodolist}
                                                   changeTodolistTitle={changeTodolistTitle}
                                                   removeTask={removeTask}
@@ -178,7 +183,6 @@ const App = () => {
                                                   addTask={addTask}
                                                   changeTaskStatus={changeTaskStatus}
                                                   changeTaskTitle={changeTaskTitle}
-                                                  filter={todolist.filter}
                                         />
                                     </Paper>
                                 </Grid>

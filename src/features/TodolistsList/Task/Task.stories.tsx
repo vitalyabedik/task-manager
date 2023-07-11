@@ -17,7 +17,7 @@ const meta: Meta<typeof Task> = {
     // https://storybook.js.org/docs/react/api/argtypes
     args: {
         task: {
-            id: '12wsdewfijdei', title: 'JS', status: TaskStatuses.New, priority: TaskPriorities.Low,
+            id: '12wsdewfijdei', title: 'JS', status: TaskStatuses.New, priority: TaskPriorities.Low, entityStatus: 'idle',
             startDate: '', deadline: '', todoListId: 'qweewtrrddfgdfg', order: 0, addedDate: '', description: ''
         },
         todolistId: 'fgdosrg8rgjuh',
@@ -36,7 +36,7 @@ export const TaskIsDoneStory: Story = {
     // More on args: https://storybook.js.org/docs/react/writing-stories/args
     args: {
         task: {
-            id: '12wsdewfijdei2343', title: 'CSS', status: TaskStatuses.Completed, priority: TaskPriorities.Low,
+            id: '12wsdewfijdei2343', title: 'CSS', status: TaskStatuses.Completed, priority: TaskPriorities.Low, entityStatus: 'idle',
             startDate: '', deadline: '', todoListId: 'qweewtrrddfgdfg', order: 0, addedDate: '', description: ''
         },
     },

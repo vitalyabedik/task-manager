@@ -9,29 +9,29 @@ beforeEach(() => {
     startState = {
         'todolistId1': [
             {
-                id: '1', title: 'CSS', status: TaskStatuses.New, priority: TaskPriorities.Low,
+                id: '1', title: 'CSS', status: TaskStatuses.New, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: 'todolistId1', order: 0, addedDate: '', description: ''
             },
             {
-                id: '2', title: 'JS', status: TaskStatuses.Completed, priority: TaskPriorities.Low,
+                id: '2', title: 'JS', status: TaskStatuses.Completed, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: 'todolistId1', order: 0, addedDate: '', description: ''
             },
             {
-                id: '3', title: 'React', status: TaskStatuses.New, priority: TaskPriorities.Low,
+                id: '3', title: 'React', status: TaskStatuses.New, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: 'todolistId1', order: 0, addedDate: '', description: ''
             }
         ],
         'todolistId2': [
             {
-                id: '1', title: 'bread', status: TaskStatuses.New, priority: TaskPriorities.Low,
+                id: '1', title: 'bread', status: TaskStatuses.New, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: 'todolistId2', order: 0, addedDate: '', description: ''
             },
             {
-                id: '2', title: 'milk', status: TaskStatuses.Completed, priority: TaskPriorities.Low,
+                id: '2', title: 'milk', status: TaskStatuses.Completed, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: 'todolistId2', order: 0, addedDate: '', description: ''
             },
             {
-                id: '3', title: 'tea', status: TaskStatuses.New, priority: TaskPriorities.Low,
+                id: '3', title: 'tea', status: TaskStatuses.New, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: 'todolistId2', order: 0, addedDate: '', description: ''
             }
         ]
@@ -46,21 +46,21 @@ test('correct task should be deleted from correct array', () => {
     expect(endState).toEqual({
         'todolistId1': [
             {
-                id: '1', title: 'CSS', status: TaskStatuses.New, priority: TaskPriorities.Low,
+                id: '1', title: 'CSS', status: TaskStatuses.New, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: 'todolistId1', order: 0, addedDate: '', description: ''
             },
             {
-                id: '2', title: 'JS', status: TaskStatuses.Completed, priority: TaskPriorities.Low,
+                id: '2', title: 'JS', status: TaskStatuses.Completed, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: 'todolistId1', order: 0, addedDate: '', description: ''
             },
             {
-                id: '3', title: 'React', status: TaskStatuses.New, priority: TaskPriorities.Low,
+                id: '3', title: 'React', status: TaskStatuses.New, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: 'todolistId1', order: 0, addedDate: '', description: ''
             }
         ],
         'todolistId2': [
             {
-                id: '1', title: 'bread', status: TaskStatuses.New, priority: TaskPriorities.Low,
+                id: '1', title: 'bread', status: TaskStatuses.New, priority: TaskPriorities.Low, entityStatus: 'idle',
                 startDate: '', deadline: '', todoListId: 'todolistId2', order: 0, addedDate: '', description: ''
             },
             {

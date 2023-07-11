@@ -5,6 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import ControlPoint from '@mui/icons-material/ControlPoint';
 
 type AddItemFormPropsType = {
+    disabled?: boolean
     addItem: (title: string) => void
 }
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
@@ -41,7 +42,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                        error={!!error}
                        helperText={error}
             />
-            <IconButton onClick={addTaskHandler} color={'primary'} >
+            <IconButton disabled={props.disabled} onClick={addTaskHandler} color={'primary'} >
                 <ControlPoint/>
             </IconButton>
             {/*<Button onClick={addTaskHandler} variant={'contained'}>+</Button>*/}

@@ -8,23 +8,25 @@ import Button from '@mui/material/Button';
 import {AddItemForm} from '../../../components/AddItemForm/AddItemForm';
 import {EditableSpan} from '../../../components/EditableSpan/EditableSpan';
 import {Task} from '../Task';
-import {TaskStatuses, TaskType} from '../../../api/todolist-api';
+import {TaskStatuses} from '../../../api/todolist-api';
 import {FilterValuesType} from '../todolists-reducer';
-import {fetchTasksTC} from '../Task/tasks-reducer';
+import {fetchTasksTC, TaskDomainType} from '../Task/tasks-reducer';
 import {useAppDispatch} from '../../../app/store';
+import {RequestStatusType} from '../../../app/app-reducer';
 
 type PropsType = {
     id: string
     title: string
-    tasks: Array<TaskType>
+    tasks: Array<TaskDomainType>
+    filter: FilterValuesType
+    entityStatus: RequestStatusType
     removeTodolist: (todolistId: string) => void
     changeTodolistTitle: (todolistId: string, title: string) => void
-    removeTask: (todolistId: string, id: string) => void
-    addTask: (todolistId: string, title: string) => void
     changeFilter: (todolistId: string, value: FilterValuesType) => void
+    addTask: (todolistId: string, title: string) => void
+    removeTask: (todolistId: string, id: string) => void
     changeTaskStatus: (todolistId: string, taskId: string, status: TaskStatuses) => void
     changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
-    filter: FilterValuesType
 }
 
 export const Todolist = React.memo((props: PropsType) => {
@@ -73,12 +75,12 @@ export const Todolist = React.memo((props: PropsType) => {
         <div>
 
             <h3>
-                <EditableSpan title={props.title} onChange={changeTodolistTitleHandler}/>
-                <IconButton onClick={removeTodolistHandler}>
+                <EditableSpan disabled={props.entityStatus === 'loading'} title={props.title} onChange={changeTodolistTitleHandler}/>
+                <IconButton disabled={props.entityStatus === 'loading'} onClick={removeTodolistHandler}>
                     <Delete/>
                 </IconButton>
             </h3>
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm disabled={props.entityStatus === 'loading'} addItem={addTask}/>
             <div>
                 {
                     filteredTasks.map(task => {
