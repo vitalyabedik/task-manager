@@ -10,14 +10,16 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
-type FormikErrorType = {
-    email?: string
-    password?: string
-    rememberMe?: boolean
-}
+import {loginTC} from './auth-reducer';
+import {useAppDispatch, useAppSelector} from '../../app/store';
+import {Navigate} from 'react-router-dom';
+import {ROUTES} from '../../configs/routes';
 
 export const Login = () => {
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+
+    const dispatch = useAppDispatch()
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -31,10 +33,13 @@ export const Login = () => {
                 .required('Required'),
         }),
         onSubmit: values => {
-            alert(JSON.stringify(values));
+            // alert(JSON.stringify(values));
+            dispatch(loginTC(values))
             formik.resetForm()
         },
     })
+
+    if (isLoggedIn) return <Navigate to={ROUTES.MAIN}/>
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
