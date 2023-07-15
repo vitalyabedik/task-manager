@@ -15,7 +15,7 @@ import {
     RemoveTodolistACType,
     SetTodolistsACType,
 } from '../todolists-reducer';
-import {TasksStateType} from '../../../app';
+import {TasksStateType} from '../../../app/App';
 import {RequestStatusType, setAppStatusAC} from '../../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../../utils/error-utils';
 

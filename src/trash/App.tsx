@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
-import {Todolist} from '../features/TodolistsList/Todolist';
+import {Todolist} from '../features/TodolistsList/Todolist/Todolist';
 import {AddItemForm} from '../components/AddItemForm/AddItemForm';
 import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
 import {FilterValuesType, TodolistDomainType} from '../features/TodolistsList/todolists-reducer';

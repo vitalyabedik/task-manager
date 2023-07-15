@@ -15,8 +15,8 @@ import {
 import {addTaskTC, removeTaskTC, updateTaskTC} from './Task/tasks-reducer';
 import {TaskStatuses} from '../../api/todolist-api';
 import {AddItemForm} from '../../components/AddItemForm/AddItemForm';
-import {Todolist} from './Todolist';
-import {TasksStateType} from '../../app';
+import {Todolist} from './Todolist/Todolist';
+import {TasksStateType} from '../../app/App';
 
 export const TodolistsList = () => {
     const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)

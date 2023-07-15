@@ -13,7 +13,7 @@ import {LinearProgress} from '@mui/material';
 
 import {useAppSelector} from './store';
 import {FilterValuesType} from '../features/TodolistsList/todolists-reducer';
-import {TodolistsList} from '../features/TodolistsList';
+import {TodolistsList} from '../features/TodolistsList/TodolistsList';
 import {RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
 import {TaskDomainType} from '../features/TodolistsList/Task/tasks-reducer';
