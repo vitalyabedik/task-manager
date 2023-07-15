@@ -1,4 +1,5 @@
 import React from 'react';
+import {Route, Routes, Navigate} from 'react-router-dom';
 
 import './App.css';
 
@@ -17,6 +18,10 @@ import {TodolistsList} from '../features/TodolistsList/TodolistsList';
 import {RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
 import {TaskDomainType} from '../features/TodolistsList/Task/tasks-reducer';
+import {ROUTES} from '../configs/routes';
+import {Login} from '../features/Login';
+import {NotFound} from '../components/NotFound';
+
 
 export type TodolistType = {
     id: string
@@ -53,7 +58,12 @@ export const App = () => {
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
-                <TodolistsList/>
+                <Routes>
+                    <Route path={ROUTES.MAIN} element={<TodolistsList/>}/>
+                    <Route path={ROUTES.LOGIN} element={<Login/>}/>
+                    <Route path={ROUTES.NOTFOUND} element={<NotFound/>}/>
+                    <Route path={'*'} element={<Navigate to={ROUTES.NOTFOUND}/>}/>
+                </Routes>
             </Container>
         </div>
     );
