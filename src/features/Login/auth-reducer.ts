@@ -6,7 +6,8 @@ import {ResultCode} from '../../api/todolist-api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 
 const initialState = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    isInitialized: false
 }
 type InitialStateType = typeof initialState
 
@@ -14,6 +15,8 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
     switch (action.type) {
         case 'login/SET-IS-LOGGED-IN':
             return {...state, isLoggedIn: action.value}
+        case 'login/SET-IS-INITIALIZED':
+            return {...state, isInitialized: action.value}
         default:
             return state
     }
@@ -22,6 +25,9 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 // action creators
 export const setIsLoggedInAC = (value: boolean) =>
     ({type: 'login/SET-IS-LOGGED-IN', value} as const)
+
+export const setIsInitializedAC = (value: boolean) =>
+    ({type: 'login/SET-IS-INITIALIZED', value} as const)
 
 // thunks creators
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionsType>) => {
@@ -43,7 +49,7 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionsTyp
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     authAPI.me().then(res => {
-        debugger
+        // debugger
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true));
         } else {
@@ -53,9 +59,29 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
         .catch((error) => {
             handleServerNetworkError(dispatch, error.message)
         })
+        .finally(() => {
+            dispatch(setIsInitializedAC(true))
+        })
+}
+
+export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setAppStatusAC('loading'))
+    authAPI.logout()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(false))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError(dispatch, res.data)
+            }
+        })
+        .catch((error) => {
+            handleServerNetworkError(dispatch,error)
+        })
 }
 
 // types
 type ActionsType = ReturnType<typeof setIsLoggedInAC>
+    | ReturnType<typeof setIsInitializedAC>
     | SetAppErrorACType
     | SetAppStatusACType

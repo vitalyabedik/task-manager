@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Route, Routes, Navigate} from 'react-router-dom';
 
 import './App.css';
@@ -10,10 +10,9 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import {LinearProgress} from '@mui/material';
+import {CircularProgress, LinearProgress} from '@mui/material';
 
-import {useAppSelector} from './store';
-import {FilterValuesType} from '../features/TodolistsList/todolists-reducer';
+import {useAppDispatch, useAppSelector} from './store';
 import {TodolistsList} from '../features/TodolistsList/TodolistsList';
 import {RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
@@ -21,13 +20,8 @@ import {TaskDomainType} from '../features/TodolistsList/Task/tasks-reducer';
 import {ROUTES} from '../configs/routes';
 import {Login} from '../features/Login';
 import {NotFound} from '../components/NotFound';
-
-
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
+import {initializeAppTC, logoutTC} from '../features/Login/auth-reducer';
+import {Logout} from '@mui/icons-material';
 
 export type TasksStateType = {
     [key: string]: TaskDomainType[]
@@ -35,6 +29,26 @@ export type TasksStateType = {
 
 export const App = () => {
     const status = useAppSelector<RequestStatusType>(state => state.app.status)
+    const isInitialized = useAppSelector<boolean>(state => state.auth.isInitialized)
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+
+    const dispatch = useAppDispatch()
+
+    const onLogoutHandler = () => {
+        dispatch(logoutTC())
+    }
+
+    useEffect(() => {
+        // debugger
+        dispatch(initializeAppTC())
+    }, [])
+
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
 
     return (
         <div className="App">
@@ -53,7 +67,9 @@ export const App = () => {
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         News
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {isLoggedIn && <Button onClick={onLogoutHandler} color="inherit">
+                        <Logout/>
+                    </Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>
