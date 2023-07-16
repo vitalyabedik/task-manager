@@ -4,7 +4,7 @@ import {applyMiddleware, combineReducers, legacy_createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk'
 import {v1} from 'uuid';
 
-import {AppRootStateType} from '../../app/store';
+import {RootStateType} from '../../app/store';
 import {tasksReducer} from '../../features/TodolistsList/Task/tasks-reducer';
 import {todolistsReducer} from '../../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../../api/todolist-api';
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
     app: appReducer
 })
 
-const initialGlobalState: AppRootStateType = {
+const initialGlobalState: RootStateType = {
     todolists: [
         {id: 'todolistId1', title: 'What to learn', filter: 'all', addedDate: '', order: 0, entityStatus: 'idle'},
         {id: 'todolistId2', title: 'What to buy', filter: 'all', addedDate: '', order: 0, entityStatus: 'idle'}

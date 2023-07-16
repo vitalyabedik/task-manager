@@ -4,7 +4,7 @@ import React, {useCallback, useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
-import {AppRootStateType, useAppDispatch, useAppSelector} from '../../app/store';
+
 import {
     addTodolistTC, changeTodolistFilterAC,
     changeTodolistTitleTC,
@@ -19,10 +19,13 @@ import {Todolist} from './Todolist/Todolist';
 import {TasksStateType} from '../../app/App';
 import {Navigate} from 'react-router-dom';
 import {ROUTES} from '../../configs/routes';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {RootStateType} from '../../app/store';
+
 
 export const TodolistsList = () => {
-    const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
-    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const todolists = useSelector<RootStateType, TodolistDomainType[]>(state => state.todolists)
+    const tasks = useSelector<RootStateType, TasksStateType>(state => state.tasks)
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
     const dispatch = useAppDispatch()

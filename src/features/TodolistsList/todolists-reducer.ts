@@ -4,6 +4,8 @@ import {ErrorType, ResultCode, todolistAPI, TodolistType} from '../../api/todoli
 import {RequestStatusType, setAppStatusAC} from '../../app/app-reducer';
 import {AxiosError} from 'axios';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
+import {fetchTasksTC} from './Task/tasks-reducer';
+import {AppDispatch} from '../../app/store';
 
 const initialState: TodolistDomainType[] = []
 
@@ -21,6 +23,8 @@ export const todolistsReducer = (state = initialState, action: TodolistsActionsT
             return state.map(t => t.id === action.todolistId ? {...t, filter: action.newFilter} : t)
         case 'CHANGE-TODOLIST-ENTITY-STATUS':
             return state.map(t => t.id === action.todolistId ? {...t, entityStatus: action.status} : t)
+        case 'CLEAR-TODOLISTS-DATA':
+            return []
         default:
             return state
     }
@@ -45,6 +49,8 @@ export const changeTodolistFilterAC = (todolistId: string, newFilter: FilterValu
 
 export const setTodolistsAC = (todolists: TodolistType[]) => ({type: 'SET-TODOLISTS', todolists} as const)
 
+export const clearTodolistsDataAC = () => ({type: 'CLEAR-TODOLISTS-DATA'} as const)
+
 export const changeTodolistEntityStatusAC = (todolistId: string, status: RequestStatusType) => ({
     type: 'CHANGE-TODOLIST-ENTITY-STATUS',
     todolistId,
@@ -52,12 +58,18 @@ export const changeTodolistEntityStatusAC = (todolistId: string, status: Request
 } as const)
 
 // thunks creators
-export const fetchTodolistsTC = () => (dispatch: Dispatch) => {
+export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
     dispatch(setAppStatusAC('loading'))
     todolistAPI.getTodolists()
         .then(res => {
             dispatch(setTodolistsAC(res.data))
             dispatch(setAppStatusAC('succeeded'))
+            return res.data
+        })
+        .then((todos) => {
+            todos.forEach((tl) => {
+                dispatch(fetchTasksTC(tl.id))
+            })
         })
         .catch((e: AxiosError<ErrorType>) => {
             const error = e.response ? e.response?.data.messages[0].message : e.message
@@ -123,6 +135,7 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) => (dis
 export type RemoveTodolistACType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistACType = ReturnType<typeof addTodolistAC>
 export type SetTodolistsACType = ReturnType<typeof setTodolistsAC>
+export type ClearTodolistsDataACType = ReturnType<typeof clearTodolistsDataAC>
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -134,6 +147,7 @@ export type TodolistDomainType = TodolistType & {
 export type TodolistsActionsType = RemoveTodolistACType
     | AddTodolistACType
     | SetTodolistsACType
+    | ClearTodolistsDataACType
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof changeTodolistFilterAC>
     | ReturnType<typeof changeTodolistEntityStatusAC>

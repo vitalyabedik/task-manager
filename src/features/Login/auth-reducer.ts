@@ -4,6 +4,7 @@ import {SetAppErrorACType, setAppStatusAC, SetAppStatusACType} from '../../app/a
 import {authAPI, LoginParamsType} from '../../api/auth-api';
 import {ResultCode} from '../../api/todolist-api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
+import {clearTodolistsDataAC, ClearTodolistsDataACType} from '../TodolistsList/todolists-reducer';
 
 const initialState = {
     isLoggedIn: false,
@@ -71,6 +72,7 @@ export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC(false))
                 dispatch(setAppStatusAC('succeeded'))
+                dispatch(clearTodolistsDataAC())
             } else {
                 handleServerAppError(dispatch, res.data)
             }
@@ -85,3 +87,4 @@ type ActionsType = ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setIsInitializedAC>
     | SetAppErrorACType
     | SetAppStatusACType
+    | ClearTodolistsDataACType

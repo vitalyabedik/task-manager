@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux';
 import {AxiosError} from 'axios';
 
-import {AppRootStateType} from '../../../app/store';
+import {RootStateType} from '../../../app/store';
 import {
     ErrorType, ResultCode,
     TaskPriorities,
@@ -11,7 +11,7 @@ import {
     UpdateTaskModelType
 } from '../../../api/todolist-api';
 import {
-    AddTodolistACType,
+    AddTodolistACType, ClearTodolistsDataACType,
     RemoveTodolistACType,
     SetTodolistsACType,
 } from '../todolists-reducer';
@@ -70,6 +70,8 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
             const stateCopy = {...state}
             delete stateCopy[action.todolistId]
             return stateCopy
+        case 'CLEAR-TODOLISTS-DATA':
+            return {}
         default:
             return state
     }
@@ -146,7 +148,7 @@ export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispa
 }
 
 export const updateTaskTC = (todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType) => {
-    return (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    return (dispatch: Dispatch, getState: () => RootStateType) => {
         const task = getState().tasks[todolistId].find(t => t.id === taskId)
 
         if (task) {
@@ -189,6 +191,7 @@ export type TasksActionsType = ReturnType<typeof removeTaskAC>
     | AddTodolistACType
     | RemoveTodolistACType
     | SetTodolistsACType
+    | ClearTodolistsDataACType
 
 export type TaskDomainType = TaskType & {
     entityStatus: RequestStatusType

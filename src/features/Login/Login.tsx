@@ -11,9 +11,10 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {loginTC} from './auth-reducer';
-import {useAppDispatch, useAppSelector} from '../../app/store';
+
 import {Navigate} from 'react-router-dom';
 import {ROUTES} from '../../configs/routes';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 
 export const Login = () => {
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)

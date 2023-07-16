@@ -11,8 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import {CircularProgress, LinearProgress} from '@mui/material';
+import {Logout} from '@mui/icons-material';
 
-import {useAppDispatch, useAppSelector} from './store';
 import {TodolistsList} from '../features/TodolistsList/TodolistsList';
 import {RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
@@ -21,7 +21,7 @@ import {ROUTES} from '../configs/routes';
 import {Login} from '../features/Login';
 import {NotFound} from '../components/NotFound';
 import {initializeAppTC, logoutTC} from '../features/Login/auth-reducer';
-import {Logout} from '@mui/icons-material';
+import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 
 export type TasksStateType = {
     [key: string]: TaskDomainType[]

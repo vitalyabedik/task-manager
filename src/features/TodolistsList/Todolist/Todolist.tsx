@@ -10,8 +10,7 @@ import {EditableSpan} from '../../../components/EditableSpan/EditableSpan';
 import {Task} from '../Task/Task';
 import {TaskStatuses} from '../../../api/todolist-api';
 import {FilterValuesType} from '../todolists-reducer';
-import {fetchTasksTC, TaskDomainType} from '../Task/tasks-reducer';
-import {useAppDispatch} from '../../../app/store';
+import {TaskDomainType} from '../Task/tasks-reducer';
 import {RequestStatusType} from '../../../app/app-reducer';
 
 type PropsType = {
@@ -30,11 +29,6 @@ type PropsType = {
 }
 
 export const Todolist = React.memo((props: PropsType) => {
-    const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        dispatch(fetchTasksTC(props.id))
-    }, [])
 
     const removeTodolistHandler = useCallback(() => {
         props.removeTodolist(props.id)
