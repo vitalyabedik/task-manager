@@ -6,26 +6,26 @@ import Paper from '@mui/material/Paper';
 
 
 import {
-    addTodolistTC, changeTodolistFilterAC,
+    addTodolistTC,
     changeTodolistTitleTC,
     fetchTodolistsTC,
     FilterValuesType,
-    removeTodolistTC, TodolistDomainType
+    removeTodolistTC, TodolistDomainType, todolistsActions
 } from './todolists-reducer';
 import {addTaskTC, removeTaskTC, updateTaskTC} from './Task/tasks-reducer';
-import {TaskStatuses} from '../../api/todolist-api';
-import {AddItemForm} from '../../components/AddItemForm/AddItemForm';
+import {TaskStatuses} from 'api/todolist-api';
+import {AddItemForm} from 'components/AddItemForm';
 import {Todolist} from './Todolist/Todolist';
-import {TasksStateType} from '../../app/App';
+import {TasksStateType} from 'app';
 import {Navigate} from 'react-router-dom';
-import {ROUTES} from '../../configs/routes';
-import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
-import {RootStateType} from '../../app/store';
+import {ROUTES} from 'configs/routes';
+import {useAppDispatch, useAppSelector} from 'hooks/hooks';
+import {AppRootStateType} from 'app/store';
 
 
 export const TodolistsList = () => {
-    const todolists = useSelector<RootStateType, TodolistDomainType[]>(state => state.todolists)
-    const tasks = useSelector<RootStateType, TasksStateType>(state => state.tasks)
+    const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
+    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
     const dispatch = useAppDispatch()
@@ -48,7 +48,7 @@ export const TodolistsList = () => {
     }, [])
 
     const changeFilter = useCallback((todolistId: string, filter: FilterValuesType) => {
-        dispatch(changeTodolistFilterAC(todolistId, filter))
+        dispatch(todolistsActions.changeTodolistFilter({todolistId, filter}))
     }, [])
 
     const removeTask = useCallback((todolistId: string, id: string) => {

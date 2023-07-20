@@ -1,17 +1,17 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 
 import styles from './Todolist.module.css'
 import IconButton from '@mui/material/IconButton';
 import Delete from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
-import {AddItemForm} from '../../../components/AddItemForm/AddItemForm';
-import {EditableSpan} from '../../../components/EditableSpan/EditableSpan';
+import {AddItemForm} from 'components/AddItemForm';
+import {EditableSpan} from 'components/EditableSpan';
 import {Task} from '../Task/Task';
-import {TaskStatuses} from '../../../api/todolist-api';
+import {TaskStatuses} from 'api/todolist-api';
 import {FilterValuesType} from '../todolists-reducer';
 import {TaskDomainType} from '../Task/tasks-reducer';
-import {RequestStatusType} from '../../../app/app-reducer';
+import {RequestStatusType} from 'app/app-reducer';
 
 type PropsType = {
     id: string

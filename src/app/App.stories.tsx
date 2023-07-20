@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {ReduxStoreProviderDecorator} from '../stories/decorators/ReduxStoreProviderDecorator';
+import {ReduxStoreProviderDecorator} from 'stories/decorators/ReduxStoreProviderDecorator';
 import {App} from './App';
 
 // More on how to set up stories at:

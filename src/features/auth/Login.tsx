@@ -13,8 +13,8 @@ import Button from '@mui/material/Button';
 import {loginTC} from './auth-reducer';
 
 import {Navigate} from 'react-router-dom';
-import {ROUTES} from '../../configs/routes';
-import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {ROUTES} from 'configs/routes';
+import {useAppDispatch, useAppSelector} from 'hooks/hooks';
 
 export const Login = () => {
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)

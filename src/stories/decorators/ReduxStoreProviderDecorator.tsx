@@ -4,11 +4,11 @@ import {applyMiddleware, combineReducers, legacy_createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk'
 import {v1} from 'uuid';
 
-import {RootStateType} from '../../app/store';
-import {tasksReducer} from '../../features/TodolistsList/Task/tasks-reducer';
-import {todolistsReducer} from '../../features/TodolistsList/todolists-reducer';
-import {TaskPriorities, TaskStatuses} from '../../api/todolist-api';
-import {appReducer} from '../../app/app-reducer';
+import {AppRootStateType} from 'app/store';
+import {tasksReducer} from 'features/TodolistsList/Task/tasks-reducer';
+import {todolistsReducer} from 'features/TodolistsList/todolists-reducer';
+import {TaskPriorities, TaskStatuses} from 'api/todolist-api';
+import {appReducer} from 'app/app-reducer';
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
     app: appReducer
 })
 
-const initialGlobalState: RootStateType = {
+const initialGlobalState: AppRootStateType = {
     todolists: [
         {id: 'todolistId1', title: 'What to learn', filter: 'all', addedDate: '', order: 0, entityStatus: 'idle'},
         {id: 'todolistId2', title: 'What to buy', filter: 'all', addedDate: '', order: 0, entityStatus: 'idle'}
@@ -45,11 +45,11 @@ const initialGlobalState: RootStateType = {
     },
     app: {
         status: 'idle',
-        error: null
+        error: null,
+        isInitialized: false
     },
     auth: {
         isLoggedIn: false,
-        isInitialized: false
     }
 };
 
