@@ -4,51 +4,59 @@ import {ErrorType, ResultCode, todolistAPI, TodolistType} from 'api/todolist-api
 import {appActions, RequestStatusType} from 'app/app-reducer';
 import {AxiosError} from 'axios';
 import {handleServerAppError, handleServerNetworkError} from 'utils/error-utils';
-import {fetchTasksTC} from './Task/tasks-reducer';
+import {fetchTasksTC} from 'features/TodolistsList/tasks-reducer';
 import {AppDispatch} from 'app/store';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {clearTasksAndTodolists} from 'common/actions/common.actions';
 
 const initialState: TodolistDomainType[] = []
 
-const slice =  createSlice({
+const slice = createSlice({
     name: 'todo',
     initialState,
     reducers: {
-        removeTodolist: (state, action: PayloadAction<{todolistId: string}>) => {
+        removeTodolist: (state, action: PayloadAction<{ todolistId: string }>) => {
             // return state.filter(t => t.id !== action.payload.todolistId)
 
             const index = state.findIndex(todo => todo.id === action.payload.todolistId)
             if (index !== -1) state.splice(index, 1)
         },
-        addTodolist: (state, action: PayloadAction<{todolist: TodolistType}>) => {
+        addTodolist: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
             const newTodolist: TodolistDomainType = {...action.payload.todolist, filter: 'all', entityStatus: 'idle'}
             state.unshift(newTodolist)
         },
-        changeTodolistTitle: (state, action: PayloadAction<{todolistId: string, title: string}>) => {
+        changeTodolistTitle: (state, action: PayloadAction<{ todolistId: string, title: string }>) => {
             const todo = state.find(todo => todo.id === action.payload.todolistId)
             if (todo) {
                 todo.title = action.payload.title
             }
         },
-        changeTodolistFilter: (state, action: PayloadAction<{todolistId: string, filter: FilterValuesType}>) => {
+        changeTodolistFilter: (state, action: PayloadAction<{ todolistId: string, filter: FilterValuesType }>) => {
             const todo = state.find(todo => todo.id === action.payload.todolistId)
             if (todo) {
                 todo.filter = action.payload.filter
             }
         },
-        changeTodolistEntityStatus: (state, action: PayloadAction<{todolistId: string, entityStatus: RequestStatusType}>) => {
+        changeTodolistEntityStatus: (state, action: PayloadAction<{ todolistId: string, entityStatus: RequestStatusType }>) => {
             const todo = state.find(todo => todo.id === action.payload.todolistId)
             if (todo) {
                 todo.entityStatus = action.payload.entityStatus
             }
         },
-        setTodolists: (state, action: PayloadAction<{todolists: TodolistType[]}>) => {
+        setTodolists: (state, action: PayloadAction<{ todolists: TodolistType[] }>) => {
             return action.payload.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
         },
-        clearTodolistsData: (state, action: PayloadAction) => {
-            return []
-        },
     },
+    extraReducers: builder => {
+        builder
+            .addCase(clearTasksAndTodolists, () => {
+                return []
+            })
+        // edu example 0
+        // .addCase(clearTasksAndTodolists, (state, action) => {
+        //     return action.payload.todolists
+        // })
+    }
 })
 
 export const todolistsReducer = slice.reducer

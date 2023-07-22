@@ -5,7 +5,7 @@ import {ResultCode} from 'api/todolist-api';
 import {handleServerAppError, handleServerNetworkError} from 'utils/error-utils';
 import {AppThunk} from 'app/store';
 import {appActions} from 'app/app-reducer';
-import {todolistsActions} from 'features/TodolistsList/todolists-reducer';
+import {clearTasksAndTodolists} from 'common/actions/common.actions';
 
 const slice = createSlice({
     name: 'auth',
@@ -13,7 +13,7 @@ const slice = createSlice({
         isLoggedIn: false,
     },
     reducers: {
-        setIsLoggedIn: (state, action: PayloadAction<{isLoggedIn: boolean}>) => {
+        setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
             state.isLoggedIn = action.payload.isLoggedIn
             // return {...state, isLoggedIn: action.value}
         }
@@ -49,13 +49,19 @@ export const logoutTC = (): AppThunk => (dispatch) => {
             if (res.data.resultCode === 0) {
                 dispatch(authActions.setIsLoggedIn({isLoggedIn: false}))
                 dispatch(appActions.setAppStatus({status: 'succeeded'}))
-                dispatch(todolistsActions.clearTodolistsData())
+                dispatch(clearTasksAndTodolists())
+
+                // edu example 0
+                // dispatch(clearTasksAndTodolists({todolists: [], tasks: {}}))
+
+                // edu example 1
+                // dispatch(clearTasksAndTodolists([], {}))
             } else {
                 handleServerAppError(dispatch, res.data)
             }
         })
         .catch((error) => {
-            handleServerNetworkError(dispatch,error)
+            handleServerNetworkError(dispatch, error)
         })
 }
 

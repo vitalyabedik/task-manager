@@ -16,6 +16,7 @@ import {TasksStateType} from 'app';
 import {appActions, RequestStatusType} from 'app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from 'utils/error-utils';
 import {todolistsActions} from 'features/TodolistsList/todolists-reducer';
+import {clearTasksAndTodolists} from 'common/actions/common.actions';
 
 
 const initialState: TasksStateType = {}
@@ -31,6 +32,23 @@ const slice = createSlice({
             const index = tasks.findIndex(t => t.id === action.payload.taskId)
             if (index !== -1) tasks.splice(index, 1)
         },
+        //edu example 2
+        // removeTask: {
+        //     reducer: (state, action: PayloadAction<{ todolistId: string, taskId: string }>) => {
+        //         const tasks = state[action.payload.todolistId]
+        //         const index = tasks.findIndex(t => t.id === action.payload.taskId)
+        //         if (index !== -1) tasks.splice(index, 1)
+        //     },
+        //     // первее отрабатывает prepare
+        //     prepare: (todolistId: string, taskId: string) => {
+        //         return {
+        //             payload: {
+        //                 todolistId,
+        //                 taskId
+        //             }
+        //         }
+        //     }
+        // },
         addTask: (state, action: PayloadAction<{ task: TaskType }>) => {
             const tasks = state[action.payload.task.todoListId]
             tasks.unshift({
@@ -80,9 +98,13 @@ const slice = createSlice({
                     state[tl.id] = []
                 })
             })
-            .addCase(todolistsActions.clearTodolistsData, (state, action) => {
+            .addCase(clearTasksAndTodolists, () => {
                 return {}
             })
+        // edu example 0
+        // .addCase(clearTasksAndTodolists, (state, action) => {
+        //     return action.payload.tasks
+        // })
     }
 })
 
@@ -110,6 +132,8 @@ export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: D
         .then(res => {
             if (res.data.resultCode === ResultCode.SUCCESS) {
                 dispatch(tasksActions.removeTask({todolistId, taskId}))
+
+                // dispatch(tasksActions.removeTask(todolistId, taskId))
                 dispatch(appActions.setAppStatus({status: 'succeeded'}))
             } else {
                 handleServerAppError(dispatch, res.data)
