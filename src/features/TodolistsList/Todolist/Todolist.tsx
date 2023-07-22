@@ -10,7 +10,7 @@ import {EditableSpan} from 'components/EditableSpan';
 import {Task} from '../Task/Task';
 import {TaskStatuses} from 'api/todolist-api';
 import {FilterValuesType} from '../todolists-reducer';
-import {TaskDomainType} from '../Task/tasks-reducer';
+import {TaskDomainType} from 'features/TodolistsList/tasks-reducer';
 import {RequestStatusType} from 'app/app-reducer';
 
 type PropsType = {
@@ -29,7 +29,6 @@ type PropsType = {
 }
 
 export const Todolist = React.memo((props: PropsType) => {
-
     const removeTodolistHandler = useCallback(() => {
         props.removeTodolist(props.id)
     }, [props.removeTodolist, props.id])

@@ -1,32 +1,32 @@
-import {useSelector} from 'react-redux';
 import React, {useCallback, useEffect} from 'react';
+import {Navigate} from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-
 
 import {
     addTodolistTC,
     changeTodolistTitleTC,
     fetchTodolistsTC,
     FilterValuesType,
-    removeTodolistTC, TodolistDomainType, todolistsActions
+    removeTodolistTC,
+    todolistsActions
 } from './todolists-reducer';
-import {addTaskTC, removeTaskTC, updateTaskTC} from './Task/tasks-reducer';
+import {addTaskTC, removeTaskTC, updateTaskTC} from 'features/TodolistsList/tasks-reducer';
 import {TaskStatuses} from 'api/todolist-api';
 import {AddItemForm} from 'components/AddItemForm';
 import {Todolist} from './Todolist/Todolist';
-import {TasksStateType} from 'app';
-import {Navigate} from 'react-router-dom';
 import {ROUTES} from 'configs/routes';
 import {useAppDispatch, useAppSelector} from 'hooks/hooks';
-import {AppRootStateType} from 'app/store';
+import {selectAuthIsLoggedIn} from 'features/auth/auth.selectors';
+import {selectTasks} from 'features/TodolistsList/tasks.selector';
+import {selectTodolists} from 'features/TodolistsList/todolists.selector';
 
 
 export const TodolistsList = () => {
-    const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
-    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
-    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+    const todolists = useAppSelector(selectTodolists)
+    const tasks = useAppSelector(selectTasks)
+    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
 
     const dispatch = useAppDispatch()
 

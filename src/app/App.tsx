@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {useSelector} from 'react-redux';
 import {Route, Routes, Navigate} from 'react-router-dom';
 
 import './App.css';
@@ -17,13 +16,13 @@ import {Logout} from '@mui/icons-material';
 import {TodolistsList} from 'features/TodolistsList';
 import {initializeAppTC, RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from 'components/ErrorSnackbar';
-import {TaskDomainType} from 'features/TodolistsList/Task/tasks-reducer';
+import {TaskDomainType} from 'features/TodolistsList/tasks-reducer';
 import {ROUTES} from 'configs/routes';
 import {Login} from 'features/auth';
 import {NotFound} from 'components/NotFound';
 import {logoutTC} from 'features/auth/auth-reducer';
 import {useAppDispatch, useAppSelector} from 'hooks/hooks';
-import {selectIsLoggedIn} from 'features/auth/auth-selectors';
+import {selectAuthIsLoggedIn} from 'features/auth/auth.selectors';
 
 export type TasksStateType = {
     [key: string]: TaskDomainType[]
@@ -32,7 +31,7 @@ export type TasksStateType = {
 export const App = () => {
     const status = useAppSelector<RequestStatusType>(state => state.app.status)
     const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
-    const isLoggedIn = useSelector(selectIsLoggedIn)
+    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
 
     const dispatch = useAppDispatch()
 

@@ -5,7 +5,7 @@ import thunkMiddleware from 'redux-thunk'
 import {v1} from 'uuid';
 
 import {AppRootStateType} from 'app/store';
-import {tasksReducer} from 'features/TodolistsList/Task/tasks-reducer';
+import {tasksReducer} from 'features/TodolistsList/tasks-reducer';
 import {todolistsReducer} from 'features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from 'api/todolist-api';
 import {appReducer} from 'app/app-reducer';

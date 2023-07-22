@@ -15,9 +15,10 @@ import {loginTC} from './auth-reducer';
 import {Navigate} from 'react-router-dom';
 import {ROUTES} from 'configs/routes';
 import {useAppDispatch, useAppSelector} from 'hooks/hooks';
+import {selectAuthIsLoggedIn} from 'features/auth/auth.selectors';
 
 export const Login = () => {
-    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
 
     const dispatch = useAppDispatch()
 
@@ -61,13 +62,15 @@ export const Login = () => {
                                    margin="normal"
                                    {...formik.getFieldProps('email')}
                         />
-                        {formik.touched.email && formik.errors.email && <div style={{color: 'red'}}>{formik.errors.email}</div>}
+                        {formik.touched.email && formik.errors.email &&
+                            <div style={{color: 'red'}}>{formik.errors.email}</div>}
                         <TextField type="password"
                                    label="Password"
                                    margin="normal"
                                    {...formik.getFieldProps('password')}
                         />
-                        {formik.touched.password && formik.errors.password && <div style={{color: 'red'}}>{formik.errors.password}</div>}
+                        {formik.touched.password && formik.errors.password &&
+                            <div style={{color: 'red'}}>{formik.errors.password}</div>}
                         <FormControlLabel
                             label={'Remember me'}
                             control={<Checkbox checked={formik.values.rememberMe}

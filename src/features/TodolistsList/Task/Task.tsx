@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Delete from '@mui/icons-material/Delete';
 
 import {TaskStatuses} from 'api/todolist-api';
-import {TaskDomainType} from './tasks-reducer';
+import {TaskDomainType} from 'features/TodolistsList/tasks-reducer';
 
 type TaskPropsType = {
     task: TaskDomainType
