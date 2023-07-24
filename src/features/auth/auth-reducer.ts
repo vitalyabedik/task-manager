@@ -15,7 +15,6 @@ const slice = createSlice({
   reducers: {
     setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
       state.isLoggedIn = action.payload.isLoggedIn
-      // return {...state, isLoggedIn: action.value}
     },
   },
 })
@@ -54,12 +53,6 @@ export const logoutTC = (): AppThunk => (dispatch) => {
         dispatch(authActions.setIsLoggedIn({ isLoggedIn: false }))
         dispatch(appActions.setAppStatus({ status: "succeeded" }))
         dispatch(clearTasksAndTodolists())
-
-        // edu example 0
-        // dispatch(clearTasksAndTodolists({todolists: [], tasks: {}}))
-
-        // edu example 1
-        // dispatch(clearTasksAndTodolists([], {}))
       } else {
         handleServerAppError(dispatch, res.data)
       }

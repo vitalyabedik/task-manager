@@ -1,12 +1,12 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 
 import { ErrorType, ResultCode, todolistAPI, TodolistType } from "api/todolist-api"
 import { appActions, RequestStatusType } from "app/app-reducer"
-import { AxiosError } from "axios"
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils"
 import { fetchTasksTC } from "features/TodolistsList/tasks-reducer"
 import { AppDispatch } from "app/store"
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
 
 const initialState: TodolistDomainType[] = []
@@ -16,8 +16,6 @@ const slice = createSlice({
   initialState,
   reducers: {
     removeTodolist: (state, action: PayloadAction<{ todolistId: string }>) => {
-      // return state.filter(t => t.id !== action.payload.todolistId)
-
       const index = state.findIndex((todo) => todo.id === action.payload.todolistId)
       if (index !== -1) state.splice(index, 1)
     },
@@ -54,10 +52,6 @@ const slice = createSlice({
     builder.addCase(clearTasksAndTodolists, () => {
       return []
     })
-    // edu example 0
-    // .addCase(clearTasksAndTodolists, (state, action) => {
-    //     return action.payload.todolists
-    // })
   },
 })
 
