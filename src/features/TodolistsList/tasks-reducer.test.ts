@@ -1,5 +1,4 @@
 import { tasksActions, tasksReducer } from "features/TodolistsList/tasks-reducer"
-
 import { todolistsActions } from "features/TodolistsList/todolists-reducer"
 import { TaskPriorities, TaskStatuses } from "api/todolist-api"
 import { TasksStateType } from "app"
@@ -176,19 +175,20 @@ test("correct task should be deleted from correct array", () => {
 })
 
 test("correct task should be added to correct array", () => {
+  const task = {
+    id: "1",
+    title: "juce",
+    status: TaskStatuses.New,
+    priority: TaskPriorities.Low,
+    startDate: "",
+    deadline: "",
+    todoListId: "todolistId2",
+    order: 0,
+    addedDate: "",
+    description: "",
+  }
   const action = tasksActions.addTask({
-    task: {
-      id: "1",
-      title: "juce",
-      status: TaskStatuses.New,
-      priority: TaskPriorities.Low,
-      startDate: "",
-      deadline: "",
-      todoListId: "todolistId2",
-      order: 0,
-      addedDate: "",
-      description: "",
-    },
+    task,
   })
 
   const endState = tasksReducer(startState, action)
@@ -231,13 +231,14 @@ test("title of specified task should be changed", () => {
 })
 
 test("new array should be added when new todolist is added", () => {
+  const todolist = {
+    id: "any id",
+    title: "new todolist",
+    addedDate: "",
+    order: 0,
+  }
   const action = todolistsActions.addTodolist({
-    todolist: {
-      id: "any id",
-      title: "new todolist",
-      addedDate: "",
-      order: 0,
-    },
+    todolist,
   })
 
   const endState = tasksReducer(startState, action)
