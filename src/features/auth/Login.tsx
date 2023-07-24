@@ -33,7 +33,6 @@ export const Login = () => {
       password: Yup.string().min(3, "Password must be 3 characters or more").required("Required"),
     }),
     onSubmit: (values) => {
-      // alert(JSON.stringify(values));
       dispatch(loginTC(values))
       formik.resetForm()
     },
@@ -49,7 +48,7 @@ export const Login = () => {
             <FormLabel>
               <p>
                 To log in get registered
-                <a href={"https://social-network.samuraijs.com/"} target={"_blank"}>
+                <a href={"https://social-network.samuraijs.com/"} target={"_blank"} rel="noreferrer">
                   {" "}
                   here
                 </a>

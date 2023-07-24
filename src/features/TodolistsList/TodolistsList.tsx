@@ -22,7 +22,11 @@ import { selectAuthIsLoggedIn } from "features/auth/auth.selectors"
 import { selectTasks } from "features/TodolistsList/tasks.selector"
 import { selectTodolists } from "features/TodolistsList/todolists.selector"
 
-export const TodolistsList = () => {
+type TodolistsPropsType = {
+  demo?: boolean
+}
+
+export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
   const todolists = useAppSelector(selectTodolists)
   const tasks = useAppSelector(selectTasks)
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
@@ -30,11 +34,10 @@ export const TodolistsList = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    // debugger
-    if (!isLoggedIn) return
+    if (!isLoggedIn || demo) return
 
     dispatch(fetchTodolistsTC())
-  }, [])
+  }, [demo, isLoggedIn])
 
   const addTodolist = useCallback((title: string) => {
     dispatch(addTodolistTC(title))

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Route, Routes, Navigate } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 
 import "./App.css"
 
@@ -24,11 +24,15 @@ import { logoutTC } from "features/auth/auth-reducer"
 import { useAppDispatch, useAppSelector } from "hooks/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/auth.selectors"
 
+type AppPropsType = {
+  demo?: boolean
+}
+
 export type TasksStateType = {
   [key: string]: TaskDomainType[]
 }
 
-export const App = () => {
+export const App = ({ demo = false }: AppPropsType) => {
   const status = useAppSelector<RequestStatusType>((state) => state.app.status)
   const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized)
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
@@ -40,9 +44,10 @@ export const App = () => {
   }
 
   useEffect(() => {
-    // debugger
+    if (demo) return
+
     dispatch(initializeAppTC())
-  }, [])
+  }, [demo])
 
   if (!isInitialized) {
     return (
@@ -73,7 +78,7 @@ export const App = () => {
       </AppBar>
       <Container fixed>
         <Routes>
-          <Route path={ROUTES.MAIN} element={<TodolistsList />} />
+          <Route path={ROUTES.MAIN} element={<TodolistsList demo={demo} />} />
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.NOTFOUND} element={<NotFound />} />
           <Route path={"*"} element={<Navigate to={ROUTES.NOTFOUND} />} />

@@ -82,6 +82,7 @@
     "puppeteer": "^20.7.2",
     "start-server-and-test": "^2.0.0",
     "storybook": "7.0.22",
+    "storybook-addon-react-router-v6": "^1.0.2",
     "webpack": "5.87.0"
   },
   "jest": {
