@@ -3,15 +3,15 @@ import { combineReducers } from "redux"
 import { Provider } from "react-redux"
 import thunkMiddleware from "redux-thunk"
 import { v1 } from "uuid"
-
-import { AppRootReducerType, AppRootStateType } from "app/store"
-import { tasksReducer } from "features/TodolistsList/tasks-reducer"
-import { todolistsReducer } from "features/TodolistsList/todolists-reducer"
-import { TaskPriorities, TaskStatuses } from "api/todolist-api"
-import { appReducer } from "app/app-reducer"
-import { authReducer } from "features/auth/auth-reducer"
 import { configureStore } from "@reduxjs/toolkit"
 import { HashRouter } from "react-router-dom"
+
+import { AppRootReducerType, AppRootStateType } from "app/store"
+import { tasksReducer } from "features/TodolistsList/model/tasks.reducer"
+import { todolistsReducer } from "features/TodolistsList/model/todolists.reducer"
+import { appReducer } from "app/app.reducer"
+import { authReducer } from "features/auth/model/auth.reducer"
+import { TaskPriorities, TaskStatuses } from "common/enums"
 
 const rootReducer: AppRootReducerType = combineReducers({
   tasks: tasksReducer,
