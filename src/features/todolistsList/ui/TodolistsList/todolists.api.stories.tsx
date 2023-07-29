@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react"
 
-import { todolistsApi } from "features/TodolistsList/api/todolists.api"
+import { todolistsApi } from "features/todolistsList/api/todolists.api"
+import { tasksApi } from "features/tasks/api"
 
 export default {
   title: "API",
@@ -104,7 +105,7 @@ export const GetTodolistTasks = () => {
   }
 
   const getTaskHandler = () => {
-    todolistsApi.getTodolistTasks(todolistId).then((res) => {
+    tasksApi.getTasks(todolistId).then((res) => {
       console.log(res.data)
       setState(res.data)
     })
@@ -135,7 +136,7 @@ export const CreateTodolistTasks = () => {
   }
 
   const createTaskHandler = () => {
-    todolistsApi.createTodolistTask(todolistId, title).then((res) => {
+    tasksApi.createTask(todolistId, title).then((res) => {
       setState(res.data)
     })
   }
@@ -166,7 +167,7 @@ export const DeleteTodolistTask = () => {
   }
 
   const deleteTaskHandler = () => {
-    todolistsApi.deleteTodolistTask(todolistId, taskId).then((res) => {
+    tasksApi.deleteTask(todolistId, taskId).then((res) => {
       setState(res.data)
     })
   }
@@ -202,7 +203,7 @@ export const UpdateTodolistTask = () => {
   }
 
   const updateTaskHandler = () => {
-    todolistsApi.updateTodolistTask(todolistId, taskId, title).then((res) => {
+    tasksApi.updateTask(todolistId, taskId, title).then((res) => {
       setState(res.data)
     })
   }

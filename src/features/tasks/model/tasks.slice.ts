@@ -3,14 +3,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { Dispatch } from "redux"
 
 import { AppRootStateType } from "app/store"
-import { ErrorType, TaskType, todolistsApi, UpdateTaskModelType } from "features/TodolistsList/api/todolists.api"
 import { TasksStateType } from "app"
 import { appActions, RequestStatusType } from "app/app.reducer"
 import { handleServerNetworkError } from "common/utils/errors/handleServerNetworkError"
-import { todolistsActions } from "features/TodolistsList/model/todolists.reducer"
+import { todolistsActions } from "features/todolistsList/model/todolists.slice"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
 import { handleServerAppError } from "common/utils"
 import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums"
+import { ErrorType } from "common/api"
+import { tasksApi, TaskType, UpdateTaskModelType } from "features/tasks/api"
 
 const initialState: TasksStateType = {}
 
@@ -76,14 +77,14 @@ const slice = createSlice({
   },
 })
 
-export const tasksReducer = slice.reducer
+export const tasksSlice = slice.reducer
 export const tasksActions = slice.actions
 
 // thunk creators
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
   dispatch(appActions.setAppStatus({ status: "loading" }))
-  todolistsApi
-    .getTodolistTasks(todolistId)
+  tasksApi
+    .getTasks(todolistId)
     .then((res) => {
       dispatch(tasksActions.setTasks({ todolistId, tasks: res.data.items }))
       dispatch(appActions.setAppStatus({ status: "succeeded" }))
@@ -97,8 +98,8 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
 export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
   dispatch(appActions.setAppStatus({ status: "loading" }))
   dispatch(tasksActions.changeTaskEntityStatus({ todolistId, taskId, entityStatus: "loading" }))
-  todolistsApi
-    .deleteTodolistTask(todolistId, taskId)
+  tasksApi
+    .deleteTask(todolistId, taskId)
     .then((res) => {
       if (res.data.resultCode === ResultCode.SUCCESS) {
         dispatch(tasksActions.removeTask({ todolistId, taskId }))
@@ -115,8 +116,8 @@ export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: D
 
 export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
   dispatch(appActions.setAppStatus({ status: "loading" }))
-  todolistsApi
-    .createTodolistTask(todolistId, title)
+  tasksApi
+    .createTask(todolistId, title)
     .then((res) => {
       if (res.data.resultCode === ResultCode.SUCCESS) {
         dispatch(tasksActions.addTask({ task: res.data.data.item }))
@@ -148,8 +149,8 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
 
       dispatch(appActions.setAppStatus({ status: "loading" }))
       dispatch(tasksActions.changeTaskEntityStatus({ todolistId, taskId, entityStatus: "loading" }))
-      todolistsApi
-        .updateTodolistTask(todolistId, taskId, apiModel)
+      tasksApi
+        .updateTask(todolistId, taskId, apiModel)
         .then((res) => {
           if (res.data.resultCode === ResultCode.SUCCESS) {
             dispatch(tasksActions.updateTask({ todolistId, taskId, model: domainModel }))

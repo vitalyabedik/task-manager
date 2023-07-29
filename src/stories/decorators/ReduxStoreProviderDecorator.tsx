@@ -7,15 +7,15 @@ import { configureStore } from "@reduxjs/toolkit"
 import { HashRouter } from "react-router-dom"
 
 import { AppRootReducerType, AppRootStateType } from "app/store"
-import { tasksReducer } from "features/TodolistsList/model/tasks.reducer"
-import { todolistsReducer } from "features/TodolistsList/model/todolists.reducer"
+import { tasksSlice } from "features/tasks/model/tasks.slice"
+import { todolistsSlice } from "features/todolistsList/model/todolists.slice"
 import { appReducer } from "app/app.reducer"
 import { authReducer } from "features/auth/model/auth.reducer"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 
 const rootReducer: AppRootReducerType = combineReducers({
-  tasks: tasksReducer,
-  todolists: todolistsReducer,
+  tasks: tasksSlice,
+  todolists: todolistsSlice,
   app: appReducer,
   auth: authReducer,
 })

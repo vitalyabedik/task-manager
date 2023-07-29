@@ -1,15 +1,15 @@
 import React, { useCallback } from "react"
 
-import styles from "features/TodolistsList/ui/Todolist/Todolist.module.css"
+import styles from "features/todolistsList/ui/Todolist/Todolist.module.css"
 import IconButton from "@mui/material/IconButton"
 import Delete from "@mui/icons-material/Delete"
 import Button from "@mui/material/Button"
 
 import { AddItemForm } from "common/components/AddItemForm"
 import { EditableSpan } from "common/components/EditableSpan"
-import { Task } from "features/TodolistsList/ui/Task/Task"
-import { FilterValuesType } from "features/TodolistsList/model/todolists.reducer"
-import { TaskDomainType } from "features/TodolistsList/model/tasks.reducer"
+import { Task } from "features/tasks/ui/Task/Task"
+import { FilterValuesType } from "features/todolistsList/model/todolists.slice"
+import { TaskDomainType } from "features/tasks/model/tasks.slice"
 import { RequestStatusType } from "app/app.reducer"
 import { TaskStatuses } from "common/enums"
 
@@ -32,6 +32,7 @@ export const Todolist = React.memo((props: PropsType) => {
   const removeTodolistHandler = useCallback(() => {
     props.removeTodolist(props.id)
   }, [props.removeTodolist, props.id])
+
   const changeTodolistTitleHandler = useCallback(
     (newTitle: string) => {
       props.changeTodolistTitle(props.id, newTitle)

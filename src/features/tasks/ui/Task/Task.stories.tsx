@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { Task } from 'features/TodolistsList/ui/Task/Task';
+import { Task } from 'features/tasks/ui/Task/Task';
 import { TaskPriorities, TaskStatuses } from 'common/enums';
 
 // More on how to set up stories at:

@@ -1,8 +1,8 @@
-import { TodolistDomainType, todolistsActions, todolistsReducer } from "features/TodolistsList/model/todolists.reducer"
-import { tasksReducer } from "features/TodolistsList/model/tasks.reducer"
-import { TodolistType } from "features/TodolistsList/api/todolists.api"
+import { TodolistDomainType, todolistsActions, todolistsSlice } from "features/todolistsList/model/todolists.slice"
+import { tasksSlice } from "features/tasks/model/tasks.slice"
 import { TasksStateType } from "app"
 import { TaskPriorities, TaskStatuses } from "common/enums"
+import { TodolistType } from "features/todolistsList/api"
 
 test("ids should be equals", () => {
   const startTasksState: TasksStateType = {}
@@ -17,8 +17,8 @@ test("ids should be equals", () => {
 
   const action = todolistsActions.addTodolist({ todolist })
 
-  const endTasksState = tasksReducer(startTasksState, action)
-  const endTodolistsState = todolistsReducer(startTodolistsState, action)
+  const endTasksState = tasksSlice(startTasksState, action)
+  const endTodolistsState = todolistsSlice(startTodolistsState, action)
 
   const keys = Object.keys(endTasksState)
   const idFromTasks = keys[0]
@@ -116,7 +116,7 @@ test("property with todolistId should be deleted", () => {
 
   const action = todolistsActions.removeTodolist({ todolistId: "todolistId2" })
 
-  const endState = tasksReducer(startState, action)
+  const endState = tasksSlice(startState, action)
 
   const keys = Object.keys(endState)
 

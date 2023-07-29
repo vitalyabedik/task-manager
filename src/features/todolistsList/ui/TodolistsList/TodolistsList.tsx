@@ -11,15 +11,15 @@ import {
   FilterValuesType,
   removeTodolistTC,
   todolistsActions,
-} from "features/TodolistsList/model/todolists.reducer"
-import { addTaskTC, removeTaskTC, updateTaskTC } from "features/TodolistsList/model/tasks.reducer"
+} from "features/todolistsList/model/todolists.slice"
+import { addTaskTC, removeTaskTC, updateTaskTC } from "features/tasks/model/tasks.slice"
 import { AddItemForm } from "common/components/AddItemForm"
-import { Todolist } from "features/TodolistsList/ui/Todolist/Todolist"
+import { Todolist } from "features/todolistsList/ui/Todolist/Todolist"
 import { ROUTES } from "common/configs/routes"
 import { useAppDispatch, useAppSelector } from "common/hooks/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
-import { selectTasks } from "features/TodolistsList/model/tasks.selector"
-import { selectTodolists } from "features/TodolistsList/model/todolists.selector"
+import { selectTasks } from "features/tasks/model/tasks.selector"
+import { selectTodolists } from "features/todolistsList/model/todolists.selector"
 import { TaskStatuses } from "common/enums"
 
 type TodolistsPropsType = {

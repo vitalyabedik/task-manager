@@ -4,3 +4,14 @@ export type ResponseType<D = {}> = {
   fieldsErrors: Array<string>
   data: D
 }
+
+export type ErrorType = {
+  statusCode: number
+  messages: [
+    {
+      message: string
+      field: string
+    },
+  ]
+  error: string
+}

@@ -1,13 +1,13 @@
 import React, { ChangeEvent, useCallback } from "react"
 
-import styles from "features/TodolistsList/ui/Todolist/Todolist.module.css"
+import styles from "features/todolistsList/ui/Todolist/Todolist.module.css"
 
 import Checkbox from "@mui/material/Checkbox"
 import { EditableSpan } from "common/components/EditableSpan"
 import IconButton from "@mui/material/IconButton"
 import Delete from "@mui/icons-material/Delete"
 
-import { TaskDomainType } from "features/TodolistsList/model/tasks.reducer"
+import { TaskDomainType } from "features/tasks/model/tasks.slice"
 import { TaskStatuses } from "common/enums"
 
 type TaskPropsType = {

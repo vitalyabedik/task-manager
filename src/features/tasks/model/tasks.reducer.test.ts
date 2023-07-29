@@ -1,5 +1,5 @@
-import { tasksActions, tasksReducer } from "features/TodolistsList/model/tasks.reducer"
-import { todolistsActions } from "features/TodolistsList/model/todolists.reducer"
+import { tasksActions, tasksSlice } from "features/tasks/model/tasks.slice"
+import { todolistsActions } from "features/todolistsList/model/todolists.slice"
 import { TasksStateType } from "app"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 
@@ -95,7 +95,7 @@ beforeEach(() => {
 test("correct task should be deleted from correct array", () => {
   const action = tasksActions.removeTask({ todolistId: "todolistId2", taskId: "2" })
 
-  const endState = tasksReducer(startState, action)
+  const endState = tasksSlice(startState, action)
 
   expect(endState).toEqual({
     todolistId1: [
@@ -191,7 +191,7 @@ test("correct task should be added to correct array", () => {
     task,
   })
 
-  const endState = tasksReducer(startState, action)
+  const endState = tasksSlice(startState, action)
 
   expect(endState["todolistId1"].length).toBe(3)
   expect(endState["todolistId2"].length).toBe(4)
@@ -209,7 +209,7 @@ test("status of specified task should be changed", () => {
     },
   })
 
-  const endState = tasksReducer(startState, action)
+  const endState = tasksSlice(startState, action)
 
   expect(endState["todolistId2"][1].status).toBe(TaskStatuses.New)
   expect(endState["todolistId1"][1].status).toBe(TaskStatuses.Completed)
@@ -224,7 +224,7 @@ test("title of specified task should be changed", () => {
     },
   })
 
-  const endState = tasksReducer(startState, action)
+  const endState = tasksSlice(startState, action)
 
   expect(endState["todolistId2"][1].title).toBe("water")
   expect(endState["todolistId1"][1].title).toBe("JS")
@@ -241,7 +241,7 @@ test("new array should be added when new todolist is added", () => {
     todolist,
   })
 
-  const endState = tasksReducer(startState, action)
+  const endState = tasksSlice(startState, action)
 
   const keys = Object.keys(endState)
   const newKey = keys.find((k) => k != "todolistId1" && k != "todolistId2")

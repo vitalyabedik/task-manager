@@ -2,14 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 
-import { ErrorType, todolistsApi, TodolistType } from "features/TodolistsList/api/todolists.api"
+import { todolistsApi } from "features/todolistsList/api/todolists.api"
 import { appActions, RequestStatusType } from "app/app.reducer"
 import { handleServerNetworkError } from "common/utils/errors/handleServerNetworkError"
-import { fetchTasksTC } from "features/TodolistsList/model/tasks.reducer"
+import { fetchTasksTC } from "features/tasks/model/tasks.slice"
 import { AppDispatch } from "app/store"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
 import { handleServerAppError } from "common/utils"
 import { ResultCode } from "common/enums"
+import { ErrorType } from "common/api"
+import { TodolistType } from "features/todolistsList/api"
 
 const initialState: TodolistDomainType[] = []
 
@@ -57,7 +59,7 @@ const slice = createSlice({
   },
 })
 
-export const todolistsReducer = slice.reducer
+export const todolistsSlice = slice.reducer
 export const todolistsActions = slice.actions
 
 // thunks creators
