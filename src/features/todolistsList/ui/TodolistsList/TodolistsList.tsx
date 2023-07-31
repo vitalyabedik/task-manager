@@ -12,7 +12,7 @@ import {
   removeTodolistTC,
   todolistsActions,
 } from "features/todolistsList/model/todolists.slice"
-import { addTaskTC, removeTaskTC, updateTaskTC } from "features/tasks/model/tasks.slice"
+import { tasksThunks, updateTaskTC } from "features/tasks/model/tasks.slice"
 import { AddItemForm } from "common/components/AddItemForm"
 import { Todolist } from "features/todolistsList/ui/Todolist/Todolist"
 import { ROUTES } from "common/configs/routes"
@@ -54,11 +54,11 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
   }, [])
 
   const removeTask = useCallback((todolistId: string, id: string) => {
-    dispatch(removeTaskTC(todolistId, id))
+    dispatch(tasksThunks.removeTask({ todolistId, taskId: id }))
   }, [])
 
   const addTask = useCallback((todolistId: string, title: string) => {
-    dispatch(addTaskTC(todolistId, title))
+    dispatch(tasksThunks.addTask({ todolistId, title }))
   }, [])
 
   const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {

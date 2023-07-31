@@ -1,7 +1,8 @@
-import { tasksActions, tasksSlice } from "features/tasks/model/tasks.slice"
+import { RemoveTaskArgType, tasksActions, tasksSlice, tasksThunks } from "features/tasks/model/tasks.slice"
 import { todolistsActions } from "features/todolistsList/model/todolists.slice"
 import { TasksStateType } from "app"
 import { TaskPriorities, TaskStatuses } from "common/enums"
+import { TaskType } from "features/tasks/api"
 
 let startState: TasksStateType
 
@@ -93,7 +94,18 @@ beforeEach(() => {
 })
 
 test("correct task should be deleted from correct array", () => {
-  const action = tasksActions.removeTask({ todolistId: "todolistId2", taskId: "2" })
+  type DeleteActionType = {
+    type: typeof tasksThunks.removeTask.fulfilled.type
+    payload: RemoveTaskArgType
+  }
+
+  const action: DeleteActionType = {
+    type: tasksThunks.removeTask.fulfilled.type,
+    payload: {
+      todolistId: "todolistId2",
+      taskId: "2",
+    },
+  }
 
   const endState = tasksSlice(startState, action)
 
@@ -187,9 +199,16 @@ test("correct task should be added to correct array", () => {
     addedDate: "",
     description: "",
   }
-  const action = tasksActions.addTask({
-    task,
-  })
+
+  type AddActionType = {
+    type: typeof tasksThunks.addTask.fulfilled.type
+    payload: { task: TaskType }
+  }
+
+  const action: AddActionType = {
+    type: tasksThunks.addTask.fulfilled.type,
+    payload: { task },
+  }
 
   const endState = tasksSlice(startState, action)
 
@@ -237,6 +256,7 @@ test("new array should be added when new todolist is added", () => {
     addedDate: "",
     order: 0,
   }
+
   const action = todolistsActions.addTodolist({
     todolist,
   })
