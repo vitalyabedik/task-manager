@@ -1,4 +1,4 @@
-import { RemoveTaskArgType, tasksActions, tasksSlice, tasksThunks } from "features/tasks/model/tasks.slice"
+import { RemoveTaskArgType, tasksSlice, tasksThunks } from "features/tasks/model/tasks.slice"
 import { todolistsActions } from "features/todolistsList/model/todolists.slice"
 import { TasksStateType } from "app"
 import { TaskPriorities, TaskStatuses } from "common/enums"
@@ -220,32 +220,60 @@ test("correct task should be added to correct array", () => {
 })
 
 test("status of specified task should be changed", () => {
-  const action = tasksActions.updateTask({
-    todolistId: "todolistId2",
-    taskId: "2",
-    model: {
-      status: TaskStatuses.New,
+  type ChangeStatusActionType = {
+    type: typeof tasksThunks.updateTask.fulfilled.type
+    payload: {
+      todolistId: string
+      taskId: string
+      model: {
+        status: TaskStatuses
+      }
+    }
+  }
+
+  const action: ChangeStatusActionType = {
+    type: tasksThunks.updateTask.fulfilled.type,
+    payload: {
+      todolistId: "todolistId2",
+      taskId: "2",
+      model: {
+        status: TaskStatuses.New,
+      },
     },
-  })
+  }
 
   const endState = tasksSlice(startState, action)
 
-  expect(endState["todolistId2"][1].status).toBe(TaskStatuses.New)
+  expect(endState["todolistId2"][2].status).toBe(TaskStatuses.New)
   expect(endState["todolistId1"][1].status).toBe(TaskStatuses.Completed)
 })
 
 test("title of specified task should be changed", () => {
-  const action = tasksActions.updateTask({
-    todolistId: "todolistId2",
-    taskId: "2",
-    model: {
-      title: "water",
+  type ChangeTitleActionType = {
+    type: typeof tasksThunks.updateTask.fulfilled.type
+    payload: {
+      todolistId: string
+      taskId: string
+      model: {
+        title: string
+      }
+    }
+  }
+
+  const action: ChangeTitleActionType = {
+    type: tasksThunks.updateTask.fulfilled.type,
+    payload: {
+      todolistId: "todolistId2",
+      taskId: "2",
+      model: {
+        title: "water",
+      },
     },
-  })
+  }
 
   const endState = tasksSlice(startState, action)
 
-  expect(endState["todolistId2"][1].title).toBe("water")
+  expect(endState["todolistId2"][2].title).toBe("water")
   expect(endState["todolistId1"][1].title).toBe("JS")
 })
 

@@ -12,7 +12,7 @@ import {
   removeTodolistTC,
   todolistsActions,
 } from "features/todolistsList/model/todolists.slice"
-import { tasksThunks, updateTaskTC } from "features/tasks/model/tasks.slice"
+import { tasksThunks } from "features/tasks/model/tasks.slice"
 import { AddItemForm } from "common/components/AddItemForm"
 import { Todolist } from "features/todolistsList/ui/Todolist/Todolist"
 import { ROUTES } from "common/configs/routes"
@@ -62,11 +62,11 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
   }, [])
 
   const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
-    dispatch(updateTaskTC(todolistId, taskId, { status }))
+    dispatch(tasksThunks.updateTask({ todolistId, taskId, domainModel: { status } }))
   }, [])
 
   const changeTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
-    dispatch(updateTaskTC(todolistId, taskId, { title }))
+    dispatch(tasksThunks.updateTask({ todolistId, taskId, domainModel: { title } }))
   }, [])
 
   if (!isLoggedIn) return <Navigate to={ROUTES.LOGIN} />
