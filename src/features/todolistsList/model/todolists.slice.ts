@@ -5,7 +5,7 @@ import { Dispatch } from "redux"
 import { todolistsApi } from "features/todolistsList/api/todolists.api"
 import { appActions, RequestStatusType } from "app/app.reducer"
 import { handleServerNetworkError } from "common/utils/errors/handleServerNetworkError"
-import { fetchTasksTC } from "features/tasks/model/tasks.slice"
+import { tasksThunks } from "features/tasks/model/tasks.slice"
 import { AppDispatch } from "app/store"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
 import { handleServerAppError } from "common/utils"
@@ -74,7 +74,7 @@ export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
     })
     .then((todos) => {
       todos.forEach((tl) => {
-        dispatch(fetchTasksTC(tl.id))
+        dispatch(tasksThunks.fetchTasks({ todolistId: tl.id }))
       })
     })
     .catch((e: AxiosError<ErrorType>) => {
