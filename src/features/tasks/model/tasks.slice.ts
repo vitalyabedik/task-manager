@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { TasksStateType } from "app"
 import { appActions, RequestStatusType } from "app/app.reducer"
 import { handleServerNetworkError } from "common/utils/errors/handleServerNetworkError"
-import { todolistsActions, todolistsThunks } from "features/todolistsList/model/todolists.slice"
+import { todolistsThunks } from "features/todolistsList/model/todolists.slice"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
 import { createAppAsyncThunk, handleServerAppError } from "common/utils"
 import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums"
@@ -52,7 +52,7 @@ const slice = createSlice({
           }
         }
       })
-      .addCase(todolistsActions.addTodolist, (state, action) => {
+      .addCase(todolistsThunks.addTodolist.fulfilled, (state, action) => {
         state[action.payload.todolist.id] = []
       })
       .addCase(todolistsThunks.removeTodolist.fulfilled, (state, action) => {

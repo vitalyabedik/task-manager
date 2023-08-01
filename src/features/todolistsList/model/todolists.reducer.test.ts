@@ -8,6 +8,7 @@ import {
   todolistsSlice,
   todolistsThunks,
 } from "features/todolistsList/model/todolists.slice"
+import { TodolistType } from "features/todolistsList/api"
 
 let todolistId1: string
 let todolistId2: string
@@ -44,17 +45,26 @@ test("correct todolist should be removed", () => {
 test("correct todolist should be added", () => {
   let newTodolistTitle = "newTodolistTitle"
 
-  const endState = todolistsSlice(
-    startState,
-    todolistsActions.addTodolist({
+  type AddActionType = {
+    type: typeof todolistsThunks.addTodolist.fulfilled.type
+    payload: {
+      todolist: TodolistType
+    }
+  }
+
+  const action: AddActionType = {
+    type: todolistsThunks.addTodolist.fulfilled.type,
+    payload: {
       todolist: {
         id: "any id",
         title: newTodolistTitle,
         addedDate: "",
         order: 0,
       },
-    }),
-  )
+    },
+  }
+
+  const endState = todolistsSlice(startState, action)
 
   expect(endState.length).toBe(3)
   expect(endState[0].title).toBe(newTodolistTitle)

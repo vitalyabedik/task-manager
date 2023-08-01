@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 
 import {
-  addTodolistTC,
   changeTodolistTitleTC,
   FilterValuesType,
   todolistsActions,
@@ -39,7 +38,7 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
   }, [demo, isLoggedIn])
 
   const addTodolist = useCallback((title: string) => {
-    dispatch(addTodolistTC(title))
+    dispatch(todolistsThunks.addTodolist({ title }))
   }, [])
   const removeTodolist = useCallback((todolistId: string) => {
     dispatch(todolistsThunks.removeTodolist({ todolistId }))

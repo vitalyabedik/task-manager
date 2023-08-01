@@ -1,7 +1,6 @@
 import {
   RemoveTodolistArgType,
   TodolistDomainType,
-  todolistsActions,
   todolistsSlice,
   todolistsThunks,
 } from "features/todolistsList/model/todolists.slice"
@@ -21,7 +20,19 @@ test("ids should be equals", () => {
     order: 0,
   }
 
-  const action = todolistsActions.addTodolist({ todolist })
+  type AddActionType = {
+    type: typeof todolistsThunks.addTodolist.fulfilled.type
+    payload: {
+      todolist: TodolistType
+    }
+  }
+
+  const action: AddActionType = {
+    type: todolistsThunks.addTodolist.fulfilled.type,
+    payload: {
+      todolist,
+    },
+  }
 
   const endTasksState = tasksSlice(startTasksState, action)
   const endTodolistsState = todolistsSlice(startTodolistsState, action)

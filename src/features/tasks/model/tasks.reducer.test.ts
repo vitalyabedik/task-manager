@@ -1,8 +1,9 @@
 import { RemoveTaskArgType, tasksSlice, tasksThunks, UpdateTaskArgType } from "features/tasks/model/tasks.slice"
-import { todolistsActions } from "features/todolistsList/model/todolists.slice"
+import { todolistsThunks } from "features/todolistsList/model/todolists.slice"
 import { TasksStateType } from "app"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 import { TaskType } from "features/tasks/api"
+import { TodolistType } from "features/todolistsList/api"
 
 let startState: TasksStateType
 
@@ -268,10 +269,20 @@ test("new array should be added when new todolist is added", () => {
     order: 0,
   }
 
-  const action = todolistsActions.addTodolist({
-    todolist,
-  })
+  type ActionType = {
+    type: typeof todolistsThunks.addTodolist.fulfilled.type,
+    payload: {
+      todolist: TodolistType
+    },
+  }
 
+  const action: ActionType = {
+    type: todolistsThunks.addTodolist.fulfilled.type,
+    payload: {
+      todolist
+    },
+  }
+  
   const endState = tasksSlice(startState, action)
 
   const keys = Object.keys(endState)
