@@ -12,7 +12,7 @@ import { TodolistType } from "features/todolistsList/api"
 const initialState: TodolistDomainType[] = []
 
 const slice = createSlice({
-  name: "todo",
+  name: "todolists",
   initialState,
   reducers: {
     changeTodolistFilter: (state, action: PayloadAction<{ todolistId: string; filter: FilterValuesType }>) => {
