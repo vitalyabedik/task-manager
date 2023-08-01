@@ -7,10 +7,10 @@ import Paper from "@mui/material/Paper"
 import {
   addTodolistTC,
   changeTodolistTitleTC,
-  fetchTodolistsTC,
   FilterValuesType,
   removeTodolistTC,
   todolistsActions,
+  todolistsThunks,
 } from "features/todolistsList/model/todolists.slice"
 import { tasksThunks } from "features/tasks/model/tasks.slice"
 import { AddItemForm } from "common/components/AddItemForm"
@@ -36,7 +36,7 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
   useEffect(() => {
     if (!isLoggedIn || demo) return
 
-    dispatch(fetchTodolistsTC())
+    dispatch(todolistsThunks.fetchTodolists({}))
   }, [demo, isLoggedIn])
 
   const addTodolist = useCallback((title: string) => {
