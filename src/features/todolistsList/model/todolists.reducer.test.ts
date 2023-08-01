@@ -1,6 +1,7 @@
 import { v1 } from "uuid"
 
 import {
+  ChangeTodolistTitleArgType,
   FilterValuesType,
   RemoveTodolistArgType,
   TodolistDomainType,
@@ -73,13 +74,20 @@ test("correct todolist should be added", () => {
 test("correct todolist should changed title", () => {
   let newTodolistTitle = "newTodolistTitle"
 
-  const endState = todolistsSlice(
-    startState,
-    todolistsActions.changeTodolistTitle({
+  type AddActionType = {
+    type: typeof todolistsThunks.changeTodolistTitle.fulfilled.type
+    payload: ChangeTodolistTitleArgType
+  }
+
+  const action: AddActionType = {
+    type: todolistsThunks.changeTodolistTitle.fulfilled.type,
+    payload: {
       todolistId: todolistId2,
       title: newTodolistTitle,
-    }),
-  )
+    },
+  }
+
+  const endState = todolistsSlice(startState, action)
 
   expect(endState[0].title).toBe("What to learn")
   expect(endState[1].title).toBe(newTodolistTitle)
