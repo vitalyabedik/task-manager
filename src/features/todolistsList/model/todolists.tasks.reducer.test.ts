@@ -1,4 +1,10 @@
-import { TodolistDomainType, todolistsActions, todolistsSlice } from "features/todolistsList/model/todolists.slice"
+import {
+  RemoveTodolistArgType,
+  TodolistDomainType,
+  todolistsActions,
+  todolistsSlice,
+  todolistsThunks,
+} from "features/todolistsList/model/todolists.slice"
 import { tasksSlice } from "features/tasks/model/tasks.slice"
 import { TasksStateType } from "app"
 import { TaskPriorities, TaskStatuses } from "common/enums"
@@ -114,7 +120,17 @@ test("property with todolistId should be deleted", () => {
     ],
   }
 
-  const action = todolistsActions.removeTodolist({ todolistId: "todolistId2" })
+  type RemoveActionType = {
+    type: typeof todolistsThunks.removeTodolist.fulfilled.type
+    payload: RemoveTodolistArgType
+  }
+
+  const action: RemoveActionType = {
+    type: todolistsThunks.removeTodolist.fulfilled.type,
+    payload: {
+      todolistId: "todolistId2",
+    },
+  }
 
   const endState = tasksSlice(startState, action)
 

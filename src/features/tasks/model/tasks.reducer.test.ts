@@ -99,12 +99,12 @@ beforeEach(() => {
 })
 
 test("correct task should be deleted from correct array", () => {
-  type DeleteActionType = {
+  type RemoveActionType = {
     type: typeof tasksThunks.removeTask.fulfilled.type
     payload: RemoveTaskArgType
   }
 
-  const action: DeleteActionType = {
+  const action: RemoveActionType = {
     type: tasksThunks.removeTask.fulfilled.type,
     payload: {
       todolistId: "todolistId2",

@@ -8,7 +8,6 @@ import {
   addTodolistTC,
   changeTodolistTitleTC,
   FilterValuesType,
-  removeTodolistTC,
   todolistsActions,
   todolistsThunks,
 } from "features/todolistsList/model/todolists.slice"
@@ -43,7 +42,7 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
     dispatch(addTodolistTC(title))
   }, [])
   const removeTodolist = useCallback((todolistId: string) => {
-    dispatch(removeTodolistTC(todolistId))
+    dispatch(todolistsThunks.removeTodolist({ todolistId }))
   }, [])
   const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
     dispatch(changeTodolistTitleTC(todolistId, title))

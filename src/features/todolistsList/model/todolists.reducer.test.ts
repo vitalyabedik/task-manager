@@ -2,9 +2,11 @@ import { v1 } from "uuid"
 
 import {
   FilterValuesType,
+  RemoveTodolistArgType,
   TodolistDomainType,
   todolistsActions,
   todolistsSlice,
+  todolistsThunks,
 } from "features/todolistsList/model/todolists.slice"
 
 let todolistId1: string
@@ -22,7 +24,18 @@ beforeEach(() => {
 })
 
 test("correct todolist should be removed", () => {
-  const endState = todolistsSlice(startState, todolistsActions.removeTodolist({ todolistId: todolistId1 }))
+  type RemoveActionType = {
+    type: typeof todolistsThunks.removeTodolist.fulfilled.type
+    payload: RemoveTodolistArgType
+  }
+
+  const action: RemoveActionType = {
+    type: todolistsThunks.removeTodolist.fulfilled.type,
+    payload: {
+      todolistId: todolistId1,
+    },
+  }
+  const endState = todolistsSlice(startState, action)
 
   expect(endState.length).toBe(1)
   expect(endState[0].id).toBe(todolistId2)
