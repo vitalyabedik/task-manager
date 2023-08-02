@@ -38,7 +38,8 @@ const login = createAppAsyncThunk<AuthArgType, LoginParamsType>("auth/login", as
       dispatch(appActions.setAppStatus({ status: "succeeded" }))
       return { isLoggedIn: true }
     } else {
-      handleServerAppError(dispatch, res.data, false)
+      const isShowAppError = !res.data.fieldsErrors.length
+      handleServerAppError(dispatch, res.data, isShowAppError)
       return rejectWithValue(res.data)
     }
   } catch (error) {
