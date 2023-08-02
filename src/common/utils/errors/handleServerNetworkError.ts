@@ -1,6 +1,13 @@
-import axios from "axios"
-import { appActions } from "app/app.reducer"
-import { AppDispatch } from "app/store"
+import axios from 'axios';
+import { appActions } from 'app/app.reducer';
+import { AppDispatch } from 'app/store';
+
+/**
+ * Handles server network errors and updates the application state accordingly.
+ *
+ * @param {AppDispatch} dispatch - The dispatch function from Redux to update the state.
+ * @param {unknown} err - The error object received from the network request.
+ */
 
 export const handleServerNetworkError = (dispatch: AppDispatch, err: unknown) => {
   let errorMessage = "Some error occurred"
