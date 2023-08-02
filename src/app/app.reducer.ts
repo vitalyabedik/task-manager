@@ -1,7 +1,7 @@
 import { Dispatch } from "redux"
 import { authApi } from "features/auth/api/auth.api"
 import { handleServerNetworkError } from "common/utils/errors/handleServerNetworkError"
-import { authActions } from "features/auth/model/auth.reducer"
+import { authActions } from "features/auth/model/auth.slice"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { handleServerAppError } from "common/utils"
 

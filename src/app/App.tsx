@@ -20,7 +20,7 @@ import { TaskDomainType } from "features/tasks/model/tasks.slice"
 import { ROUTES } from "common/configs/routes"
 import { Login } from "features/auth/ui/Login"
 import { NotFound } from "common/components/NotFound"
-import { logoutTC } from "features/auth/model/auth.reducer"
+import { logoutTC } from "features/auth/model/auth.slice"
 import { useAppDispatch, useAppSelector } from "common/hooks/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
 

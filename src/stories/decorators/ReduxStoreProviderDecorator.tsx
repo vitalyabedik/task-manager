@@ -10,14 +10,14 @@ import { AppRootReducerType, AppRootStateType } from "app/store"
 import { tasksSlice } from "features/tasks/model/tasks.slice"
 import { todolistsSlice } from "features/todolistsList/model/todolists.slice"
 import { appReducer } from "app/app.reducer"
-import { authReducer } from "features/auth/model/auth.reducer"
+import { authSlice } from "features/auth/model/auth.slice"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 
 const rootReducer: AppRootReducerType = combineReducers({
   tasks: tasksSlice,
   todolists: todolistsSlice,
   app: appReducer,
-  auth: authReducer,
+  auth: authSlice,
 })
 
 const initialGlobalState: AppRootStateType = {

@@ -11,11 +11,11 @@ import FormGroup from "@mui/material/FormGroup"
 import FormLabel from "@mui/material/FormLabel"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
-import { loginTC } from "features/auth/model/auth.reducer"
 
 import { ROUTES } from "common/configs/routes"
 import { useAppDispatch, useAppSelector } from "common/hooks/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
+import { authThunks } from "features/auth/model/auth.slice"
 
 export const Login = () => {
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
@@ -33,7 +33,7 @@ export const Login = () => {
       password: Yup.string().min(3, "Password must be 3 characters or more").required("Required"),
     }),
     onSubmit: (values) => {
-      dispatch(loginTC(values))
+      dispatch(authThunks.login(values))
       formik.resetForm()
     },
   })

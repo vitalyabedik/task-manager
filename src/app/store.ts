@@ -5,13 +5,13 @@ import thunkMiddleware, { ThunkAction, ThunkDispatch } from "redux-thunk"
 import { tasksSlice } from "features/tasks/model/tasks.slice"
 import { todolistsSlice } from "features/todolistsList/model/todolists.slice"
 import { appReducer } from "app/app.reducer"
-import { authReducer } from "features/auth/model/auth.reducer"
+import { authSlice } from "features/auth/model/auth.slice"
 
 const rootReducer = combineReducers({
   tasks: tasksSlice,
   todolists: todolistsSlice,
   app: appReducer,
-  auth: authReducer,
+  auth: authSlice,
 })
 
 export const store = configureStore({
