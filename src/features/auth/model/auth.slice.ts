@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
 import { authApi } from "features/auth/api/auth.api"
 import { handleServerNetworkError } from "common/utils/errors/handleServerNetworkError"
@@ -13,17 +13,16 @@ const slice = createSlice({
   initialState: {
     isLoggedIn: false,
   },
-  reducers: {
-    setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
-      state.isLoggedIn = action.payload.isLoggedIn
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.isLoggedIn = action.payload.isLoggedIn
       })
       .addCase(logout.fulfilled, (state, action) => {
+        state.isLoggedIn = action.payload.isLoggedIn
+      })
+      .addCase(initializeApp.fulfilled, (state, action) => {
         state.isLoggedIn = action.payload.isLoggedIn
       })
   },
@@ -68,9 +67,26 @@ const logout = createAppAsyncThunk<AuthArgType, void>("auth/logout", async (arg,
   }
 })
 
+const initializeApp = createAppAsyncThunk<AuthArgType, void>("app/initializeApp", async (arg, thunkAPI) => {
+  const { dispatch, rejectWithValue } = thunkAPI
+
+  try {
+    const res = await authApi.me()
+    if (res.data.resultCode === ResultCode.SUCCESS) {
+      return { isLoggedIn: true }
+    } else {
+      return rejectWithValue(null)
+    }
+  } catch (error) {
+    handleServerNetworkError(dispatch, error)
+    return rejectWithValue(null)
+  } finally {
+    dispatch(appActions.setAppIsInitialized({ isInitialized: true }))
+  }
+})
+
 export const authSlice = slice.reducer
-export const authActions = slice.actions
-export const authThunks = { login, logout }
+export const authThunks = { login, logout, initializeApp }
 
 export type AuthArgType = {
   isLoggedIn: boolean

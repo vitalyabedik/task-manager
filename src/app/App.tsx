@@ -14,7 +14,7 @@ import { CircularProgress, LinearProgress } from "@mui/material"
 import { Logout } from "@mui/icons-material"
 
 import { TodolistsList } from "features/todolistsList/ui/TodolistsList"
-import { initializeAppTC, RequestStatusType } from "app/app.reducer"
+import { RequestStatusType } from "app/app.reducer"
 import { ErrorSnackbar } from "common/components/ErrorSnackbar"
 import { TaskDomainType } from "features/tasks/model/tasks.slice"
 import { ROUTES } from "common/configs/routes"
@@ -46,7 +46,7 @@ export const App = ({ demo = false }: AppPropsType) => {
   useEffect(() => {
     if (demo) return
 
-    dispatch(initializeAppTC())
+    dispatch(authThunks.initializeApp())
   }, [demo])
 
   if (!isInitialized) {

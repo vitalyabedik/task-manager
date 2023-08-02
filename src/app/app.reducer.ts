@@ -1,9 +1,4 @@
-import { Dispatch } from "redux"
-import { authApi } from "features/auth/api/auth.api"
-import { handleServerNetworkError } from "common/utils/errors/handleServerNetworkError"
-import { authActions } from "features/auth/model/auth.slice"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { handleServerAppError } from "common/utils"
 
 const initialState = {
   status: "idle" as RequestStatusType,
@@ -32,23 +27,3 @@ const slice = createSlice({
 
 export const appReducer = slice.reducer
 export const appActions = slice.actions
-
-export const initializeAppTC = () => (dispatch: Dispatch) => {
-  authApi
-    .me()
-    .then((res) => {
-      // debugger
-      if (res.data.resultCode === 0) {
-        dispatch(authActions.setIsLoggedIn({ isLoggedIn: true }))
-      } else {
-        handleServerAppError(dispatch, res.data)
-      }
-      dispatch(appActions.setAppIsInitialized({ isInitialized: true }))
-    })
-    .catch((error) => {
-      handleServerNetworkError(dispatch, error.message)
-    })
-    .finally(() => {
-      dispatch(authActions.setIsLoggedIn({ isLoggedIn: true }))
-    })
-}
