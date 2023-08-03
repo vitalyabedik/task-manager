@@ -1,15 +1,13 @@
 import { v1 } from "uuid"
 
 import {
-  ChangeTodolistTitleArgType,
   FilterValuesType,
-  RemoveTodolistArgType,
   TodolistDomainType,
   todolistsActions,
   todolistsSlice,
   todolistsThunks,
 } from "features/todolistsList/model/todolists.slice"
-import { TodolistType } from "features/todolistsList/api"
+import { DeleteTodolistArgType, TodolistType, UpdateTodolistTitleArgType } from "features/todolistsList/api"
 
 let todolistId1: string
 let todolistId2: string
@@ -26,12 +24,12 @@ beforeEach(() => {
 })
 
 test("correct todolist should be removed", () => {
-  type RemoveActionType = {
+  type DeleteActionType = {
     type: typeof todolistsThunks.removeTodolist.fulfilled.type
-    payload: RemoveTodolistArgType
+    payload: DeleteTodolistArgType
   }
 
-  const action: RemoveActionType = {
+  const action: DeleteActionType = {
     type: todolistsThunks.removeTodolist.fulfilled.type,
     payload: {
       todolistId: todolistId1,
@@ -74,13 +72,13 @@ test("correct todolist should be added", () => {
 test("correct todolist should changed title", () => {
   let newTodolistTitle = "newTodolistTitle"
 
-  type AddActionType = {
-    type: typeof todolistsThunks.changeTodolistTitle.fulfilled.type
-    payload: ChangeTodolistTitleArgType
+  type UpdateActionType = {
+    type: typeof todolistsThunks.updateTodolistTitle.fulfilled.type
+    payload: UpdateTodolistTitleArgType
   }
 
-  const action: AddActionType = {
-    type: todolistsThunks.changeTodolistTitle.fulfilled.type,
+  const action: UpdateActionType = {
+    type: todolistsThunks.updateTodolistTitle.fulfilled.type,
     payload: {
       todolistId: todolistId2,
       title: newTodolistTitle,

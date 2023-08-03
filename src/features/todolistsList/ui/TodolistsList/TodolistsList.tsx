@@ -29,7 +29,7 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
   useEffect(() => {
     if (!isLoggedIn || demo) return
 
-    dispatch(todolistsThunks.fetchTodolists({}))
+    dispatch(todolistsThunks.getTodolists({}))
   }, [demo, isLoggedIn])
 
   const addTodolist = useCallback((title: string) => {
@@ -39,7 +39,7 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
     dispatch(todolistsThunks.removeTodolist({ todolistId }))
   }, [])
   const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
-    dispatch(todolistsThunks.changeTodolistTitle({ todolistId, title }))
+    dispatch(todolistsThunks.updateTodolistTitle({ todolistId, title }))
   }, [])
 
   const changeFilter = useCallback((todolistId: string, filter: FilterValuesType) => {

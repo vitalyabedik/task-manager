@@ -25,7 +25,7 @@ export const CreateTodolist = () => {
   }
 
   const createTodolistHandler = () => {
-    todolistsApi.createTodolist(title).then((res) => {
+    todolistsApi.addTodolist(title).then((res) => {
       setState(res.data)
     })
   }
@@ -79,7 +79,7 @@ export const UpdateTodolistTitle = () => {
   }
 
   const updateTodolistHandler = () => {
-    todolistsApi.updateTodolist(todolistId, title).then((res) => {
+    todolistsApi.updateTodolist({ todolistId, title }).then((res) => {
       setState(res.data)
     })
   }
