@@ -9,14 +9,14 @@ import { HashRouter } from "react-router-dom"
 import { AppRootReducerType, AppRootStateType } from "app/store"
 import { tasksSlice } from "features/tasks/model/tasks.slice"
 import { todolistsSlice } from "features/todolistsList/model/todolists.slice"
-import { appReducer } from "app/app.reducer"
+import { appSlice } from "app/app.slice"
 import { authSlice } from "features/auth/model/auth.slice"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 
 const rootReducer: AppRootReducerType = combineReducers({
   tasks: tasksSlice,
   todolists: todolistsSlice,
-  app: appReducer,
+  app: appSlice,
   auth: authSlice,
 })
 

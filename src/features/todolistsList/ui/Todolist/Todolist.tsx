@@ -10,7 +10,7 @@ import { EditableSpan } from "common/components/EditableSpan"
 import { Task } from "features/tasks/ui/Task/Task"
 import { FilterValuesType } from "features/todolistsList/model/todolists.slice"
 import { TaskDomainType } from "features/tasks/model/tasks.slice"
-import { RequestStatusType } from "app/app.reducer"
+import { RequestStatusType } from "app/app.slice"
 import { TaskStatuses } from "common/enums"
 
 type PropsType = {

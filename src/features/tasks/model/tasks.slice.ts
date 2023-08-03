@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { TasksStateType } from "app"
-import { appActions, RequestStatusType } from "app/app.reducer"
+import { appActions, RequestStatusType } from "app/app.slice"
 import { todolistsThunks } from "features/todolistsList/model/todolists.slice"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
 import { createAppAsyncThunk, handleServerAppError } from "common/utils"
