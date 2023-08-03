@@ -14,7 +14,7 @@ import { ResponseType } from 'common/api/common.types.api';
  *    or rejects with a specific value from `thunkAPI.rejectWithValue` if an error occurs.
  */
 
-const thunkTryCatch = async <T>(
+export const thunkTryCatch = async <T>(
   thunkAPI: BaseThunkAPI<AppRootStateType, any, AppDispatch, null | ResponseType>,
   logic: () => Promise<T>,
 ): Promise<T | ReturnType<typeof thunkAPI.rejectWithValue>> => {

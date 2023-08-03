@@ -66,7 +66,7 @@ const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, {}>(
       const res = await todolistsApi.getTodolists()
       dispatch(appActions.setAppStatus({ status: "succeeded" }))
       res.data.forEach((tl) => {
-        dispatch(tasksThunks.fetchTasks({ todolistId: tl.id }))
+        dispatch(tasksThunks.getTasks({ todolistId: tl.id }))
       })
       return { todolists: res.data }
     } catch (error) {

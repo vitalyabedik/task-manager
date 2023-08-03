@@ -47,7 +47,7 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
   }, [])
 
   const removeTask = useCallback((todolistId: string, id: string) => {
-    dispatch(tasksThunks.removeTask({ todolistId, taskId: id }))
+    dispatch(tasksThunks.deleteTask({ todolistId, taskId: id }))
   }, [])
 
   const addTask = useCallback((todolistId: string, title: string) => {

@@ -1,8 +1,8 @@
-import { RemoveTaskArgType, tasksSlice, tasksThunks, UpdateTaskArgType } from "features/tasks/model/tasks.slice"
+import { tasksSlice, tasksThunks } from "features/tasks/model/tasks.slice"
 import { todolistsThunks } from "features/todolistsList/model/todolists.slice"
 import { TasksStateType } from "app"
 import { TaskPriorities, TaskStatuses } from "common/enums"
-import { TaskType } from "features/tasks/api"
+import { DeleteTaskArgType, TaskType, UpdateTaskArgType } from "features/tasks/api"
 import { TodolistType } from "features/todolistsList/api"
 
 let startState: TasksStateType
@@ -101,12 +101,12 @@ beforeEach(() => {
 
 test("correct task should be deleted from correct array", () => {
   type RemoveActionType = {
-    type: typeof tasksThunks.removeTask.fulfilled.type
-    payload: RemoveTaskArgType
+    type: typeof tasksThunks.deleteTask.fulfilled.type
+    payload: DeleteTaskArgType
   }
 
   const action: RemoveActionType = {
-    type: tasksThunks.removeTask.fulfilled.type,
+    type: tasksThunks.deleteTask.fulfilled.type,
     payload: {
       todolistId: "todolistId2",
       taskId: "2",
@@ -270,19 +270,19 @@ test("new array should be added when new todolist is added", () => {
   }
 
   type ActionType = {
-    type: typeof todolistsThunks.addTodolist.fulfilled.type,
+    type: typeof todolistsThunks.addTodolist.fulfilled.type
     payload: {
       todolist: TodolistType
-    },
+    }
   }
 
   const action: ActionType = {
     type: todolistsThunks.addTodolist.fulfilled.type,
     payload: {
-      todolist
+      todolist,
     },
   }
-  
+
   const endState = tasksSlice(startState, action)
 
   const keys = Object.keys(endState)

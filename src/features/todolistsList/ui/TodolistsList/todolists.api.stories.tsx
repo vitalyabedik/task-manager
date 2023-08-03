@@ -136,7 +136,7 @@ export const CreateTodolistTasks = () => {
   }
 
   const createTaskHandler = () => {
-    tasksApi.createTask(todolistId, title).then((res) => {
+    tasksApi.addTask({ todolistId, title }).then((res) => {
       setState(res.data)
     })
   }
@@ -167,7 +167,7 @@ export const DeleteTodolistTask = () => {
   }
 
   const deleteTaskHandler = () => {
-    tasksApi.deleteTask(todolistId, taskId).then((res) => {
+    tasksApi.deleteTask({ todolistId, taskId }).then((res) => {
       setState(res.data)
     })
   }
