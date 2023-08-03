@@ -20,7 +20,7 @@ import { TaskDomainType } from "features/tasks/model/tasks.slice"
 import { ROUTES } from "common/configs/routes"
 import { Login } from "features/auth/ui/Login"
 import { NotFound } from "common/components/NotFound"
-import { useAppDispatch, useAppSelector } from "common/hooks"
+import { useActions, useAppSelector } from "common/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
 import { authThunks } from "features/auth/model/auth.slice"
 
@@ -37,16 +37,16 @@ export const App = ({ demo = false }: AppPropsType) => {
   const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized)
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
 
-  const dispatch = useAppDispatch()
+  const { initializeApp, logout } = useActions(authThunks)
 
   const onLogoutHandler = () => {
-    dispatch(authThunks.logout())
+    logout()
   }
 
   useEffect(() => {
     if (demo) return
 
-    dispatch(authThunks.initializeApp())
+    initializeApp()
   }, [demo])
 
   if (!isInitialized) {
