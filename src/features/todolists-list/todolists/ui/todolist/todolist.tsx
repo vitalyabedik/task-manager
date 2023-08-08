@@ -16,7 +16,9 @@ type PropsType = {
 export const Todolist: React.FC<PropsType> = React.memo(({ todolist, tasks }) => {
   const { addTask } = useActions({ ...todolistsThunks, ...tasksThunks })
 
-  const addTaskHandler = useCallback((title: string) => addTask({ todolistId: todolist.id, title }), [])
+  const addTaskHandler = useCallback((title: string) => {
+    return addTask({ todolistId: todolist.id, title }).unwrap()
+  }, [])
 
   return (
     <div>

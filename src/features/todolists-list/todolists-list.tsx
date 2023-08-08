@@ -23,7 +23,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   const tasks = useAppSelector(selectTasks)
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
 
-  const { fetchTodolists, addTodolist: addTodolistThunk } = useActions({
+  const { fetchTodolists, addTodolist } = useActions({
     ...todolistsThunks,
     ...tasksThunks,
     ...todolistsActions,
@@ -36,7 +36,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   }, [demo, isLoggedIn])
 
   const addTodolistCallback = useCallback((title: string) => {
-    addTodolistThunk({ title })
+    return addTodolist({ title }).unwrap()
   }, [])
 
   if (!isLoggedIn) return <Navigate to={ROUTES.LOGIN} />

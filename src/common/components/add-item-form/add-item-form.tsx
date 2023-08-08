@@ -3,10 +3,11 @@ import React, { ChangeEvent, KeyboardEvent, useState } from "react"
 import TextField from "@mui/material/TextField"
 import IconButton from "@mui/material/IconButton"
 import ControlPoint from "@mui/icons-material/ControlPoint"
+import { BaseResponseType } from "common/api"
 
 type PropsType = {
+  addItem: (title: string) => Promise<any>
   disabled?: boolean
-  addItem: (title: string) => void
 }
 
 export const AddItemForm: React.FC<PropsType> = React.memo(({ addItem, disabled }) => {
@@ -15,8 +16,14 @@ export const AddItemForm: React.FC<PropsType> = React.memo(({ addItem, disabled 
 
   const addTaskHandler = () => {
     if (title.trim() !== "") {
-      addItem(title.trim())
-      setTitle("")
+      addItem &&
+        addItem(title)
+          .then(() => {
+            setTitle("")
+          })
+          .catch((reason: BaseResponseType) => {
+            setError(reason.messages[0])
+          })
     } else {
       setError("Title is required!")
     }
