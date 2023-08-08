@@ -14,11 +14,11 @@ import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
 import { selectTasks } from "features/todolists-list/tasks/model/tasks.selector"
 import { selectTodolists } from "features/todolists-list/todolists/model/todolists.selector"
 
-type TodolistsPropsType = {
+type PropsType = {
   demo?: boolean
 }
 
-export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
+export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   const todolists = useAppSelector(selectTodolists)
   const tasks = useAppSelector(selectTasks)
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)

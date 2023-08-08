@@ -13,7 +13,7 @@ import Container from "@mui/material/Container"
 import { CircularProgress, LinearProgress } from "@mui/material"
 import { Logout } from "@mui/icons-material"
 
-import { TodolistsList } from "features/todolists-list/todolistsList"
+import { TodolistsList } from "features/todolists-list/todolists-list"
 import { RequestStatusType } from "app/model/app.reducer"
 import { ErrorSnackbar } from "common/components/errorSnackbar"
 import { ROUTES } from "common/configs/routes"
@@ -23,11 +23,11 @@ import { useActions, useAppSelector } from "common/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
 import { authThunks } from "features/auth/model/auth.reducer"
 
-type AppPropsType = {
+type PropsType = {
   demo?: boolean
 }
 
-export const App = ({ demo = false }: AppPropsType) => {
+export const App: React.FC<PropsType> = ({ demo = false }) => {
   const status = useAppSelector<RequestStatusType>((state) => state.app.status)
   const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized)
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
