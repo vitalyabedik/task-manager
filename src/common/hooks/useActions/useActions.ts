@@ -1,28 +1,31 @@
-import { ActionCreator, ActionCreatorsMapObject, AsyncThunk, bindActionCreators } from '@reduxjs/toolkit';
+import { ActionCreatorsMapObject, bindActionCreators } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
 
 /**
- * Custom React hook to bind Redux action creators to the dispatch function from the Redux store.
+ * Custom hook that wraps Redux action creators with the dispatch function,
+ * enabling their use within functional components.
  *
- * @template Actions - The type of the action creators map object.
- * @param {Actions} actions - The map object containing the action creators to be bound.
- * @returns {BoundActions<Actions>} The bound actions object where action creators are connected to the dispatch function.
+ * @template T - The type of the action creators object.
+ * @param {T} actions - An object containing Redux action creators.
+ * @returns {Object} An object with action creators mapped to the dispatch function.
  */
 
-export const useActions = <Actions extends ActionCreatorsMapObject = ActionCreatorsMapObject>(
-  actions: Actions,
-): BoundActions<Actions> => {
+export const useActions = <T extends ActionCreatorsMapObject>(actions: T) => {
   const dispatch = useAppDispatch()
 
-  return useMemo(() => bindActionCreators(actions, dispatch), [])
+  return useMemo(() => bindActionCreators<T, RemapActionCreators<T>>(actions, dispatch), [actions, dispatch])
 }
 
 // Types
-type BoundActions<Actions extends ActionCreatorsMapObject> = {
-  [key in keyof Actions]: Actions[key] extends AsyncThunk<any, any, any> ? BoundAsyncThunk<Actions[key]> : Actions[key]
-}
+type IsValidArg<T> = T extends object ? (keyof T extends never ? false : true) : true
+type ActionCreatorResponse<T extends (...args: any[]) => any> = ReturnType<ReturnType<T>>
+type ReplaceReturnType<T, TNewReturn> = T extends (...args: any[]) => infer R
+  ? IsValidArg<Extract<T, (...args: any[]) => any>> extends true
+    ? (...args: Parameters<Extract<T, (...args: any[]) => any>>) => TNewReturn
+    : () => TNewReturn
+  : never
 
-type BoundAsyncThunk<Action extends ActionCreator<any>> = (
-  ...args: Parameters<Action>
-) => ReturnType<ReturnType<Action>>
+type RemapActionCreators<T extends ActionCreatorsMapObject> = {
+  [K in keyof T]: ReplaceReturnType<T[K], ActionCreatorResponse<T[K]>>
+}
