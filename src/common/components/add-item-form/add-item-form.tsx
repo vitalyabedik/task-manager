@@ -17,7 +17,7 @@ export const AddItemForm: React.FC<PropsType> = React.memo(({ addItem, disabled 
   const addTaskHandler = () => {
     if (title.trim() !== "") {
       addItem &&
-        addItem(title)
+        addItem(title.trim())
           .then(() => {
             setTitle("")
           })
