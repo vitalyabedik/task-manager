@@ -15,12 +15,7 @@ const rootReducer = combineReducers({
 })
 
 export const store = configureStore({
-  reducer: {
-    tasks: tasksSlice,
-    todolists: todolistsSlice,
-    app: appSlice,
-    auth: authSlice,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunkMiddleware),
 })
 
