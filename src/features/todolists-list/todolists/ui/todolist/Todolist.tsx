@@ -23,9 +23,6 @@ type PropsType = {
   changeTodolistTitle: (todolistId: string, title: string) => void
   changeFilter: (todolistId: string, value: FilterValuesType) => void
   addTask: (todolistId: string, title: string) => void
-  removeTask: (todolistId: string, id: string) => void
-  changeTaskStatus: (todolistId: string, taskId: string, status: TaskStatuses) => void
-  changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
 }
 
 export const Todolist = React.memo((props: PropsType) => {
@@ -86,16 +83,7 @@ export const Todolist = React.memo((props: PropsType) => {
       <AddItemForm disabled={props.entityStatus === "loading"} addItem={addTask} />
       <div>
         {filteredTasks.map((task) => {
-          return (
-            <Task
-              key={task.id}
-              todolistId={props.id}
-              task={task}
-              removeTask={props.removeTask}
-              changeTaskStatus={props.changeTaskStatus}
-              changeTaskTitle={props.changeTaskTitle}
-            />
-          )
+          return <Task key={task.id} todolistId={props.id} task={task} />
         })}
       </div>
       <div>

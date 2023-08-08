@@ -17,7 +17,6 @@ import { useActions, useAppSelector } from "common/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
 import { selectTasks } from "features/todolists-list/tasks/model/tasks.selector"
 import { selectTodolists } from "features/todolists-list/todolists/model/todolists.selector"
-import { TaskStatuses } from "common/enums"
 
 type TodolistsPropsType = {
   demo?: boolean
@@ -34,8 +33,6 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
     removeTodolist: removeTodolistThunk,
     updateTodolistTitle: updateTodolistTitleThunk,
     addTask: addTaskThunk,
-    deleteTask,
-    updateTask,
     changeTodolistFilter,
   } = useActions({ ...todolistsThunks, ...tasksThunks, ...todolistsActions })
 
@@ -61,20 +58,8 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
     changeTodolistFilter({ todolistId, filter })
   }, [])
 
-  const removeTask = useCallback((todolistId: string, id: string) => {
-    deleteTask({ todolistId, taskId: id })
-  }, [])
-
   const addTask = useCallback((todolistId: string, title: string) => {
     addTaskThunk({ todolistId, title })
-  }, [])
-
-  const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
-    updateTask({ todolistId, taskId, domainModel: { status } })
-  }, [])
-
-  const changeTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
-    updateTask({ todolistId, taskId, domainModel: { title } })
   }, [])
 
   if (!isLoggedIn) return <Navigate to={ROUTES.LOGIN} />
@@ -102,9 +87,6 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
                   changeTodolistTitle={changeTodolistTitle}
                   changeFilter={changeFilter}
                   addTask={addTask}
-                  removeTask={removeTask}
-                  changeTaskStatus={changeTaskStatus}
-                  changeTaskTitle={changeTaskTitle}
                 />
               </Paper>
             </Grid>

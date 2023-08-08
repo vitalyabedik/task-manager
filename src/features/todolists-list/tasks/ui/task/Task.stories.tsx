@@ -1,8 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
+import type { Meta, StoryObj } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
 
-import { Task } from 'features/todolists-list/tasks/ui/task/Task';
-import { TaskPriorities, TaskStatuses } from 'common/enums';
+import { Task } from "features/todolists-list/tasks/ui/task/Task"
+import { TaskPriorities, TaskStatuses } from "common/enums"
+
+type TaskStoryProps = {
+  changeTaskStatus: () => void
+  changeTaskTitle: () => void
+  removeTask: () => void
+} & React.ComponentProps<typeof Task>
 
 // More on how to set up stories at:
 // https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -32,7 +38,7 @@ const meta: Meta<typeof Task> = {
     changeTaskStatus: action("Status changed inside Index"),
     changeTaskTitle: action("Title changed inside Index"),
     removeTask: action("Remove Button clicked changed inside Index"),
-  },
+  } as TaskStoryProps,
 }
 
 export default meta
@@ -56,5 +62,9 @@ export const TaskIsDoneStory: Story = {
       addedDate: "",
       description: "",
     },
-  },
+    todolistId: "fgdosrg8rgjuh",
+    changeTaskStatus: action("Status changed inside Index"),
+    changeTaskTitle: action("Title changed inside Index"),
+    removeTask: action("Remove Button clicked changed inside Index"),
+  } as TaskStoryProps,
 }
