@@ -1,1 +1,1 @@
-export * from "common/components/add-item-form/AddItemForm"
+export * from "common/components/add-item-form/add-item-form"
