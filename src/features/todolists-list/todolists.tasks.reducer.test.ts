@@ -130,12 +130,12 @@ test("property with todolistId should be deleted", () => {
   }
 
   type DeleteActionType = {
-    type: typeof todolistsThunks.removeTodolist.fulfilled.type
+    type: typeof todolistsThunks.deleteTodolist.fulfilled.type
     payload: DeleteTodolistArgType
   }
 
   const action: DeleteActionType = {
-    type: todolistsThunks.removeTodolist.fulfilled.type,
+    type: todolistsThunks.deleteTodolist.fulfilled.type,
     payload: {
       todolistId: "todolistId2",
     },

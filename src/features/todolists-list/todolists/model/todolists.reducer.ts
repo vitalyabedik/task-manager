@@ -37,10 +37,10 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(todolistsThunks.getTodolists.fulfilled, (state, action) => {
+      .addCase(todolistsThunks.fetchTodolists.fulfilled, (state, action) => {
         return action.payload.todolists.map((tl) => ({ ...tl, filter: "all", entityStatus: "idle" }))
       })
-      .addCase(todolistsThunks.removeTodolist.fulfilled, (state, action) => {
+      .addCase(todolistsThunks.deleteTodolist.fulfilled, (state, action) => {
         const index = state.findIndex((todo) => todo.id === action.payload.todolistId)
         if (index !== -1) state.splice(index, 1)
       })
@@ -60,7 +60,7 @@ const slice = createSlice({
   },
 })
 
-const getTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, undefined>(
+const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, undefined>(
   "todolists/fetchTodolists",
   async (_, thunkAPI) => {
     const { dispatch } = thunkAPI
@@ -68,7 +68,7 @@ const getTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, undefine
     return thunkTryCatch(thunkAPI, async () => {
       const res = await todolistsApi.getTodolists()
       res.data.forEach((tl) => {
-        dispatch(tasksThunks.getTasks({ todolistId: tl.id }))
+        dispatch(tasksThunks.fetchTasks({ todolistId: tl.id }))
       })
       const todolists = res.data
       return { todolists }
@@ -76,7 +76,7 @@ const getTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, undefine
   },
 )
 
-const removeTodolist = createAppAsyncThunk<DeleteTodolistArgType, DeleteTodolistArgType>(
+const deleteTodolist = createAppAsyncThunk<DeleteTodolistArgType, DeleteTodolistArgType>(
   "todolists/removeTodolist",
   async (arg, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI
@@ -140,7 +140,7 @@ const updateTodolistTitle = createAppAsyncThunk<UpdateTodolistTitleArgType, Upda
 
 export const todolistsReducer = slice.reducer
 export const todolistsActions = slice.actions
-export const todolistsThunks = { getTodolists, removeTodolist, addTodolist, updateTodolistTitle }
+export const todolistsThunks = { fetchTodolists, deleteTodolist, addTodolist, updateTodolistTitle }
 
 // types
 export type FilterValuesType = "all" | "active" | "completed"

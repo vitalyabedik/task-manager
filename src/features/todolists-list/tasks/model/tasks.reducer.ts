@@ -35,7 +35,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(tasksThunks.getTasks.fulfilled, (state, action) => {
+      .addCase(tasksThunks.fetchTasks.fulfilled, (state, action) => {
         state[action.payload.todolistId] = action.payload.tasks.map((t: any) => ({ ...t, entityStatus: "idle" }))
       })
       .addCase(tasksThunks.deleteTask.fulfilled, (state, action) => {
@@ -63,10 +63,10 @@ const slice = createSlice({
       .addCase(todolistsThunks.addTodolist.fulfilled, (state, action) => {
         state[action.payload.todolist.id] = []
       })
-      .addCase(todolistsThunks.removeTodolist.fulfilled, (state, action) => {
+      .addCase(todolistsThunks.deleteTodolist.fulfilled, (state, action) => {
         delete state[action.payload.todolistId]
       })
-      .addCase(todolistsThunks.getTodolists.fulfilled, (state, action) => {
+      .addCase(todolistsThunks.fetchTodolists.fulfilled, (state, action) => {
         action.payload.todolists.forEach((tl) => {
           state[tl.id] = []
         })
@@ -77,7 +77,7 @@ const slice = createSlice({
   },
 })
 
-const getTasks = createAppAsyncThunk<{ todolistId: string; tasks: TaskType[] }, GetTasksArgType>(
+const fetchTasks = createAppAsyncThunk<{ todolistId: string; tasks: TaskType[] }, GetTasksArgType>(
   "tasks/fetchTasks",
   async (arg, thunkAPI) => {
     return thunkTryCatch(thunkAPI, async () => {
@@ -187,7 +187,7 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
 
 export const tasksReducer = slice.reducer
 export const tasksActions = slice.actions
-export const tasksThunks = { getTasks, deleteTask, addTask, updateTask }
+export const tasksThunks = { fetchTasks, deleteTask, addTask, updateTask }
 
 // types
 export type TasksStateType = {

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react"
+import React, { ChangeEvent, useCallback } from "react"
 
 import styles from "features/todolists-list/tasks/ui/task/task.module.css"
 
@@ -19,20 +19,26 @@ type PropsType = {
 export const Task: React.FC<PropsType> = React.memo(({ task, todolistId }) => {
   const { deleteTask, updateTask } = useActions(tasksThunks)
 
-  const deleteTaskHandler = () => deleteTask({ todolistId, taskId: task.id })
+  const deleteTaskCallback = useCallback(() => deleteTask({ todolistId, taskId: task.id }), [todolistId, task.id])
 
-  const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const status = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
-    updateTask({
-      todolistId,
-      taskId: task.id,
-      domainModel: { status },
-    })
-  }
+  const changeTaskStatusCallback = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const status = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
+      updateTask({
+        todolistId,
+        taskId: task.id,
+        domainModel: { status },
+      })
+    },
+    [todolistId, task.id],
+  )
 
-  const changeTaskTitleHandler = (title: string) => {
-    updateTask({ todolistId, taskId: task.id, domainModel: { title } })
-  }
+  const changeTaskTitleCallback = useCallback(
+    (title: string) => {
+      updateTask({ todolistId, taskId: task.id, domainModel: { title } })
+    },
+    [todolistId, task.id],
+  )
 
   const taskStatusClasses = task.status === TaskStatuses.Completed ? styles.isDone : ""
 
@@ -40,11 +46,11 @@ export const Task: React.FC<PropsType> = React.memo(({ task, todolistId }) => {
     <div key={task.id} className={taskStatusClasses}>
       <Checkbox
         disabled={task.entityStatus === "loading"}
-        onChange={changeTaskStatusHandler}
+        onChange={changeTaskStatusCallback}
         checked={task.status === TaskStatuses.Completed}
       />
-      <EditableSpan disabled={task.entityStatus === "loading"} onChange={changeTaskTitleHandler} title={task.title} />
-      <IconButton disabled={task.entityStatus === "loading"} onClick={deleteTaskHandler}>
+      <EditableSpan disabled={task.entityStatus === "loading"} onChange={changeTaskTitleCallback} title={task.title} />
+      <IconButton disabled={task.entityStatus === "loading"} onClick={deleteTaskCallback}>
         <Delete />
       </IconButton>
     </div>
