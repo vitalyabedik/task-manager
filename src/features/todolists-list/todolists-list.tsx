@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper"
 
 import { todolistsActions, todolistsThunks } from "features/todolists-list/todolists/model/todolists.reducer"
 import { tasksThunks } from "features/todolists-list/tasks/model/tasks.reducer"
-import { AddItemForm } from "common/components/addItemForm"
+import { AddItemForm } from "common/components/add-item-form"
 import { Todolist } from "features/todolists-list/todolists/ui/todolist/todolist"
 import { ROUTES } from "common/configs/routes"
 import { useActions, useAppSelector } from "common/hooks"

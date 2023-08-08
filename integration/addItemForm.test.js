@@ -1,4 +1,4 @@
-describe("addItemForm", () => {
+describe("add-item-form", () => {
   it("base example, visually looks correct", async () => {
     // APIs from jest-puppeteer
     await page.goto(

@@ -3,7 +3,7 @@ import React, { ChangeEvent, useCallback } from "react"
 import styles from "features/todolists-list/todolists/ui/todolist/tasks/task/task.module.css"
 
 import Checkbox from "@mui/material/Checkbox"
-import { EditableSpan } from "common/components/editableSpan"
+import { EditableSpan } from "common/components/editable-span"
 import IconButton from "@mui/material/IconButton"
 import Delete from "@mui/icons-material/Delete"
 

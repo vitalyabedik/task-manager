@@ -1,6 +1,6 @@
 import React, { useCallback } from "react"
 
-import { AddItemForm } from "common/components/addItemForm"
+import { AddItemForm } from "common/components/add-item-form"
 import { TodolistDomainType, todolistsThunks } from "features/todolists-list/todolists/model/todolists.reducer"
 import { TaskDomainType, tasksThunks } from "features/todolists-list/tasks/model/tasks.reducer"
 import { useActions } from "common/hooks"
