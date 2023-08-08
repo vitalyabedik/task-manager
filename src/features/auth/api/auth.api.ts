@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios/index"
 
 import { commonApi } from "common/api/common.api"
-import { BaseResponseType } from "common/api/common.types.api"
-import { LoginParamsType, UserData } from "features/auth/api/auth.types.api"
-import { TodolistType } from "features/todolistsList/api"
+import { BaseResponseType } from "common/api/common.api.types"
+import { LoginParamsType, UserData } from "features/auth/api/auth.api.types"
+import { TodolistType } from "features/todolists-list/todolists/api"
 
 export const authApi = {
   me() {

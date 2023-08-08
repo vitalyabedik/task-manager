@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
-import { appActions } from 'app/app.slice';
-import { BaseResponseType } from 'common/api/common.types.api';
+import { appActions } from 'app/app.reducer';
+import { BaseResponseType } from 'common/api/common.api.types';
 
 /**
  * Handles server application errors and updates the application state accordingly.

@@ -1,8 +1,8 @@
 import { AppDispatch, AppRootStateType } from 'app/store';
 import { handleServerNetworkError } from 'common/utils/errors';
 import { BaseThunkAPI } from '@reduxjs/toolkit/dist/createAsyncThunk';
-import { appActions } from 'app/app.slice';
-import { BaseResponseType } from 'common/api/common.types.api';
+import { appActions } from 'app/app.reducer';
+import { BaseResponseType } from 'common/api/common.api.types';
 
 /**
  * A utility function that wraps asynchronous logic in a try-catch block with specific error handling.

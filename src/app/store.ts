@@ -2,16 +2,16 @@ import { configureStore } from "@reduxjs/toolkit"
 import { AnyAction, combineReducers } from "redux"
 import thunkMiddleware, { ThunkDispatch } from "redux-thunk"
 
-import { tasksSlice } from "features/tasks/model/tasks.slice"
-import { todolistsSlice } from "features/todolistsList/model/todolists.slice"
-import { appSlice } from "app/app.slice"
-import { authSlice } from "features/auth/model/auth.slice"
+import { tasksReducer } from "features/todolists-list/tasks/model/tasks.reducer"
+import { todolistsReducer } from "features/todolists-list/todolists/model/todolists.reducer"
+import { appReducer } from "app/app.reducer"
+import { authReducer } from "features/auth/model/auth.reducer"
 
 const rootReducer = combineReducers({
-  tasks: tasksSlice,
-  todolists: todolistsSlice,
-  app: appSlice,
-  auth: authSlice,
+  tasks: tasksReducer,
+  todolists: todolistsReducer,
+  app: appReducer,
+  auth: authReducer,
 })
 
 export const store = configureStore({
