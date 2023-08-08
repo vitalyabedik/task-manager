@@ -32,13 +32,13 @@ export const TodolistsList = ({ demo = false }: TodolistsPropsType) => {
     addTask: addTaskThunk,
     deleteTask,
     updateTask,
-    changeTodolistFilter
+    changeTodolistFilter,
   } = useActions({ ...todolistsThunks, ...tasksThunks, ...todolistsActions })
 
   useEffect(() => {
     if (!isLoggedIn || demo) return
 
-    getTodolists({})
+    getTodolists()
   }, [demo, isLoggedIn])
 
   const addTodolist = useCallback((title: string) => {

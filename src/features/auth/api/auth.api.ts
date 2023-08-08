@@ -1,22 +1,22 @@
 import { AxiosResponse } from "axios/index"
 
 import { commonApi } from "common/api/common.api"
-import { ResponseType } from "common/api/common.types.api"
+import { BaseResponseType } from "common/api/common.types.api"
 import { LoginParamsType, UserData } from "features/auth/api/auth.types.api"
 import { TodolistType } from "features/todolistsList/api"
 
 export const authApi = {
   me() {
-    return commonApi.get<ResponseType<UserData>>(`auth/me`)
+    return commonApi.get<BaseResponseType<UserData>>(`auth/me`)
   },
   login(data: LoginParamsType) {
     return commonApi.post<
-      ResponseType<{ item: TodolistType }>,
-      AxiosResponse<ResponseType<{ item: TodolistType }>>,
+      BaseResponseType<{ item: TodolistType }>,
+      AxiosResponse<BaseResponseType<{ item: TodolistType }>>,
       LoginParamsType
     >("auth/login", data)
   },
   logout() {
-    return commonApi.delete<ResponseType>(`auth/login`)
+    return commonApi.delete<BaseResponseType>(`auth/login`)
   },
 }

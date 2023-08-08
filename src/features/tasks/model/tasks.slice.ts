@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { TasksStateType } from "app"
+
 import { appActions, RequestStatusType } from "app/app.slice"
 import { todolistsThunks } from "features/todolistsList/model/todolists.slice"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
@@ -91,6 +91,7 @@ const deleteTask = createAppAsyncThunk<DeleteTaskArgType, DeleteTaskArgType>(
   "tasks/removeTask",
   async (arg, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI
+
     return thunkTryCatch(thunkAPI, async () => {
       dispatch(
         tasksActions.changeTaskEntityStatus({
@@ -158,37 +159,27 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
         ...arg.domainModel,
       }
 
-      try {
+      dispatch(
+        tasksActions.changeTaskEntityStatus({
+          todolistId: arg.todolistId,
+          taskId: arg.taskId,
+          entityStatus: "loading",
+        }),
+      )
+      const res = await tasksApi.updateTask(arg.todolistId, arg.taskId, apiModel)
+      if (res.data.resultCode === ResultCode.SUCCESS) {
         dispatch(
           tasksActions.changeTaskEntityStatus({
             todolistId: arg.todolistId,
             taskId: arg.taskId,
-            entityStatus: "loading",
+            entityStatus: "succeeded",
           }),
         )
-        const res = await tasksApi.updateTask(arg.todolistId, arg.taskId, apiModel)
-        if (res.data.resultCode === ResultCode.SUCCESS) {
-          dispatch(
-            tasksActions.changeTaskEntityStatus({
-              todolistId: arg.todolistId,
-              taskId: arg.taskId,
-              entityStatus: "succeeded",
-            }),
-          )
 
-          return arg
-        } else {
-          handleServerAppError(dispatch, res.data)
-          return rejectWithValue(null)
-        }
-      } finally {
-        dispatch(
-          tasksActions.changeTaskEntityStatus({
-            todolistId: arg.todolistId,
-            taskId: arg.taskId,
-            entityStatus: "idle",
-          }),
-        )
+        return arg
+      } else {
+        handleServerAppError(dispatch, res.data)
+        return rejectWithValue(null)
       }
     })
   },
@@ -199,6 +190,10 @@ export const tasksActions = slice.actions
 export const tasksThunks = { getTasks, deleteTask, addTask, updateTask }
 
 // types
+export type TasksStateType = {
+  [key: string]: TaskDomainType[]
+}
+
 export type TaskDomainType = TaskType & {
   entityStatus: RequestStatusType
 }

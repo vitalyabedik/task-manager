@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 
 import { commonApi } from "common/api/common.api"
-import { ResponseType } from "common/api/common.types.api"
+import { BaseResponseType } from "common/api/common.types.api"
 import {
   AddTodolistArgType,
   DeleteTodolistArgType,
@@ -15,17 +15,20 @@ export const todolistsApi = {
   },
   addTodolist(arg: AddTodolistArgType) {
     return commonApi.post<
-      ResponseType<{ item: TodolistType }>,
-      AxiosResponse<ResponseType<{ item: TodolistType }>>,
+      BaseResponseType<{ item: TodolistType }>,
+      AxiosResponse<BaseResponseType<{ item: TodolistType }>>,
       { title: string }
     >(`todo-lists`, { title: arg.title })
   },
   deleteTodolist(arg: DeleteTodolistArgType) {
-    return commonApi.delete<ResponseType>(`todo-lists/${arg.todolistId}`)
+    return commonApi.delete<BaseResponseType>(`todo-lists/${arg.todolistId}`)
   },
   updateTodolist(arg: UpdateTodolistTitleArgType) {
-    return commonApi.put<ResponseType, AxiosResponse<ResponseType>, { title: string }>(`todo-lists/${arg.todolistId}`, {
-      title: arg.title,
-    })
+    return commonApi.put<BaseResponseType, AxiosResponse<BaseResponseType>, { title: string }>(
+      `todo-lists/${arg.todolistId}`,
+      {
+        title: arg.title,
+      },
+    )
   },
 }

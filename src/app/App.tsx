@@ -16,7 +16,6 @@ import { Logout } from "@mui/icons-material"
 import { TodolistsList } from "features/todolistsList/ui/TodolistsList"
 import { RequestStatusType } from "app/app.slice"
 import { ErrorSnackbar } from "common/components/ErrorSnackbar"
-import { TaskDomainType } from "features/tasks/model/tasks.slice"
 import { ROUTES } from "common/configs/routes"
 import { Login } from "features/auth/ui/Login"
 import { NotFound } from "common/components/NotFound"
@@ -26,10 +25,6 @@ import { authThunks } from "features/auth/model/auth.slice"
 
 type AppPropsType = {
   demo?: boolean
-}
-
-export type TasksStateType = {
-  [key: string]: TaskDomainType[]
 }
 
 export const App = ({ demo = false }: AppPropsType) => {

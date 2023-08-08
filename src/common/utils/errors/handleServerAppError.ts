@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import { appActions } from 'app/app.slice';
-import { ResponseType } from 'common/api/common.types.api';
+import { BaseResponseType } from 'common/api/common.types.api';
 
 /**
  * Handles server application errors and updates the application state accordingly.
@@ -12,7 +12,7 @@ import { ResponseType } from 'common/api/common.types.api';
  * @param {boolean} [showError=true] - A flag indicating whether to show the error message or not. Default is true.
  */
 
-export const handleServerAppError = <T>(dispatch: Dispatch, data: ResponseType<T>, showError: boolean = true) => {
+export const handleServerAppError = <T>(dispatch: Dispatch, data: BaseResponseType<T>, showError: boolean = true) => {
   if (showError) {
     dispatch(appActions.setAppError({ error: data.messages.length ? data.messages[0] : "Some error occurred" }))
   }

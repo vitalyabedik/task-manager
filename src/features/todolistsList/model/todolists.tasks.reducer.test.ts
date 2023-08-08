@@ -1,6 +1,5 @@
 import { TodolistDomainType, todolistsSlice, todolistsThunks } from "features/todolistsList/model/todolists.slice"
-import { tasksSlice } from "features/tasks/model/tasks.slice"
-import { TasksStateType } from "app"
+import { tasksSlice, TasksStateType } from "features/tasks/model/tasks.slice"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 import { DeleteTodolistArgType, TodolistType } from "features/todolistsList/api"
 

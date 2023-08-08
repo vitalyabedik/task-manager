@@ -42,7 +42,7 @@ const login = createAppAsyncThunk<AuthArgType, LoginParamsType>("auth/login", as
   })
 })
 
-const logout = createAppAsyncThunk<AuthArgType, void>("auth/logout", async (arg, thunkAPI) => {
+const logout = createAppAsyncThunk<AuthArgType, undefined>("auth/logout", async (_, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI
 
   return thunkTryCatch(thunkAPI, async () => {
@@ -57,7 +57,7 @@ const logout = createAppAsyncThunk<AuthArgType, void>("auth/logout", async (arg,
   })
 })
 
-const initializeApp = createAppAsyncThunk<AuthArgType, void>("app/initializeApp", async (arg, thunkAPI) => {
+const initializeApp = createAppAsyncThunk<AuthArgType, undefined>("app/initializeApp", async (_, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI
 
   return thunkTryCatch(thunkAPI, async () => {
