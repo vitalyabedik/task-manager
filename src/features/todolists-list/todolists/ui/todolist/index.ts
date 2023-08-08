@@ -1,1 +1,1 @@
-export * from "features/todolists-list/todolists/ui/todolist/Todolist"
+export * from "features/todolists-list/todolists/ui/todolist/todolist"

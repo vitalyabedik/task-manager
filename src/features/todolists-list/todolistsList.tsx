@@ -10,8 +10,8 @@ import {
   todolistsThunks,
 } from "features/todolists-list/todolists/model/todolists.reducer"
 import { tasksThunks } from "features/todolists-list/tasks/model/tasks.reducer"
-import { AddItemForm } from "common/components/AddItemForm"
-import { Todolist } from "features/todolists-list/todolists/ui/todolist/Todolist"
+import { AddItemForm } from "common/components/addItemForm"
+import { Todolist } from "features/todolists-list/todolists/ui/todolist/todolist"
 import { ROUTES } from "common/configs/routes"
 import { useActions, useAppSelector } from "common/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"

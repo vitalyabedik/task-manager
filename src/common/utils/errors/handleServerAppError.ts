@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 
-import { appActions } from 'app/app.reducer';
+import { appActions } from 'app/model/app.reducer';
 import { BaseResponseType } from 'common/api/common.api.types';
 
 /**

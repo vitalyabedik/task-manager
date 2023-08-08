@@ -5,8 +5,8 @@ import { BrowserRouter } from "react-router-dom"
 
 import "./index.css"
 
-import { App } from "./app/App"
-import { store } from "./app/store"
+import { App } from "app/ui/app"
+import { store } from "app/model/store"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(

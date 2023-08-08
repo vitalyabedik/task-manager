@@ -6,10 +6,10 @@ import { v1 } from "uuid"
 import { configureStore } from "@reduxjs/toolkit"
 import { HashRouter } from "react-router-dom"
 
-import { AppRootReducerType, AppRootStateType } from "app/store"
+import { AppRootReducerType, AppRootStateType } from "app/model/store"
 import { tasksReducer } from "features/todolists-list/tasks/model/tasks.reducer"
 import { todolistsReducer } from "features/todolists-list/todolists/model/todolists.reducer"
-import { appReducer } from "app/app.reducer"
+import { appReducer } from "app/model/app.reducer"
 import { authReducer } from "features/auth/model/auth.reducer"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 

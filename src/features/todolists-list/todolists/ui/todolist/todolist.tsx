@@ -1,16 +1,16 @@
 import React, { useCallback } from "react"
 
-import styles from "features/todolists-list/todolists/ui/todolist/Todolist.module.css"
+import styles from "features/todolists-list/todolists/ui/todolist/todolist.module.css"
 import IconButton from "@mui/material/IconButton"
 import Delete from "@mui/icons-material/Delete"
 import Button from "@mui/material/Button"
 
-import { AddItemForm } from "common/components/AddItemForm"
-import { EditableSpan } from "common/components/EditableSpan"
-import { Task } from "features/todolists-list/tasks/ui/task/Task"
+import { AddItemForm } from "common/components/addItemForm"
+import { EditableSpan } from "common/components/editableSpan"
+import { Task } from "features/todolists-list/tasks/ui/task/task"
 import { FilterValuesType } from "features/todolists-list/todolists/model/todolists.reducer"
 import { TaskDomainType } from "features/todolists-list/tasks/model/tasks.reducer"
-import { RequestStatusType } from "app/app.reducer"
+import { RequestStatusType } from "app/model/app.reducer"
 import { TaskStatuses } from "common/enums"
 
 type PropsType = {

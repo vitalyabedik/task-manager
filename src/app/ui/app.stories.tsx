@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { BrowserRouterDecorator, ReduxStoreProviderDecorator } from 'stories/decorators/ReduxStoreProviderDecorator';
-import { App } from './App';
+import { BrowserRouterDecorator, ReduxStoreProviderDecorator } from 'app/decorators/reduxStoreProviderDecorator';
+import { App } from 'app/ui/app';
 
 // More on how to set up stories at:
 // https://storybook.js.org/docs/react/writing-stories/introduction#default-export

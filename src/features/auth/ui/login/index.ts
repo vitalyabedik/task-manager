@@ -1,1 +1,1 @@
-export * from "features/auth/ui/login/Login"
+export * from "features/auth/ui/login/login"

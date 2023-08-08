@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { appActions } from 'app/app.reducer';
-import { AppDispatch } from 'app/store';
+import { appActions } from 'app/model/app.reducer';
+import { AppDispatch } from 'app/model/store';
 
 /**
  * Handles server network errors and updates the application state accordingly.

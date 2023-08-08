@@ -1,1 +1,1 @@
-export * from "features/todolists-list/TodolistsList"
+export * from "features/todolists-list/todolistsList"
