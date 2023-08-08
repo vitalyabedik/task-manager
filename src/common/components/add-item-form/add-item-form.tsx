@@ -4,25 +4,26 @@ import TextField from "@mui/material/TextField"
 import IconButton from "@mui/material/IconButton"
 import ControlPoint from "@mui/icons-material/ControlPoint"
 
-type AddItemFormPropsType = {
+type PropsType = {
   disabled?: boolean
   addItem: (title: string) => void
 }
-export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+
+export const AddItemForm: React.FC<PropsType> = React.memo(({ addItem, disabled }) => {
   const [title, setTitle] = useState("")
   const [error, setError] = useState<string | null>(null)
 
   const addTaskHandler = () => {
     if (title.trim() !== "") {
-      props.addItem(title.trim())
+      addItem(title.trim())
       setTitle("")
     } else {
       setError("Title is required!")
     }
   }
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value)
-  }
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
+
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (error !== null) {
       setError(null)
@@ -44,10 +45,9 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
         error={!!error}
         helperText={error}
       />
-      <IconButton disabled={props.disabled} onClick={addTaskHandler} color={"primary"}>
+      <IconButton disabled={disabled} onClick={addTaskHandler} color={"primary"}>
         <ControlPoint />
       </IconButton>
-      {/*<Button onClick={addTaskHandler} variant={'contained'}>+</Button>*/}
     </div>
   )
 })

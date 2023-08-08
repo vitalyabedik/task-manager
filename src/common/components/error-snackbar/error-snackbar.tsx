@@ -1,15 +1,11 @@
 import React from "react"
 
 import Snackbar from "@mui/material/Snackbar"
-import MuiAlert, { AlertProps } from "@mui/material/Alert"
 
 import { useActions, useAppSelector } from "common/hooks"
 import { appActions } from "app/model/app.reducer"
 import { selectAppError } from "app/model/app.selectors"
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-})
+import { Alert } from "./alert"
 
 export const ErrorSnackbar = () => {
   const error = useAppSelector(selectAppError)
