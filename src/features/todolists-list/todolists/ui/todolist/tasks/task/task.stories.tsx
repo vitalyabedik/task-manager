@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 
-import { Task } from "features/todolists-list/tasks/ui/task/task"
+import { Task } from "features/todolists-list/todolists/ui/todolist/tasks/task/task"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 
 type TaskStoryProps = {

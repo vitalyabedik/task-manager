@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback } from "react"
 
-import styles from "features/todolists-list/tasks/ui/task/task.module.css"
+import styles from "features/todolists-list/todolists/ui/todolist/tasks/task/task.module.css"
 
 import Checkbox from "@mui/material/Checkbox"
 import { EditableSpan } from "common/components/editableSpan"
