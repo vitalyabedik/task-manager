@@ -7,7 +7,7 @@ import { EditableSpan } from "common/components/editable-span"
 import IconButton from "@mui/material/IconButton"
 import Delete from "@mui/icons-material/Delete"
 
-import { TaskDomainType, tasksThunks } from "features/todolists-list/tasks/model/tasks.reducer"
+import { TaskDomainType, tasksThunks } from "features/todolists-list/tasks/model/tasks.slice"
 import { TaskStatuses } from "common/enums"
 import { useActions } from "common/hooks"
 

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 import { authApi } from "features/auth/api/auth.api"
-import { appActions } from "app/model/app.reducer"
+import { appActions } from "app/model/app.slice"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
 import { createAppAsyncThunk } from "common/utils"
 import { LoginParamsType } from "features/auth/api/auth.api.types"
@@ -66,7 +66,7 @@ const initializeApp = createAppAsyncThunk<AuthArgType, undefined>(
   },
 )
 
-export const authReducer = slice.reducer
+export const authSlice = slice.reducer
 export const authThunks = { login, logout, initializeApp }
 
 export type AuthArgType = {

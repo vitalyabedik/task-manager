@@ -1,5 +1,5 @@
 import { TaskPriorities, TaskStatuses } from "common/enums"
-import { UpdateDomainTaskModelType } from "features/todolists-list/tasks/model/tasks.reducer"
+import { UpdateDomainTaskModelType } from "features/todolists-list/tasks/model/tasks.slice"
 
 export type GetTasksResponse = {
   error: string | null

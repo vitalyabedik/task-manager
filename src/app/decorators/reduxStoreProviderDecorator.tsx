@@ -7,17 +7,17 @@ import { configureStore } from "@reduxjs/toolkit"
 import { HashRouter } from "react-router-dom"
 
 import { AppRootReducerType, AppRootStateType } from "app/model/store"
-import { tasksReducer } from "features/todolists-list/tasks/model/tasks.reducer"
-import { todolistsReducer } from "features/todolists-list/todolists/model/todolists.reducer"
-import { appReducer } from "app/model/app.reducer"
-import { authReducer } from "features/auth/model/auth.reducer"
+import { tasksSlice } from "features/todolists-list/tasks/model/tasks.slice"
+import { todolistsSlice } from "features/todolists-list/todolists/model/todolists.slice"
+import { appSlice } from "app/model/app.slice"
+import { authSlice } from "features/auth/model/auth.slice"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 
 const rootReducer: AppRootReducerType = combineReducers({
-  tasks: tasksReducer,
-  todolists: todolistsReducer,
-  app: appReducer,
-  auth: authReducer,
+  tasks: tasksSlice,
+  todolists: todolistsSlice,
+  app: appSlice,
+  auth: authSlice,
 })
 
 const initialGlobalState: AppRootStateType = {

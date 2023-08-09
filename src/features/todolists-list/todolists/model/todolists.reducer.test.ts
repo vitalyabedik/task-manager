@@ -4,9 +4,9 @@ import {
   FilterValuesType,
   TodolistDomainType,
   todolistsActions,
-  todolistsReducer,
+  todolistsSlice,
   todolistsThunks,
-} from "features/todolists-list/todolists/model/todolists.reducer"
+} from "features/todolists-list/todolists/model/todolists.slice"
 import { DeleteTodolistArgType, TodolistType, UpdateTodolistTitleArgType } from "features/todolists-list/todolists/api"
 
 let todolistId1: string
@@ -35,7 +35,7 @@ test("correct todolist should be removed", () => {
       todolistId: todolistId1,
     },
   }
-  const endState = todolistsReducer(startState, action)
+  const endState = todolistsSlice(startState, action)
 
   expect(endState.length).toBe(1)
   expect(endState[0].id).toBe(todolistId2)
@@ -63,7 +63,7 @@ test("correct todolist should be added", () => {
     },
   }
 
-  const endState = todolistsReducer(startState, action)
+  const endState = todolistsSlice(startState, action)
 
   expect(endState.length).toBe(3)
   expect(endState[0].title).toBe(newTodolistTitle)
@@ -85,7 +85,7 @@ test("correct todolist should changed title", () => {
     },
   }
 
-  const endState = todolistsReducer(startState, action)
+  const endState = todolistsSlice(startState, action)
 
   expect(endState[0].title).toBe("What to learn")
   expect(endState[1].title).toBe(newTodolistTitle)
@@ -94,7 +94,7 @@ test("correct todolist should changed title", () => {
 test("correct filter should be changed", () => {
   let newFilter: FilterValuesType = "completed"
 
-  const endState = todolistsReducer(
+  const endState = todolistsSlice(
     startState,
     todolistsActions.changeTodolistFilter({
       todolistId: todolistId2,

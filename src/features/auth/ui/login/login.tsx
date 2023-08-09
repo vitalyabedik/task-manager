@@ -15,7 +15,7 @@ import Button from "@mui/material/Button"
 import { ROUTES } from "common/configs/routes"
 import { useActions, useAppSelector } from "common/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
-import { authThunks } from "features/auth/model/auth.reducer"
+import { authThunks } from "features/auth/model/auth.slice"
 import { LoginParamsType } from "features/auth/api"
 import { BaseResponseType } from "common/api"
 

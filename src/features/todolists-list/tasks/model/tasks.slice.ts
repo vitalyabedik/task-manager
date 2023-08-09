@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-import { appActions, RequestStatusType } from "app/model/app.reducer"
-import { todolistsThunks } from "features/todolists-list/todolists/model/todolists.reducer"
+import { appActions, RequestStatusType } from "app/model/app.slice"
+import { todolistsThunks } from "features/todolists-list/todolists/model/todolists.slice"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
 import { createAppAsyncThunk } from "common/utils"
 import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums"
@@ -168,7 +168,7 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
   },
 )
 
-export const tasksReducer = slice.reducer
+export const tasksSlice = slice.reducer
 export const tasksActions = slice.actions
 export const tasksThunks = { fetchTasks, deleteTask, addTask, updateTask }
 

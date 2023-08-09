@@ -14,14 +14,14 @@ import { CircularProgress, LinearProgress } from "@mui/material"
 import { Logout } from "@mui/icons-material"
 
 import { TodolistsList } from "features/todolists-list/todolists-list"
-import { RequestStatusType } from "app/model/app.reducer"
+import { RequestStatusType } from "app/model/app.slice"
 import { ErrorSnackbar } from "common/components/error-snackbar"
 import { ROUTES } from "common/configs/routes"
 import { Login } from "features/auth/ui/login"
 import { NotFound } from "common/components/not-found"
 import { useActions, useAppSelector } from "common/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
-import { authThunks } from "features/auth/model/auth.reducer"
+import { authThunks } from "features/auth/model/auth.slice"
 
 type PropsType = {
   demo?: boolean
