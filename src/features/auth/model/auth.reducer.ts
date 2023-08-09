@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { authApi } from "features/auth/api/auth.api"
 import { appActions } from "app/model/app.reducer"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
-import { createAppAsyncThunk, handleServerAppError, thunkTryCatch } from "common/utils"
+import { createAppAsyncThunk } from "common/utils"
 import { LoginParamsType } from "features/auth/api/auth.api.types"
 import { ResultCode } from "common/enums"
 
@@ -27,40 +27,32 @@ const slice = createSlice({
   },
 })
 
-const login = createAppAsyncThunk<AuthArgType, LoginParamsType>("auth/login", async (arg, thunkAPI) => {
-  const { dispatch, rejectWithValue } = thunkAPI
-
-  return thunkTryCatch(thunkAPI, async () => {
+const login = createAppAsyncThunk<AuthArgType, LoginParamsType>(
+  "auth/login",
+  async (arg, { dispatch, rejectWithValue }) => {
     const res = await authApi.login(arg)
     if (res.data.resultCode === ResultCode.SUCCESS) {
       return { isLoggedIn: true }
     } else {
       const isShowAppError = !res.data.fieldsErrors.length
-      handleServerAppError(dispatch, res.data, isShowAppError)
-      return rejectWithValue(res.data)
+      return rejectWithValue({ data: res.data, showGlobalError: isShowAppError })
     }
-  })
+  },
+)
+
+const logout = createAppAsyncThunk<AuthArgType, undefined>("auth/logout", async (_, { dispatch, rejectWithValue }) => {
+  const res = await authApi.logout()
+  if (res.data.resultCode === ResultCode.SUCCESS) {
+    dispatch(clearTasksAndTodolists())
+    return { isLoggedIn: false }
+  } else {
+    return rejectWithValue(null)
+  }
 })
 
-const logout = createAppAsyncThunk<AuthArgType, undefined>("auth/logout", async (_, thunkAPI) => {
-  const { dispatch, rejectWithValue } = thunkAPI
-
-  return thunkTryCatch(thunkAPI, async () => {
-    const res = await authApi.logout()
-    if (res.data.resultCode === ResultCode.SUCCESS) {
-      dispatch(clearTasksAndTodolists())
-      return { isLoggedIn: false }
-    } else {
-      handleServerAppError(dispatch, res.data)
-      return rejectWithValue(null)
-    }
-  })
-})
-
-const initializeApp = createAppAsyncThunk<AuthArgType, undefined>("app/initializeApp", async (_, thunkAPI) => {
-  const { dispatch, rejectWithValue } = thunkAPI
-
-  return thunkTryCatch(thunkAPI, async () => {
+const initializeApp = createAppAsyncThunk<AuthArgType, undefined>(
+  "app/initializeApp",
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const res = await authApi.me()
       if (res.data.resultCode === ResultCode.SUCCESS) {
@@ -71,8 +63,8 @@ const initializeApp = createAppAsyncThunk<AuthArgType, undefined>("app/initializ
     } finally {
       dispatch(appActions.setAppIsInitialized({ isInitialized: true }))
     }
-  })
-})
+  },
+)
 
 export const authReducer = slice.reducer
 export const authThunks = { login, logout, initializeApp }

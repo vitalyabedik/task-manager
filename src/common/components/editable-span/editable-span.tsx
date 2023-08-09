@@ -11,9 +11,7 @@ export const EditableSpan: React.FC<PropsType> = React.memo(({ title, onChange, 
   const [editMode, setEditMode] = useState(false)
   const [localTitle, setLocalTitle] = useState("")
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setLocalTitle(e.currentTarget.value)
-  }
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setLocalTitle(e.currentTarget.value)
 
   const activateEditMode = () => {
     if (disabled) return
@@ -23,16 +21,11 @@ export const EditableSpan: React.FC<PropsType> = React.memo(({ title, onChange, 
 
   const activateViewMode = () => {
     setEditMode(false)
-    onChange(title)
+    onChange(localTitle)
   }
 
   return editMode ? (
-    <TextField size={"small"}
-               onChange={onChangeHandler}
-               value={localTitle}
-               onBlur={activateViewMode}
-               autoFocus
-    />
+    <TextField size={"small"} onChange={onChangeHandler} value={localTitle} onBlur={activateViewMode} autoFocus />
   ) : (
     <span onDoubleClick={activateEditMode}>{title}</span>
   )

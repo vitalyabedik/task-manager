@@ -3,7 +3,8 @@ import React, { ChangeEvent, KeyboardEvent, useState } from "react"
 import TextField from "@mui/material/TextField"
 import IconButton from "@mui/material/IconButton"
 import ControlPoint from "@mui/icons-material/ControlPoint"
-import { BaseResponseType } from "common/api"
+
+import { RejectValueType } from "common/utils"
 
 type PropsType = {
   addItem: (title: string) => Promise<any>
@@ -14,18 +15,20 @@ export const AddItemForm: React.FC<PropsType> = React.memo(({ addItem, disabled 
   const [title, setTitle] = useState("")
   const [error, setError] = useState<string | null>(null)
 
-  const addTaskHandler = () => {
+  const addItemHandler = () => {
     if (title.trim() !== "") {
-      addItem &&
-        addItem(title.trim())
-          .then(() => {
-            setTitle("")
-          })
-          .catch((reason: BaseResponseType) => {
-            setError(reason.messages[0])
-          })
+      addItem(title.trim())
+        .then(() => {
+          setTitle("")
+        })
+        .catch((err: RejectValueType) => {
+          if (err.data) {
+            const messages = err.data.messages
+            setError(messages.length ? messages[0] : "Some error occurred")
+          }
+        })
     } else {
-      setError("Title is required!")
+      setError("Title is required")
     }
   }
 
@@ -36,7 +39,7 @@ export const AddItemForm: React.FC<PropsType> = React.memo(({ addItem, disabled 
       setError(null)
     }
     if (e.key === "Enter") {
-      addTaskHandler()
+      addItemHandler()
     }
   }
 
@@ -52,7 +55,7 @@ export const AddItemForm: React.FC<PropsType> = React.memo(({ addItem, disabled 
         error={!!error}
         helperText={error}
       />
-      <IconButton disabled={disabled} onClick={addTaskHandler} color={"primary"}>
+      <IconButton disabled={disabled} onClick={addItemHandler} color={"primary"}>
         <ControlPoint />
       </IconButton>
     </div>
