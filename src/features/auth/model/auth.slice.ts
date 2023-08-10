@@ -58,7 +58,7 @@ const initializeApp = createAppAsyncThunk<AuthArgType, undefined>(
       if (res.data.resultCode === ResultCode.SUCCESS) {
         return { isLoggedIn: true }
       } else {
-        return rejectWithValue(null)
+        return rejectWithValue({ data: res.data, showGlobalError: false })
       }
     } finally {
       dispatch(appActions.setAppIsInitialized({ isInitialized: true }))
