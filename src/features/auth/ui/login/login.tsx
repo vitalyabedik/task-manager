@@ -1,7 +1,5 @@
 import React from "react"
 import { Navigate } from "react-router-dom"
-import { FormikHelpers, useFormik } from "formik"
-import * as Yup from "yup"
 
 import Grid from "@mui/material/Grid"
 import Checkbox from "@mui/material/Checkbox"
@@ -13,37 +11,13 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 
 import { ROUTES } from "common/configs/routes"
-import { useActions, useAppSelector } from "common/hooks"
+import { useAppSelector, useLogin } from "common/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
-import { authThunks } from "features/auth/model/auth.slice"
-import { LoginParamsType } from "features/auth/api"
-import { BaseResponseType } from "common/api"
 
 export const Login = () => {
+  const { formik } = useLogin()
+
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
-
-  const { login } = useActions(authThunks)
-
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string().min(3, "Password must be 3 characters or more").required("Required"),
-    }),
-    onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
-      login(values)
-        .unwrap()
-        .catch((reason: BaseResponseType) => {
-          reason.fieldsErrors?.forEach((fieldError) => {
-            formikHelpers.setFieldError(fieldError.field, fieldError.error)
-          })
-        })
-    },
-  })
 
   if (isLoggedIn) return <Navigate to={ROUTES.MAIN} />
 
