@@ -3,9 +3,9 @@ import { action } from "@storybook/addon-actions"
 
 import { AddItemForm } from "common/components/add-item-form/add-item-form"
 
-type AddItemFormStoryProps = {
-  addItem: (title: string) => Promise<any>
-} & React.ComponentProps<typeof AddItemForm>
+const asyncCallback = async (...params: any[]) => {
+  action("Button clicked inside form")(...params)
+}
 
 // More on how to set up stories at:
 // https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -33,6 +33,6 @@ type Story = StoryObj<typeof AddItemForm>
 export const AddItemFormStory: Story = {
   // More on args: https://storybook.js.org/docs/react/writing-stories/args
   args: {
-    addItem: action("Button clicked inside form"),
-  } as AddItemFormStoryProps,
+    addItem: asyncCallback,
+  },
 }
