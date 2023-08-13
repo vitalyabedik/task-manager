@@ -21,7 +21,9 @@ export const EditableSpan: React.FC<PropsType> = React.memo(({ title, onChange, 
 
   const activateViewMode = () => {
     setEditMode(false)
-    onChange(localTitle)
+    if (localTitle !== title) {
+      onChange(localTitle)
+    }
   }
 
   return editMode ? (
