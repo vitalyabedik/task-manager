@@ -14,11 +14,7 @@ import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
 import { selectTasks } from "features/todolists-list/tasks/model/tasks.selector"
 import { selectTodolists } from "features/todolists-list/todolists/model/todolists.selector"
 
-type PropsType = {
-  demo?: boolean
-}
-
-export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
+export const TodolistsList = () => {
   const todolists = useAppSelector(selectTodolists)
   const tasks = useAppSelector(selectTasks)
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
@@ -30,10 +26,10 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   })
 
   useEffect(() => {
-    if (!isLoggedIn || demo) return
+    if (!isLoggedIn) return
 
     fetchTodolists()
-  }, [demo, isLoggedIn])
+  }, [isLoggedIn])
 
   const addTodolistCallback = useCallback((title: string) => {
     return addTodolist({ title }).unwrap()

@@ -23,11 +23,7 @@ import { useActions, useAppSelector } from "common/hooks"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
 import { authThunks } from "features/auth/model/auth.slice"
 
-type PropsType = {
-  demo?: boolean
-}
-
-export const App: React.FC<PropsType> = ({ demo = false }) => {
+export const App = () => {
   const status = useAppSelector<RequestStatusType>((state) => state.app.status)
   const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized)
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
@@ -39,10 +35,10 @@ export const App: React.FC<PropsType> = ({ demo = false }) => {
   }
 
   useEffect(() => {
-    if (demo) return
+    if (!isInitialized) return
 
     initializeApp()
-  }, [demo])
+  }, [])
 
   if (!isInitialized) {
     return (
@@ -73,7 +69,7 @@ export const App: React.FC<PropsType> = ({ demo = false }) => {
       </AppBar>
       <Container fixed>
         <Routes>
-          <Route path={ROUTES.MAIN} element={<TodolistsList demo={demo} />} />
+          <Route path={ROUTES.MAIN} element={<TodolistsList />} />
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.NOTFOUND} element={<NotFound />} />
           <Route path={"*"} element={<Navigate to={ROUTES.NOTFOUND} />} />
