@@ -35,8 +35,6 @@ export const App = () => {
   }
 
   useEffect(() => {
-    if (!isInitialized) return
-
     initializeApp()
   }, [])
 

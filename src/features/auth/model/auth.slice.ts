@@ -46,7 +46,7 @@ const logout = createAppAsyncThunk<AuthArgType, undefined>("auth/logout", async 
     dispatch(clearTasksAndTodolists())
     return { isLoggedIn: false }
   } else {
-    return rejectWithValue(null)
+    return rejectWithValue({ data: res.data, showGlobalError: false })
   }
 })
 
