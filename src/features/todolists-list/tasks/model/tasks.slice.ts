@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
 import { appActions, RequestStatusType } from "app/model/app.slice"
 import { todolistsThunks } from "features/todolists-list/todolists/model/todolists.slice"
@@ -21,16 +21,16 @@ const slice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    changeTaskEntityStatus: (
-      state,
-      action: PayloadAction<{ todolistId: string; taskId: string; entityStatus: RequestStatusType }>,
-    ) => {
-      const tasks = state[action.payload.todolistId]
-      const index = tasks.findIndex((t) => t.id === action.payload.taskId)
-      if (index !== -1) {
-        tasks[index] = { ...tasks[index], entityStatus: action.payload.entityStatus }
-      }
-    },
+    // changeTaskEntityStatus: (
+    //   state,
+    //   action: PayloadAction<{ todolistId: string; taskId: string; entityStatus: RequestStatusType }>,
+    // ) => {
+    //   const tasks = state[action.payload.todolistId]
+    //   const index = tasks.findIndex((t) => t.id === action.payload.taskId)
+    //   if (index !== -1) {
+    //     tasks[index] = { ...tasks[index], entityStatus: action.payload.entityStatus }
+    //   }
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -39,6 +39,7 @@ const slice = createSlice({
       })
       .addCase(tasksThunks.deleteTask.fulfilled, (state, action) => {
         const tasks = state[action.payload.todolistId]
+        // debugger
         const index = tasks.findIndex((t) => t.id === action.payload.taskId)
         if (index !== -1) tasks.splice(index, 1)
       })
@@ -73,6 +74,84 @@ const slice = createSlice({
       .addCase(clearTasksAndTodolists, () => {
         return {}
       })
+      .addMatcher(
+        (action) => action.type.endsWith("deleteTask/pending"),
+        (state, action) => {
+          const todolistId = action.meta?.arg?.todolistId
+          const taskId = action.meta?.arg?.taskId
+
+          const tasks = state[todolistId]
+          const index = tasks.findIndex((t) => t.id === taskId)
+          if (index !== -1) {
+            tasks[index] = { ...tasks[index], entityStatus: "loading" }
+          }
+        },
+      )
+      .addMatcher(
+        (action) => action.type.endsWith("updateTask/pending"),
+        (state, action) => {
+          const todolistId = action.meta?.arg?.todolistId
+          const taskId = action.meta?.arg?.taskId
+
+          const tasks = state[todolistId]
+          const index = tasks.findIndex((t) => t.id === taskId)
+          if (index !== -1) {
+            tasks[index] = { ...tasks[index], entityStatus: "loading" }
+          }
+        },
+      )
+      .addMatcher(
+        (action) => action.type.endsWith("deleteTask/fulfilled"),
+        (state, action) => {
+          const todolistId = action.meta?.arg?.todolistId
+          const taskId = action.meta?.arg?.taskId
+
+          const tasks: TaskDomainType[] = state[todolistId]
+          const index = tasks?.findIndex((t) => t.id === taskId)
+          if (index !== -1 && tasks !== undefined) {
+            tasks[index] = { ...tasks[index], entityStatus: "succeeded" }
+          }
+        },
+      )
+      .addMatcher(
+        (action) => action.type.endsWith("updateTask/fulfilled"),
+        (state, action) => {
+          const todolistId = action.meta?.arg?.todolistId
+          const taskId = action.meta?.arg?.taskId
+
+          const tasks = state[todolistId]
+          const index = tasks?.findIndex((t) => t.id === taskId)
+          if (index !== -1 && tasks !== undefined) {
+            tasks[index] = { ...tasks[index], entityStatus: "succeeded" }
+          }
+        },
+      )
+      .addMatcher(
+        (action) => action.type.endsWith("deleteTask/rejected"),
+        (state, action) => {
+          const todolistId = action.meta?.arg?.todolistId
+          const taskId = action.meta?.arg?.taskId
+
+          const tasks = state[todolistId]
+          const index = tasks?.findIndex((t) => t.id === taskId)
+          if (index !== -1) {
+            tasks[index] = { ...tasks[index], entityStatus: "failed" }
+          }
+        },
+      )
+      .addMatcher(
+        (action) => action.type.endsWith("updateTask/rejected"),
+        (state, action) => {
+          const todolistId = action.meta?.arg?.todolistId
+          const taskId = action.meta?.arg?.taskId
+
+          const tasks = state[todolistId]
+          const index = tasks?.findIndex((t) => t.id === taskId)
+          if (index !== -1 && tasks !== undefined) {
+            tasks[index] = { ...tasks[index], entityStatus: "failed" }
+          }
+        },
+      )
   },
 })
 
@@ -85,27 +164,27 @@ const fetchTasks = createAppAsyncThunk<{ todolistId: string; tasks: TaskType[] }
 )
 
 const deleteTask = createAppAsyncThunk<DeleteTaskArgType, DeleteTaskArgType>(
-  "tasks/removeTask",
+  "tasks/deleteTask",
   async (arg, { dispatch, rejectWithValue }) => {
-    dispatch(
-      tasksActions.changeTaskEntityStatus({
-        todolistId: arg.todolistId,
-        taskId: arg.taskId,
-        entityStatus: "loading",
-      }),
-    )
+    // dispatch(
+    //   tasksActions.changeTaskEntityStatus({
+    //     todolistId: arg.todolistId,
+    //     taskId: arg.taskId,
+    //     entityStatus: "loading",
+    //   }),
+    // )
     const res = await tasksApi.deleteTask(arg)
     if (res.data.resultCode === ResultCode.SUCCESS) {
       return arg
     } else {
-      dispatch(
-        tasksActions.changeTaskEntityStatus({
-          todolistId: arg.todolistId,
-          taskId: arg.taskId,
-          entityStatus: "failed",
-        }),
-      )
-      return rejectWithValue({ data: res.data, showGlobalError: true })
+      // dispatch(
+      //   tasksActions.changeTaskEntityStatus({
+      //     todolistId: arg.todolistId,
+      //     taskId: arg.taskId,
+      //     entityStatus: "failed",
+      //   }),
+      // )
+      return rejectWithValue({ data: res.data, showGlobalError: false })
     }
   },
 )
@@ -144,22 +223,22 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
       ...arg.domainModel,
     }
 
-    dispatch(
-      tasksActions.changeTaskEntityStatus({
-        todolistId: arg.todolistId,
-        taskId: arg.taskId,
-        entityStatus: "loading",
-      }),
-    )
+    // dispatch(
+    //   tasksActions.changeTaskEntityStatus({
+    //     todolistId: arg.todolistId,
+    //     taskId: arg.taskId,
+    //     entityStatus: "loading",
+    //   }),
+    // )
     const res = await tasksApi.updateTask(arg.todolistId, arg.taskId, apiModel)
     if (res.data.resultCode === ResultCode.SUCCESS) {
-      dispatch(
-        tasksActions.changeTaskEntityStatus({
-          todolistId: arg.todolistId,
-          taskId: arg.taskId,
-          entityStatus: "succeeded",
-        }),
-      )
+      // dispatch(
+      //   tasksActions.changeTaskEntityStatus({
+      //     todolistId: arg.todolistId,
+      //     taskId: arg.taskId,
+      //     entityStatus: "succeeded",
+      //   }),
+      // )
 
       return arg
     } else {

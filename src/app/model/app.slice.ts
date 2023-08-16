@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { isARejectedTodolistsAction } from "features/todolists-list/todolists/model/todolists.slice"
 
 const initialState = {
   status: "idle" as RequestStatusType,
@@ -52,12 +51,6 @@ const slice = createSlice({
         (action) => action.type.endsWith("/fulfilled"),
         (state) => {
           state.status = "succeeded"
-        },
-      )
-      .addMatcher(
-        (action) => isARejectedTodolistsAction(action),
-        (state) => {
-          state.status = "loading"
         },
       )
   },
