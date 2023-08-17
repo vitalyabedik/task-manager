@@ -77,12 +77,12 @@ const slice = createSlice({
       .addMatcher(
         (action) => action.type.endsWith("deleteTask/pending"),
         (state, action) => {
-          const todolistId = action.meta?.arg?.todolistId
-          const taskId = action.meta?.arg?.taskId
+          const todolistId = action.meta.arg.todolistId
+          const taskId = action.meta.arg.taskId
 
           const tasks = state[todolistId]
-          const index = tasks.findIndex((t) => t.id === taskId)
-          if (index !== -1) {
+          const index = tasks?.findIndex((t) => t.id === taskId)
+          if (index !== -1 && tasks !== undefined) {
             tasks[index] = { ...tasks[index], entityStatus: "loading" }
           }
         },
@@ -94,8 +94,8 @@ const slice = createSlice({
           const taskId = action.meta?.arg?.taskId
 
           const tasks = state[todolistId]
-          const index = tasks.findIndex((t) => t.id === taskId)
-          if (index !== -1) {
+          const index = tasks?.findIndex((t) => t.id === taskId)
+          if (index !== -1 && tasks !== undefined) {
             tasks[index] = { ...tasks[index], entityStatus: "loading" }
           }
         },
