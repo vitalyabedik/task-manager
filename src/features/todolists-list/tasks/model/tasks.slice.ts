@@ -20,18 +20,7 @@ const initialState: TasksStateType = {}
 const slice = createSlice({
   name: "tasks",
   initialState,
-  reducers: {
-    // changeTaskEntityStatus: (
-    //   state,
-    //   action: PayloadAction<{ todolistId: string; taskId: string; entityStatus: RequestStatusType }>,
-    // ) => {
-    //   const tasks = state[action.payload.todolistId]
-    //   const index = tasks.findIndex((t) => t.id === action.payload.taskId)
-    //   if (index !== -1) {
-    //     tasks[index] = { ...tasks[index], entityStatus: action.payload.entityStatus }
-    //   }
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(tasksThunks.fetchTasks.fulfilled, (state, action) => {
@@ -75,20 +64,7 @@ const slice = createSlice({
         return {}
       })
       .addMatcher(
-        (action) => action.type.endsWith("deleteTask/pending"),
-        (state, action) => {
-          const todolistId = action.meta.arg.todolistId
-          const taskId = action.meta.arg.taskId
-
-          const tasks = state[todolistId]
-          const index = tasks?.findIndex((t) => t.id === taskId)
-          if (index !== -1 && tasks !== undefined) {
-            tasks[index] = { ...tasks[index], entityStatus: "loading" }
-          }
-        },
-      )
-      .addMatcher(
-        (action) => action.type.endsWith("updateTask/pending"),
+        (action) => action.type.endsWith("/pending"),
         (state, action) => {
           const todolistId = action.meta?.arg?.todolistId
           const taskId = action.meta?.arg?.taskId
@@ -101,7 +77,7 @@ const slice = createSlice({
         },
       )
       .addMatcher(
-        (action) => action.type.endsWith("deleteTask/fulfilled"),
+        (action) => action.type.endsWith("/fulfilled"),
         (state, action) => {
           const todolistId = action.meta?.arg?.todolistId
           const taskId = action.meta?.arg?.taskId
@@ -114,20 +90,7 @@ const slice = createSlice({
         },
       )
       .addMatcher(
-        (action) => action.type.endsWith("updateTask/fulfilled"),
-        (state, action) => {
-          const todolistId = action.meta?.arg?.todolistId
-          const taskId = action.meta?.arg?.taskId
-
-          const tasks = state[todolistId]
-          const index = tasks?.findIndex((t) => t.id === taskId)
-          if (index !== -1 && tasks !== undefined) {
-            tasks[index] = { ...tasks[index], entityStatus: "succeeded" }
-          }
-        },
-      )
-      .addMatcher(
-        (action) => action.type.endsWith("deleteTask/rejected"),
+        (action) => action.type.endsWith("/rejected"),
         (state, action) => {
           const todolistId = action.meta?.arg?.todolistId
           const taskId = action.meta?.arg?.taskId
@@ -135,19 +98,6 @@ const slice = createSlice({
           const tasks = state[todolistId]
           const index = tasks?.findIndex((t) => t.id === taskId)
           if (index !== -1) {
-            tasks[index] = { ...tasks[index], entityStatus: "failed" }
-          }
-        },
-      )
-      .addMatcher(
-        (action) => action.type.endsWith("updateTask/rejected"),
-        (state, action) => {
-          const todolistId = action.meta?.arg?.todolistId
-          const taskId = action.meta?.arg?.taskId
-
-          const tasks = state[todolistId]
-          const index = tasks?.findIndex((t) => t.id === taskId)
-          if (index !== -1 && tasks !== undefined) {
             tasks[index] = { ...tasks[index], entityStatus: "failed" }
           }
         },
@@ -166,24 +116,10 @@ const fetchTasks = createAppAsyncThunk<{ todolistId: string; tasks: TaskType[] }
 const deleteTask = createAppAsyncThunk<DeleteTaskArgType, DeleteTaskArgType>(
   "tasks/deleteTask",
   async (arg, { dispatch, rejectWithValue }) => {
-    // dispatch(
-    //   tasksActions.changeTaskEntityStatus({
-    //     todolistId: arg.todolistId,
-    //     taskId: arg.taskId,
-    //     entityStatus: "loading",
-    //   }),
-    // )
     const res = await tasksApi.deleteTask(arg)
     if (res.data.resultCode === ResultCode.SUCCESS) {
       return arg
     } else {
-      // dispatch(
-      //   tasksActions.changeTaskEntityStatus({
-      //     todolistId: arg.todolistId,
-      //     taskId: arg.taskId,
-      //     entityStatus: "failed",
-      //   }),
-      // )
       return rejectWithValue({ data: res.data, showGlobalError: false })
     }
   },
@@ -223,23 +159,8 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
       ...arg.domainModel,
     }
 
-    // dispatch(
-    //   tasksActions.changeTaskEntityStatus({
-    //     todolistId: arg.todolistId,
-    //     taskId: arg.taskId,
-    //     entityStatus: "loading",
-    //   }),
-    // )
     const res = await tasksApi.updateTask(arg.todolistId, arg.taskId, apiModel)
     if (res.data.resultCode === ResultCode.SUCCESS) {
-      // dispatch(
-      //   tasksActions.changeTaskEntityStatus({
-      //     todolistId: arg.todolistId,
-      //     taskId: arg.taskId,
-      //     entityStatus: "succeeded",
-      //   }),
-      // )
-
       return arg
     } else {
       return rejectWithValue({ data: res.data, showGlobalError: true })
@@ -248,7 +169,6 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
 )
 
 export const tasksSlice = slice.reducer
-export const tasksActions = slice.actions
 export const tasksThunks = { fetchTasks, deleteTask, addTask, updateTask }
 
 // types
