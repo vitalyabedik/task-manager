@@ -1,4 +1,4 @@
-import { createSlice, isRejected, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import { todolistsApi } from "features/todolists-list/todolists/api/todolists.api"
 import { RequestStatusType } from "app/model/app.slice"
@@ -25,15 +25,6 @@ const slice = createSlice({
         todo.filter = action.payload.filter
       }
     },
-    // changeTodolistEntityStatus: (
-    //   state,
-    //   action: PayloadAction<{ todolistId: string; entityStatus: RequestStatusType }>,
-    // ) => {
-    //   const todo = state.find((todo) => todo.id === action.payload.todolistId)
-    //   if (todo) {
-    //     todo.entityStatus = action.payload.entityStatus
-    //   }
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -52,14 +43,13 @@ const slice = createSlice({
         const todo = state.find((todo) => todo.id === action.payload.todolistId)
         if (todo) {
           todo.title = action.payload.title
-          // можно entityStatus поменять
         }
       })
       .addCase(clearTasksAndTodolists, () => {
         return []
       })
       .addMatcher(
-        (action) => action.type.endsWith("changeTodolistTitle/pending"),
+        (action) => action.type.endsWith("/pending"),
         (state, action) => {
           const todolistId = action.meta?.arg?.todolistId
 
@@ -70,18 +60,7 @@ const slice = createSlice({
         },
       )
       .addMatcher(
-        (action) => action.type.endsWith("deleteTodolist/pending"),
-        (state, action) => {
-          const todolistId = action.meta?.arg?.todolistId
-
-          const todo = state.find((todo) => todo.id === todolistId)
-          if (todo) {
-            todo.entityStatus = "loading"
-          }
-        },
-      )
-      .addMatcher(
-        (action) => action.type.endsWith("changeTodolistTitle/fulfilled"),
+        (action) => action.type.endsWith("/fulfilled"),
         (state, action) => {
           const todolistId = action.meta?.arg?.todolistId
 
@@ -92,29 +71,7 @@ const slice = createSlice({
         },
       )
       .addMatcher(
-        (action) => action.type.endsWith("deleteTodolist/fulfilled"),
-        (state, action) => {
-          const todolistId = action.meta?.arg?.todolistId
-
-          const todo = state.find((todo) => todo.id === todolistId)
-          if (todo) {
-            todo.entityStatus = "succeeded"
-          }
-        },
-      )
-      .addMatcher(
-        (action) => action.type.endsWith("changeTodolistTitle/rejected"),
-        (state, action) => {
-          const todolistId = action.meta?.arg?.todolistId
-
-          const todo = state.find((todo) => todo.id === todolistId)
-          if (todo) {
-            todo.entityStatus = "failed"
-          }
-        },
-      )
-      .addMatcher(
-        (action) => action.type.endsWith("deleteTodolist/rejected"),
+        (action) => action.type.endsWith("/rejected"),
         (state, action) => {
           const todolistId = action.meta?.arg?.todolistId
 
@@ -142,13 +99,10 @@ const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, undefi
 const deleteTodolist = createAppAsyncThunk<DeleteTodolistArgType, DeleteTodolistArgType>(
   "todolists/deleteTodolist",
   async (arg, { dispatch, rejectWithValue }) => {
-    // dispatch(todolistsActions.changeTodolistEntityStatus({ todolistId: arg.todolistId, entityStatus: "loading" }))
     const res = await todolistsApi.deleteTodolist(arg)
     if (res.data.resultCode === ResultCode.SUCCESS) {
-      // dispatch(todolistsActions.changeTodolistEntityStatus({ todolistId: arg.todolistId, entityStatus: "succeeded" }))
       return arg
     } else {
-      // dispatch(todolistsActions.changeTodolistEntityStatus({ todolistId: arg.todolistId, entityStatus: "failed" }))
       return rejectWithValue({ data: res.data, showGlobalError: true })
     }
   },
@@ -170,13 +124,10 @@ const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, AddTodolistA
 const updateTodolistTitle = createAppAsyncThunk<UpdateTodolistTitleArgType, UpdateTodolistTitleArgType>(
   "todolists/changeTodolistTitle",
   async (arg, { dispatch, rejectWithValue }) => {
-    // dispatch(todolistsActions.changeTodolistEntityStatus({ todolistId: arg.todolistId, entityStatus: "loading" }))
     const res = await todolistsApi.updateTodolist(arg)
     if (res.data.resultCode === 0) {
-      // dispatch(todolistsActions.changeTodolistEntityStatus({ todolistId: arg.todolistId, entityStatus: "succeeded" }))
       return arg
     } else {
-      // dispatch(todolistsActions.changeTodolistEntityStatus({ todolistId: arg.todolistId, entityStatus: "failed" }))
       return rejectWithValue({ data: res.data, showGlobalError: true })
     }
   },
@@ -185,7 +136,6 @@ const updateTodolistTitle = createAppAsyncThunk<UpdateTodolistTitleArgType, Upda
 export const todolistsSlice = slice.reducer
 export const todolistsActions = slice.actions
 export const todolistsThunks = { fetchTodolists, deleteTodolist, addTodolist, updateTodolistTitle }
-export const isARejectedTodolistsAction = isRejected(deleteTodolist)
 
 // types
 export type FilterValuesType = "all" | "active" | "completed"
