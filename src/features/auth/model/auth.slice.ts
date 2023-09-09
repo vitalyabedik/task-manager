@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-import { authApi } from "features/auth/api/auth.api"
+import { authApi, securityApi } from "features/auth/api/auth.api"
 import { appActions } from "app/model/app.slice"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
 import { createAppAsyncThunk } from "common/utils"
@@ -11,6 +11,7 @@ const slice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
+    captchaUrl: "",
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -21,9 +22,18 @@ const slice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.isLoggedIn = action.payload.isLoggedIn
       })
+      .addCase(getCaptcha.fulfilled, (state, action) => {
+        state.captchaUrl = action.payload.captchaUrl
+      })
       .addCase(initializeApp.fulfilled, (state, action) => {
         state.isLoggedIn = action.payload.isLoggedIn
       })
+      .addMatcher(
+        (action) => action.type.endsWith("login/fulfilled"),
+        (state) => {
+          state.captchaUrl = ""
+        },
+      )
   },
 })
 
@@ -33,12 +43,24 @@ const login = createAppAsyncThunk<AuthArgType, LoginParamsType>(
     const res = await authApi.login(arg)
     if (res.data.resultCode === ResultCode.SUCCESS) {
       return { isLoggedIn: true }
+    } else if (res.data.resultCode === ResultCode.CAPTCHA_ERROR) {
+      dispatch(getCaptcha())
+      return rejectWithValue({ data: res.data, showGlobalError: false })
     } else {
       const isShowAppError = !res.data.fieldsErrors.length
       return rejectWithValue({ data: res.data, showGlobalError: isShowAppError })
     }
   },
 )
+
+const getCaptcha = createAppAsyncThunk<CaptchaArgType, undefined>("auth/getCaptcha", async (_, { rejectWithValue }) => {
+  try {
+    const res = await securityApi.getCaptchaUrl()
+    return { captchaUrl: res.data.url }
+  } catch (e) {
+    return rejectWithValue(null)
+  }
+})
 
 const logout = createAppAsyncThunk<AuthArgType, undefined>("auth/logout", async (_, { dispatch, rejectWithValue }) => {
   const res = await authApi.logout()
@@ -67,8 +89,12 @@ const initializeApp = createAppAsyncThunk<AuthArgType, undefined>(
 )
 
 export const authSlice = slice.reducer
-export const authThunks = { login, logout, initializeApp }
+export const authThunks = { login, getCaptcha, logout, initializeApp }
 
 export type AuthArgType = {
   isLoggedIn: boolean
+}
+
+export type CaptchaArgType = {
+  captchaUrl: string
 }

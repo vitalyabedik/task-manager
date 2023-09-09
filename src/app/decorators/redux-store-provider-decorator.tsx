@@ -82,6 +82,7 @@ const initialGlobalState: AppRootStateType = {
   },
   auth: {
     isLoggedIn: true,
+    captchaUrl: "",
   },
 }
 

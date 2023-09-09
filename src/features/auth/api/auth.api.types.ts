@@ -8,5 +8,8 @@ export type LoginParamsType = {
   email: string
   password: string
   rememberMe: boolean
-  captcha?: string
+}
+
+export type SecurityParamsType = {
+  url: string
 }

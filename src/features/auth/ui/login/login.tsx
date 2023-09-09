@@ -12,12 +12,18 @@ import Button from "@mui/material/Button"
 
 import { ROUTES } from "common/configs/routes"
 import { useAppSelector, useLogin } from "common/hooks"
-import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
+import { selectAuthIsLoggedIn, selectCaptchaUrl } from "features/auth/model/auth.selectors"
+import { selectAppStatus } from "app/model/app.selectors"
 
 export const Login = () => {
   const { formik } = useLogin()
 
+  const appStatus = useAppSelector(selectAppStatus)
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
+  const captchaUrl = useAppSelector(selectCaptchaUrl)
+
+  const isEmailError = formik.touched.email && formik.errors.email
+  const isPasswordError = formik.touched.password && formik.errors.password
 
   if (isLoggedIn) return <Navigate to={ROUTES.MAIN} />
 
@@ -40,17 +46,19 @@ export const Login = () => {
             </FormLabel>
             <FormGroup>
               <TextField label="Email" margin="normal" {...formik.getFieldProps("email")} />
-              {formik.touched.email && formik.errors.email && <div style={{ color: "red" }}>{formik.errors.email}</div>}
+              {isEmailError && <div style={{ color: "red" }}>{formik.errors.email}</div>}
               <TextField type="password" label="Password" margin="normal" {...formik.getFieldProps("password")} />
-              {formik.touched.password && formik.errors.password && (
-                <div style={{ color: "red" }}>{formik.errors.password}</div>
-              )}
+              {isPasswordError && <div style={{ color: "red" }}>{formik.errors.password}</div>}
               <FormControlLabel
                 label={"Remember me"}
                 control={<Checkbox checked={formik.values.rememberMe} {...formik.getFieldProps("rememberMe")} />}
               />
+              {captchaUrl && <img src={captchaUrl} alt="captcha-img" />}
+              {captchaUrl && (
+                <TextField type="password" label="captcha" margin="normal" {...formik.getFieldProps("captcha")} />
+              )}
               <Button
-                disabled={formik.isSubmitting || !formik.isValid}
+                disabled={!!isEmailError || !!isPasswordError || appStatus === "loading"}
                 type={"submit"}
                 variant={"contained"}
                 color={"primary"}

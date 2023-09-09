@@ -97,7 +97,7 @@ const slice = createSlice({
 
           const tasks = state[todolistId]
           const index = tasks?.findIndex((t) => t.id === taskId)
-          if (index !== -1) {
+          if (index !== -1 && tasks !== undefined) {
             tasks[index] = { ...tasks[index], entityStatus: "failed" }
           }
         },
