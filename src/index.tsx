@@ -10,7 +10,7 @@ import { store } from "app/model/store"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/it-incubator.todolist-learning">
     <Provider store={store}>
       <App />
     </Provider>

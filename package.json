@@ -1,5 +1,6 @@
 {
   "name": "todolist-learning",
+  "homepage": "https://vitalyabedik.github.io/it-incubator.todolist-learning",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,6 +20,7 @@
     "@types/uuid": "^9.0.1",
     "axios": "^1.4.0",
     "formik": "^2.4.2",
+    "gh-pages": "^6.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.7",
@@ -41,7 +43,9 @@
     "jest:integration": "jest -c integration/jest.config.js",
     "test:integration": "start-server-and-test storybook http-get://localhost:6006 jest:integration",
     "format": "prettier --check ./src",
-    "format:fix": "prettier --write ./src"
+    "format:fix": "prettier --write ./src",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
