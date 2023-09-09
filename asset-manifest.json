@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/it-incubator.todolist-learning/static/css/main.bc483581.css",
+    "main.js": "/it-incubator.todolist-learning/static/js/main.98dfd5e8.js",
+    "index.html": "/it-incubator.todolist-learning/index.html",
+    "main.bc483581.css.map": "/it-incubator.todolist-learning/static/css/main.bc483581.css.map",
+    "main.98dfd5e8.js.map": "/it-incubator.todolist-learning/static/js/main.98dfd5e8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bc483581.css",
+    "static/js/main.98dfd5e8.js"
+  ]
+}
