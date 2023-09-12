@@ -3,6 +3,7 @@ import React, { useEffect } from "react"
 import "app/ui/app.css"
 import Container from "@mui/material/Container"
 import { CircularProgress } from "@mui/material"
+
 import { ErrorSnackbar } from "common/components/error-snackbar"
 import { useRoutes } from "common/configs/routes"
 import { useActions, useAppSelector } from "common/hooks"
@@ -22,7 +23,7 @@ export const App = () => {
 
   if (!isInitialized) {
     return (
-      <div style={{ position: "fixed", top: "30%", textAlign: "center", width: "100%" }}>
+      <div className="loader">
         <CircularProgress />
       </div>
     )

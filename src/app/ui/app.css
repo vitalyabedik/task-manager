@@ -1,8 +1,6 @@
-/*.Index {*/
-/*  padding: 30px;*/
-/*  display: flex;*/
-/*}*/
-
-/*.Index > div {*/
-/*  margin-right: 50px;*/
-/*}*/
+.loader {
+    position: fixed;
+    top: 30%;
+    text-align: center;
+    width: 100%;
+}
