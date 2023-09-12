@@ -1,2 +1,2 @@
 export * from "./auth.api"
-export * from "features/auth/api/auth.api.types"
+export * from "./auth.api.types"

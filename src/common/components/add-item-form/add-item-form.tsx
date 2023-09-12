@@ -6,12 +6,12 @@ import ControlPoint from "@mui/icons-material/ControlPoint"
 
 import { RejectValueType } from "common/utils"
 
-type PropsType = {
+type Props = {
   addItem: (title: string) => Promise<any>
   disabled?: boolean
 }
 
-export const AddItemForm: React.FC<PropsType> = React.memo(({ addItem, disabled }) => {
+export const AddItemForm = React.memo(({ addItem, disabled }: Props): JSX.Element => {
   const [title, setTitle] = useState("")
   const [error, setError] = useState<string | null>(null)
 

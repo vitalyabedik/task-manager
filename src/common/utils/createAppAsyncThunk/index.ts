@@ -1,1 +1,1 @@
-export * from "common/utils/createAppAsyncThunk/createAppAsyncThunk"
+export * from "./createAppAsyncThunk"

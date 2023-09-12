@@ -8,12 +8,12 @@ import { FilterTasksButtons } from "features/todolists-list/todolists/ui/todolis
 import { Tasks } from "features/todolists-list/todolists/ui/todolist/tasks"
 import { TodolistTitle } from "features/todolists-list/todolists/ui/todolist/todolist-title/todolist-title"
 
-type PropsType = {
+type Props = {
   todolist: TodolistDomainType
   tasks: Array<TaskDomainType>
 }
 
-export const Todolist: React.FC<PropsType> = React.memo(({ todolist, tasks }) => {
+export const Todolist = React.memo(({ todolist, tasks }: Props): JSX.Element => {
   const { addTask } = useActions({ ...todolistsThunks, ...tasksThunks })
 
   const addTaskHandler = useCallback((title: string) => {

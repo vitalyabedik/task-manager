@@ -1,2 +1,2 @@
-export * from "features/todolists-list/todolists/api/todolists.api"
-export * from "features/todolists-list/todolists/api/todolists.api.types"
+export * from "./todolists.api"
+export * from "./todolists.api.types"

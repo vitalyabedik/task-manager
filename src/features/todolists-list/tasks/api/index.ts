@@ -1,2 +1,2 @@
-export * from "features/todolists-list/tasks/api/tasks.api"
-export * from "features/todolists-list/tasks/api/tasks.api.types"
+export * from "./tasks.api"
+export * from "./tasks.api.types"

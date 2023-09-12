@@ -1,5 +1,7 @@
 import React from "react"
 
+import styles from "features/todolists-list/todolists/ui/todolist/todolist.module.css"
+
 import Button from "@mui/material/Button"
 import { useActions } from "common/hooks"
 import {
@@ -7,13 +9,12 @@ import {
   TodolistDomainType,
   todolistsActions,
 } from "features/todolists-list/todolists/model/todolists.slice"
-import styles from "features/todolists-list/todolists/ui/todolist/todolist.module.css"
 
-type PropsType = {
+type Props = {
   todolist: TodolistDomainType
 }
 
-export const FilterTasksButtons: React.FC<PropsType> = ({ todolist }) => {
+export const FilterTasksButtons = ({ todolist }: Props): JSX.Element => {
   const { changeTodolistFilter } = useActions(todolistsActions)
 
   const changeTodolistFilterCallback = (filter: FilterValuesType) =>

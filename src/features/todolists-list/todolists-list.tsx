@@ -14,7 +14,7 @@ import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
 import { selectTasks } from "features/todolists-list/tasks/model/tasks.selector"
 import { selectTodolists } from "features/todolists-list/todolists/model/todolists.selector"
 
-export const TodolistsList = () => {
+export const TodolistsList = (): JSX.Element => {
   const todolists = useAppSelector(selectTodolists)
   const tasks = useAppSelector(selectTasks)
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)

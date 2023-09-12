@@ -5,12 +5,12 @@ import { TaskStatuses } from "common/enums"
 import { TodolistDomainType } from "features/todolists-list/todolists/model/todolists.slice"
 import { TaskDomainType } from "features/todolists-list/tasks/model/tasks.slice"
 
-type PropsType = {
+type Props = {
   todolist: TodolistDomainType
   tasks: Array<TaskDomainType>
 }
 
-export const Tasks: React.FC<PropsType> = ({ todolist, tasks }) => {
+export const Tasks = ({ todolist, tasks }: Props): JSX.Element => {
   let filteredTasks = tasks
 
   if (todolist.filter === "active") {

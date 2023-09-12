@@ -1,1 +1,1 @@
-export * from "common/components/editable-span/editable-span"
+export * from "./editable-span"

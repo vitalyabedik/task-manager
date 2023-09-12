@@ -1,1 +1,1 @@
-export * from "common/configs/routes"
+export * from "./routes"

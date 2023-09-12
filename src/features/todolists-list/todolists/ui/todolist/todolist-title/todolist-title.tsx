@@ -1,15 +1,16 @@
 import React, { useCallback } from "react"
+
 import { EditableSpan } from "common/components"
 import IconButton from "@mui/material/IconButton"
 import Delete from "@mui/icons-material/Delete"
 import { TodolistDomainType, todolistsThunks } from "features/todolists-list/todolists/model/todolists.slice"
 import { useActions } from "common/hooks"
 
-type PropsType = {
+type Props = {
   todolist: TodolistDomainType
 }
 
-export const TodolistTitle: React.FC<PropsType> = ({ todolist }) => {
+export const TodolistTitle = ({ todolist }: Props): JSX.Element => {
   const { deleteTodolist, updateTodolistTitle } = useActions(todolistsThunks)
 
   const deleteTodolistCallback = useCallback(() => deleteTodolist({ todolistId: todolist.id }), [todolist.id])

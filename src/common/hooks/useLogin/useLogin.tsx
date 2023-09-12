@@ -1,4 +1,3 @@
-import React from "react"
 import { FormikHelpers, useFormik } from "formik"
 
 import { useActions } from "common/hooks/useActions"

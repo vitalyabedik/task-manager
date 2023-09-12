@@ -1,1 +1,1 @@
-export * from "common/components/error-snackbar/error-snackbar"
+export * from "./error-snackbar"

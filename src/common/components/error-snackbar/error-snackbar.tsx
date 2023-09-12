@@ -7,7 +7,7 @@ import { appActions } from "app/model/app.slice"
 import { selectAppError } from "app/model/app.selectors"
 import { Alert } from "./alert"
 
-export const ErrorSnackbar = () => {
+export const ErrorSnackbar = (): JSX.Element => {
   const error = useAppSelector(selectAppError)
   const { setAppError } = useActions(appActions)
 

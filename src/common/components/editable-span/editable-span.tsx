@@ -2,12 +2,12 @@ import React, { ChangeEvent, useState } from "react"
 
 import TextField from "@mui/material/TextField"
 
-type PropsType = {
+type Props = {
   disabled?: boolean
   title: string
   onChange: (newValue: string) => void
 }
-export const EditableSpan: React.FC<PropsType> = React.memo(({ title, onChange, disabled }) => {
+export const EditableSpan = React.memo(({ title, onChange, disabled }: Props): JSX.Element => {
   const [editMode, setEditMode] = useState(false)
   const [localTitle, setLocalTitle] = useState("")
 

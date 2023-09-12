@@ -15,7 +15,7 @@ import { useAppSelector, useLogin } from "common/hooks"
 import { selectAuthIsLoggedIn, selectCaptchaUrl } from "features/auth/model/auth.selectors"
 import { selectAppStatus } from "app/model/app.selectors"
 
-export const Login = () => {
+export const Login = (): JSX.Element => {
   const { formik } = useLogin()
 
   const appStatus = useAppSelector(selectAppStatus)

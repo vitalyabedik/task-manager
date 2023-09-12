@@ -1,1 +1,1 @@
-export * from "common/components/not-found/not-found"
+export * from "./not-found"

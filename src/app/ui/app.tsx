@@ -10,7 +10,7 @@ import { useActions, useAppSelector } from "common/hooks"
 import { authThunks } from "features/auth/model/auth.slice"
 import { Header } from "common/components/header"
 
-export const App = () => {
+export const App = (): JSX.Element => {
   const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized)
 
   const { initializeApp } = useActions(authThunks)

@@ -14,7 +14,7 @@ import { RequestStatusType } from "app/model/app.slice"
 import { selectAuthIsLoggedIn } from "features/auth/model/auth.selectors"
 import { authThunks } from "features/auth/model/auth.slice"
 
-export const Header = () => {
+export const Header = (): JSX.Element => {
   const status = useAppSelector<RequestStatusType>((state) => state.app.status)
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
 

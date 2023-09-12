@@ -1,1 +1,1 @@
-export * from "app/ui/app"
+export * from "./app"

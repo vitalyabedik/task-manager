@@ -1,1 +1,1 @@
-export * from "common/hooks/useAppSelector/useAppSelector"
+export * from "./useAppSelector"

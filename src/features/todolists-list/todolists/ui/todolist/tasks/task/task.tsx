@@ -11,12 +11,12 @@ import { TaskDomainType, tasksThunks } from "features/todolists-list/tasks/model
 import { TaskStatuses } from "common/enums"
 import { useActions } from "common/hooks"
 
-type PropsType = {
+type Props = {
   task: TaskDomainType
   todolistId: string
 }
 
-export const Task: React.FC<PropsType> = React.memo(({ task, todolistId }) => {
+export const Task = React.memo(({ task, todolistId }: Props): JSX.Element => {
   const { deleteTask, updateTask } = useActions(tasksThunks)
 
   const deleteTaskCallback = useCallback(() => deleteTask({ todolistId, taskId: task.id }), [todolistId, task.id])
