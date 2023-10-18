@@ -1,5 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
 import { Navigate } from "react-router-dom"
+
+import "./login.css"
 
 import Grid from "@mui/material/Grid"
 import Checkbox from "@mui/material/Checkbox"
@@ -22,6 +24,16 @@ export const Login = (): JSX.Element => {
   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
   const captchaUrl = useAppSelector(selectCaptchaUrl)
 
+  const [isVisible, setIsVisible] = useState(false)
+
+  const onShowHandler = () => {
+    setIsVisible(true)
+  }
+
+  const onHideHandler = () => {
+    setIsVisible(false)
+  }
+
   const isEmailError = formik.touched.email && formik.errors.email
   const isPasswordError = formik.touched.password && formik.errors.password
 
@@ -32,18 +44,6 @@ export const Login = (): JSX.Element => {
       <Grid item justifyContent={"center"}>
         <form onSubmit={formik.handleSubmit}>
           <FormControl>
-            <FormLabel>
-              <p>
-                To log in get registered
-                <a href={"https://social-network.samuraijs.com/"} target={"_blank"} rel="noreferrer">
-                  {" "}
-                  here
-                </a>
-              </p>
-              <p>or use common test account credentials:</p>
-              <p>Email: free@samuraijs.com</p>
-              <p>Password: free</p>
-            </FormLabel>
             <FormGroup>
               <TextField label="Email" margin="normal" {...formik.getFieldProps("email")} />
               {isEmailError && <div style={{ color: "red" }}>{formik.errors.email}</div>}
@@ -66,6 +66,35 @@ export const Login = (): JSX.Element => {
                 Login
               </Button>
             </FormGroup>
+            <FormLabel>
+              <p>
+                To log in get registered
+                <a href={"https://social-network.samuraijs.com/"} target={"_blank"} rel="noreferrer">
+                  {" "}
+                  here
+                </a>
+              </p>
+              <p>
+                or use common test account credentials:{" "}
+                <p>
+                  {!isVisible ? (
+                    <span className="text" onClick={onShowHandler}>
+                      Show data
+                    </span>
+                  ) : (
+                    <span className="text" onClick={onHideHandler}>
+                      Hide data
+                    </span>
+                  )}
+                </p>
+              </p>
+              {isVisible && (
+                <>
+                  <p className="loginData">Email: free@samuraijs.com</p>
+                  <p className="loginData">Password: free</p>
+                </>
+              )}
+            </FormLabel>
           </FormControl>
         </form>
       </Grid>
