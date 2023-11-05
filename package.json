@@ -1,6 +1,6 @@
 {
-  "name": "todolist-learning",
-  "homepage": "https://vitalyabedik.github.io/it-incubator.todolist-learning",
+  "name": "Task-Manager",
+  "homepage": "https://vitalyabedik.github.io/Task-Manager",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
