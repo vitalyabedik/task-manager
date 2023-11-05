@@ -1,6 +1,6 @@
 {
-  "name": "Task-Manager",
-  "homepage": "https://vitalyabedik.github.io/Task-Manager",
+  "name": "task-manager",
+  "homepage": "https://vitalyabedik.github.io/task-manager",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
